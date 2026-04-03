@@ -17,7 +17,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!DOCTYPE html>
-<html lang="en" id="html-root">
+<html lang="en" id="html-root" class="lang-en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -123,17 +123,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     if (!switcher) return;
 
     // Toggle switcher active state
-    if (lang === 'vn') {
-      switcher.classList.add('vn-active');
-    } else {
-      switcher.classList.remove('vn-active');
-    }
+    switcher.classList.toggle('vn-active', lang === 'vn');
 
-    // Show/hide all lang-tagged elements
-    document.querySelectorAll('[data-lang]').forEach(el => {
-      const elLang = el.getAttribute('data-lang');
-      el.style.display = (elLang === lang) ? '' : 'none';
-    });
+    // Toggle class on <html> — CSS handles show/hide via html.lang-en / html.lang-vn rules
+    document.documentElement.classList.toggle('lang-en', lang === 'en');
+    document.documentElement.classList.toggle('lang-vn', lang === 'vn');
   }
 
   // Expose globally so inline onclick works

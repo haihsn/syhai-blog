@@ -167,7 +167,8 @@ img { max-width: 100%; border-radius: var(--radius); border: 0.5px solid var(--r
 }
 
 /* Lang visibility */
-[data-lang="vn"] { display: none; }
+html.lang-en [data-lang="vn"] { display: none; }
+html.lang-vn [data-lang="en"] { display: none; }
 
 /* Animations */
 @keyframes fadeUp {
