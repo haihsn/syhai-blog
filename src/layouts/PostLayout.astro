@@ -1,0 +1,270 @@
+---
+import Base from './Base.astro';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, titleVN, description, descriptionVN, pubDate, category, readTime, tags, tagsVN, cover } = post.data;
+
+function fmt(date: Date) {
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+const shareURL  = `https://syhai.xyz/blog/${post.slug}`;
+const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(shareURL)}`;
+---
+
+<Base title={`${title} — syhai.xyz`} description={description} ogImage={cover}>
+
+  <article class="post">
+
+    <!-- COVER -->
+    <div class="post__cover img-frame">
+      {cover
+        ? <img src={cover} alt={title} />
+        : <div class="img-frame__placeholder">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <rect x="3" y="8" width="30" height="20" rx="2" stroke="#85B7EB" stroke-width="1.5"/>
+              <path d="M3 17l8 7 7-6 10 7" stroke="#85B7EB" stroke-width="1"/>
+              <circle cx="11" cy="14" r="3" fill="#C3DEFA"/>
+            </svg>
+            <span data-lang="en">Cover image</span>
+            <span data-lang="vn">Ảnh bìa bài viết</span>
+          </div>
+      }
+    </div>
+
+    <!-- HEADER -->
+    <header class="post__header">
+      <div class="container">
+
+        <div class="post__meta fade-up">
+          <a href="/blog" class="post__back" data-lang="en">← All posts</a>
+          <a href="/blog" class="post__back" data-lang="vn">← Tất cả bài</a>
+          <div class="post__meta-divider"></div>
+          <span class="tag">{category}</span>
+          <div class="post__meta-divider"></div>
+          <span class="post__meta-text">{fmt(pubDate)}</span>
+          <div class="post__meta-divider"></div>
+          <span class="post__meta-text" data-lang="en">{readTime} min read</span>
+          <span class="post__meta-text" data-lang="vn">{readTime} phút đọc</span>
+        </div>
+
+        <h1 class="post__title fade-up-1" data-lang="en">{title}</h1>
+        <h1 class="post__title fade-up-1" data-lang="vn">{titleVN ?? title}</h1>
+
+        <p class="post__desc fade-up-2" data-lang="en">{description}</p>
+        <p class="post__desc fade-up-2" data-lang="vn">{descriptionVN ?? description}</p>
+
+        <div class="post__byline-row fade-up-3">
+          <div class="post__byline">
+            <span data-lang="en">By Sy Hai &nbsp;·&nbsp; {readTime} min &nbsp;·&nbsp; {tags?.join(' · ')}</span>
+            <span data-lang="vn">Bởi Sy Hai &nbsp;·&nbsp; {readTime} phút &nbsp;·&nbsp; {(tagsVN ?? tags)?.join(' · ')}</span>
+          </div>
+          {tags && (
+            <div class="post__tags">
+              {tags.map((t: string) => <span class="tag tag--outline" data-lang="en">{t}</span>)}
+              {(tagsVN ?? tags).map((t: string) => <span class="tag tag--outline" data-lang="vn">{t}</span>)}
+            </div>
+          )}
+        </div>
+
+      </div>
+    </header>
+
+    <div class="rule-thin" style="max-width:760px; margin:0 auto; padding:0 1.75rem;"><div style="height:0.5px;background:var(--rule)"></div></div>
+
+    <!-- BODY -->
+    <div class="post__body container">
+      <div class="post__layout">
+
+        <div class="prose">
+          <slot />
+        </div>
+
+        <aside class="post__sidebar">
+
+          <div class="sidebar__card">
+            <div class="sidebar__label" data-lang="en">Share</div>
+            <div class="sidebar__label" data-lang="vn">Chia sẻ</div>
+            <a href={tweetURL} target="_blank" rel="noopener" class="sidebar__share-btn" data-lang="en">Post on X →</a>
+            <a href={tweetURL} target="_blank" rel="noopener" class="sidebar__share-btn" data-lang="vn">Chia sẻ lên X →</a>
+          </div>
+
+          <div class="sidebar__card">
+            <div class="sidebar__label" data-lang="en">Author</div>
+            <div class="sidebar__label" data-lang="vn">Tác giả</div>
+            <div class="sidebar__author">
+              <div class="sidebar__avatar">SH</div>
+              <div>
+                <div class="sidebar__author-name">Sy Hai</div>
+                <div class="sidebar__author-bio" data-lang="en">AI learner · Crypto trader</div>
+                <div class="sidebar__author-bio" data-lang="vn">Học AI · Trader crypto</div>
+              </div>
+            </div>
+          </div>
+
+          {tags && (
+            <div class="sidebar__card">
+              <div class="sidebar__label" data-lang="en">Tags</div>
+              <div class="sidebar__label" data-lang="vn">Thẻ</div>
+              <div class="sidebar__tags">
+                {tags.map((t: string) => <span class="tag" data-lang="en">{t}</span>)}
+                {(tagsVN ?? tags).map((t: string) => <span class="tag" data-lang="vn">{t}</span>)}
+              </div>
+            </div>
+          )}
+
+        </aside>
+
+      </div>
+    </div>
+
+    <!-- POST FOOTER -->
+    <footer class="post__footer">
+      <div class="container">
+        <div class="post__footer-inner">
+          <a href="/blog" class="post__footer-back" data-lang="en">← Back to all posts</a>
+          <a href="/blog" class="post__footer-back" data-lang="vn">← Quay lại tất cả bài</a>
+          <a href={tweetURL} target="_blank" rel="noopener" class="btn" data-lang="en">Share on X →</a>
+          <a href={tweetURL} target="_blank" rel="noopener" class="btn" data-lang="vn">Chia sẻ lên X →</a>
+        </div>
+      </div>
+    </footer>
+
+  </article>
+
+</Base>
+
+<style>
+.post__cover {
+  width: 100%;
+  height: clamp(200px, 35vw, 340px);
+  border-radius: 0;
+  border: none;
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.post__header { padding: 2.5rem 0 1.75rem; }
+
+.post__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+.post__back {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--b300);
+}
+.post__meta-divider { width:1px; height:10px; background:var(--rule); }
+.post__meta-text    { font-family:var(--mono); font-size:0.72rem; color:var(--b300); }
+
+.post__title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  margin-bottom: 1rem;
+  max-width: 700px;
+}
+.post__title em { font-style:italic; color:var(--b500); }
+
+.post__desc {
+  font-size: 1.05rem;
+  color: var(--ink2);
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 640px;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.post__byline-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+.post__byline {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--b300);
+}
+.post__tags { display:flex; gap:5px; flex-wrap:wrap; }
+
+/* LAYOUT */
+.post__body   { padding: 2.5rem 0; }
+.post__layout { display:grid; grid-template-columns:1fr 220px; gap:3rem; align-items:start; }
+
+/* PROSE */
+.prose { max-width: 640px; }
+.prose :global(h2) { font-size:1.5rem; margin-top:2.5rem; margin-bottom:.75rem; padding-top:1.5rem; border-top:0.5px solid var(--rule); }
+.prose :global(h3) { font-size:1.15rem; margin-top:1.75rem; margin-bottom:.6rem; color:var(--b600); }
+.prose :global(p)  { font-size:1rem; color:var(--ink2); line-height:1.85; font-weight:300; margin-bottom:1.1rem; }
+.prose :global(ul),
+.prose :global(ol) { padding-left:1.5rem; margin-bottom:1.25rem; color:var(--ink2); font-weight:300; }
+.prose :global(li) { margin-bottom:.4rem; line-height:1.75; font-size:1rem; }
+.prose :global(a)  { color:var(--b500); border-bottom:0.5px solid var(--b200); }
+.prose :global(a:hover) { color:var(--b700); border-bottom-color:var(--b700); }
+.prose :global(strong)  { color:var(--ink); font-weight:600; }
+.prose :global(img)     { margin:1.5rem 0; }
+
+/* SIDEBAR */
+.post__sidebar { position:sticky; top:80px; }
+.sidebar__card {
+  background: var(--b100);
+  border: 0.5px solid var(--b200);
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: .75rem;
+}
+.sidebar__label {
+  font-family: var(--mono);
+  font-size: .62rem;
+  color: var(--b400);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: .6rem;
+  padding-bottom: .5rem;
+  border-bottom: 0.5px solid var(--b200);
+}
+.sidebar__share-btn {
+  display: block;
+  width: 100%;
+  font-family: var(--mono);
+  font-size: .72rem;
+  padding: 7px;
+  border-radius: 3px;
+  border: 0.5px solid var(--b400);
+  background: transparent;
+  color: var(--b500);
+  cursor: pointer;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  transition: all .15s;
+}
+.sidebar__share-btn:hover { background:var(--b500); color:#fff; }
+.sidebar__author { display:flex; align-items:center; gap:.6rem; }
+.sidebar__avatar { width:32px; height:32px; border-radius:50%; background:var(--b500); display:flex; align-items:center; justify-content:center; font-family:var(--playfair); font-size:.72rem; color:var(--paper); flex-shrink:0; }
+.sidebar__author-name { font-size:.85rem; font-weight:600; font-family:var(--playfair); }
+.sidebar__author-bio  { font-size:.68rem; color:var(--b400); font-family:var(--mono); margin-top:1px; }
+.sidebar__tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:.25rem; }
+
+/* FOOTER */
+.post__footer { border-top:0.5px solid var(--rule); padding:1.5rem 0; background:var(--b100); }
+.post__footer-inner { display:flex; align-items:center; justify-content:space-between; }
+.post__footer-back  { font-family:var(--mono); font-size:.78rem; color:var(--b400); }
+
+@media (max-width:780px) {
+  .post__layout { grid-template-columns:1fr; }
+  .post__sidebar { position:static; display:none; }
+}
+</style>

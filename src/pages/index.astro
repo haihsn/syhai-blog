@@ -1,0 +1,267 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter(p => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const featured = posts[0];
+const grid     = posts.slice(1, 4);
+
+function fmt(date: Date) {
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+---
+
+<Base title="syhai.xyz — AI & Crypto Research">
+
+  <div class="container--wide"><div class="rule-thick fade-up"></div></div>
+
+  <!-- FEATURED -->
+  {featured && (
+    <section class="featured">
+      <div class="container--wide">
+        <a href={`/blog/${featured.slug}`} class="featured__card fade-up-1">
+
+          <div class="featured__img img-frame">
+            {featured.data.cover
+              ? <img src={featured.data.cover} alt={featured.data.title} />
+              : <div class="img-frame__placeholder">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect x="3" y="7" width="26" height="18" rx="2" stroke="#85B7EB" stroke-width="1.5"/>
+                    <path d="M3 15l7 6 6-5 9 6" stroke="#85B7EB" stroke-width="1"/>
+                    <circle cx="10" cy="12" r="2.5" fill="#C3DEFA"/>
+                  </svg>
+                  <span data-lang="en">Cover image</span>
+                  <span data-lang="vn">Ảnh bìa</span>
+                </div>
+            }
+          </div>
+
+          <div class="featured__body">
+            <div class="featured__kicker">
+              <div class="featured__kicker-line"></div>
+              <span class="tag">{featured.data.category}</span>
+              <span class="mono muted">{fmt(featured.data.pubDate)}</span>
+              <span class="mono muted" data-lang="en">{featured.data.readTime} min read</span>
+              <span class="mono muted" data-lang="vn">{featured.data.readTime} phút đọc</span>
+            </div>
+            <h1 class="featured__title" data-lang="en">{featured.data.title}</h1>
+            <h1 class="featured__title" data-lang="vn">{featured.data.titleVN ?? featured.data.title}</h1>
+            <p class="featured__desc" data-lang="en">{featured.data.description}</p>
+            <p class="featured__desc" data-lang="vn">{featured.data.descriptionVN ?? featured.data.description}</p>
+            <span class="featured__cta">
+              <span data-lang="en">Read article →</span>
+              <span data-lang="vn">Đọc bài →</span>
+            </span>
+          </div>
+
+        </a>
+      </div>
+    </section>
+  )}
+
+  <!-- ALL POSTS -->
+  <div class="container--wide section-row fade-up-2">
+    <span class="section-label" data-lang="en">All posts</span>
+    <span class="section-label" data-lang="vn">Tất cả bài viết</span>
+    <div class="rule-thin" style="flex:1"></div>
+    <a href="/blog" class="mono muted" style="font-size:0.72rem; white-space:nowrap;" data-lang="en">View all →</a>
+    <a href="/blog" class="mono muted" style="font-size:0.72rem; white-space:nowrap;" data-lang="vn">Xem tất cả →</a>
+  </div>
+
+  {grid.length > 0 && (
+    <section class="post-grid-section fade-up-3">
+      <div class="container--wide">
+        <div class="post-grid">
+          {grid.map(post => (
+            <a href={`/blog/${post.slug}`} class="post-card">
+              <div class="post-card__img img-frame">
+                {post.data.cover
+                  ? <img src={post.data.cover} alt={post.data.title} />
+                  : <div class="img-frame__placeholder img-frame__placeholder--sm">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <rect x="2" y="5" width="20" height="14" rx="2" stroke="#85B7EB" stroke-width="1.5"/>
+                        <path d="M2 11l5 4 4-3 6 4" stroke="#85B7EB" stroke-width="1"/>
+                        <circle cx="7.5" cy="9" r="1.5" fill="#C3DEFA"/>
+                      </svg>
+                    </div>
+                }
+              </div>
+              <div class="post-card__body">
+                <span class="tag">{post.data.category}</span>
+                <h2 class="post-card__title" data-lang="en">{post.data.title}</h2>
+                <h2 class="post-card__title" data-lang="vn">{post.data.titleVN ?? post.data.title}</h2>
+                <p class="post-card__desc" data-lang="en">{post.data.description}</p>
+                <p class="post-card__desc" data-lang="vn">{post.data.descriptionVN ?? post.data.description}</p>
+                <div class="post-card__meta">
+                  <span class="mono muted">{fmt(post.data.pubDate)}</span>
+                  <span class="mono muted" data-lang="en">{post.data.readTime} min</span>
+                  <span class="mono muted" data-lang="vn">{post.data.readTime} phút</span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <div class="container--wide"><div class="rule-thick"></div></div>
+
+  <!-- WHAT I'M BUILDING -->
+  <section class="building" id="building">
+    <div class="container--wide">
+      <div class="section-row" style="margin-bottom:1.25rem">
+        <span class="section-label" data-lang="en">What I'm building</span>
+        <span class="section-label" data-lang="vn">Những gì tôi đang xây dựng</span>
+        <div class="rule-thin" style="flex:1"></div>
+      </div>
+      <div class="building__grid">
+
+        <div class="building__card">
+          <div class="building__img img-frame">
+            <div class="img-frame__placeholder">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <rect x="4" y="8" width="20" height="12" rx="2" stroke="#378ADD" stroke-width="1.5"/>
+                <path d="M8 14h12M8 17h7" stroke="#378ADD" stroke-width="1"/>
+                <circle cx="14" cy="11" r="2" fill="#C3DEFA"/>
+              </svg>
+            </div>
+          </div>
+          <div class="building__body">
+            <span class="building__status building__status--live" data-lang="en">Live</span>
+            <span class="building__status building__status--live" data-lang="vn">Đang hoạt động</span>
+            <h3 class="building__title" data-lang="en">AI Trading Signal System</h3>
+            <h3 class="building__title" data-lang="vn">Hệ thống tín hiệu giao dịch AI</h3>
+            <p class="building__desc" data-lang="en">Automated signal engine built with Claude. Runs on Binance data, fires alerts to Telegram.</p>
+            <p class="building__desc" data-lang="vn">Hệ thống tín hiệu tự động dùng Claude. Chạy trên dữ liệu Binance, gửi cảnh báo qua Telegram.</p>
+          </div>
+        </div>
+
+        <div class="building__card">
+          <div class="building__img img-frame">
+            <div class="img-frame__placeholder">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <rect x="10" y="4" width="8" height="14" rx="2" stroke="#378ADD" stroke-width="1.5"/>
+                <path d="M7 22h14M14 18v4" stroke="#378ADD" stroke-width="1.5"/>
+                <path d="M12 9h4M12 12h3" stroke="#85B7EB" stroke-width="1"/>
+              </svg>
+            </div>
+          </div>
+          <div class="building__body">
+            <span class="building__status building__status--building" data-lang="en">Building</span>
+            <span class="building__status building__status--building" data-lang="vn">Đang xây dựng</span>
+            <h3 class="building__title" data-lang="en">TikTok — AI for Traders</h3>
+            <h3 class="building__title" data-lang="vn">TikTok — AI cho trader</h3>
+            <p class="building__desc" data-lang="en">Short-form videos teaching how to use Claude for crypto research. Posting weekly.</p>
+            <p class="building__desc" data-lang="vn">Video ngắn hướng dẫn dùng Claude cho nghiên cứu crypto. Đăng hàng tuần.</p>
+          </div>
+        </div>
+
+        <div class="building__card">
+          <div class="building__img img-frame">
+            <div class="img-frame__placeholder">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <circle cx="14" cy="14" r="9" stroke="#378ADD" stroke-width="1.5"/>
+                <path d="M14 9v5l3 3" stroke="#378ADD" stroke-width="1.5"/>
+                <path d="M9 14h2M17 14h2" stroke="#85B7EB" stroke-width="1"/>
+              </svg>
+            </div>
+          </div>
+          <div class="building__body">
+            <span class="building__status building__status--soon" data-lang="en">Coming soon</span>
+            <span class="building__status building__status--soon" data-lang="vn">Sắp ra mắt</span>
+            <h3 class="building__title" data-lang="en">Crypto Research Newsletter</h3>
+            <h3 class="building__title" data-lang="vn">Bản tin nghiên cứu crypto</h3>
+            <p class="building__desc" data-lang="en">Weekly AI-powered market digest for traders. Launching Q2 2025.</p>
+            <p class="building__desc" data-lang="vn">Tổng hợp thị trường hàng tuần dùng AI. Ra mắt Q2 2025.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT STRIP -->
+  <section class="about">
+    <div class="container--wide">
+      <div class="about__inner">
+        <div class="about__avatar">SH</div>
+        <div class="about__text">
+          <div class="about__name">Sy Hai</div>
+          <div class="about__bio" data-lang="en">AI learner · Crypto trader · Learning in public</div>
+          <div class="about__bio" data-lang="vn">Học AI · Trader crypto · Học hỏi công khai</div>
+        </div>
+        <div class="about__links">
+          <a href="https://twitter.com/syhai_ai" target="_blank" rel="noopener" class="btn">X →</a>
+          <a href="/about" class="btn" data-lang="en">About</a>
+          <a href="/about" class="btn" data-lang="vn">Về tôi</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Base>
+
+<style>
+.featured { padding: 2rem 0 0; }
+.featured__card { display:block; color:inherit; }
+.featured__card:hover { color:inherit; }
+.featured__card:hover .featured__title { color: var(--b500); }
+.featured__img { height: 280px; margin-bottom: 1.5rem; }
+.featured__kicker { display:flex; align-items:center; gap:12px; margin-bottom:.9rem; flex-wrap:wrap; }
+.featured__kicker-line { width:24px; height:1.5px; background:var(--b400); flex-shrink:0; }
+.featured__title { font-size:clamp(1.6rem,3.5vw,2.4rem); letter-spacing:-.02em; margin-bottom:.75rem; transition:color .2s; max-width:700px; }
+.featured__title em { font-style:italic; color:var(--b500); }
+.featured__desc { font-size:1rem; color:var(--ink2); line-height:1.7; font-weight:300; max-width:620px; margin-bottom:1rem; padding-top:.75rem; border-top:0.5px solid var(--rule); }
+.featured__cta { font-family:var(--mono); font-size:0.78rem; color:var(--b400); }
+
+.section-row { display:flex; align-items:center; gap:12px; padding:1.5rem 0 0; }
+.mono { font-family:var(--mono); }
+.muted { color:var(--b300); font-size:0.72rem; }
+
+.post-grid-section { padding:1rem 0 2.5rem; }
+.post-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+.post-card { display:block; color:inherit; border:0.5px solid var(--rule); border-radius:var(--radius); overflow:hidden; background:var(--paper); transition:border-color .2s; }
+.post-card:hover { border-color:var(--b300); color:inherit; }
+.post-card:hover .post-card__title { color:var(--b500); }
+.post-card__img { height:120px; border-radius:0; border:none; border-bottom:0.5px solid var(--rule); }
+.post-card__body { padding:1rem 1.1rem; }
+.post-card__body .tag { margin-bottom:.6rem; }
+.post-card__title { font-family:var(--playfair); font-size:1rem; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:.5rem; transition:color .2s; }
+.post-card__desc { font-size:.82rem; color:var(--ink2); line-height:1.6; font-weight:300; margin-bottom:.75rem; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.post-card__meta { display:flex; gap:.75rem; border-top:0.5px solid var(--rule); padding-top:.6rem; }
+
+.building { padding:2rem 0; background:var(--paper); }
+.building__grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+.building__card { border:0.5px solid var(--b200); border-radius:6px; overflow:hidden; background:var(--paper); }
+.building__img { height:100px; border-radius:0; border:none; border-bottom:0.5px solid var(--b200); }
+.building__body { padding:.9rem 1rem; }
+.building__status { font-family:var(--mono); font-size:.62rem; text-transform:uppercase; letter-spacing:.1em; padding:2px 8px; border-radius:10px; display:inline-block; margin-bottom:.5rem; }
+.building__status--live     { background:rgba(24,95,165,.08); color:var(--b500); border:0.5px solid var(--b200); }
+.building__status--building { background:rgba(55,138,221,.06); color:var(--b400); border:0.5px solid var(--b200); }
+.building__status--soon     { background:var(--b100); color:var(--b300); border:0.5px solid var(--b200); }
+.building__title { font-family:var(--playfair); font-size:.95rem; font-weight:600; color:var(--ink); margin-bottom:.3rem; line-height:1.25; }
+.building__desc  { font-size:.78rem; color:var(--ink2); line-height:1.55; font-weight:300; }
+
+.about { padding:0 0 2rem; }
+.about__inner { display:flex; align-items:center; gap:1rem; background:var(--b100); border:0.5px solid var(--b200); border-radius:6px; padding:1.1rem 1.25rem; }
+.about__avatar { width:42px; height:42px; border-radius:50%; background:var(--b500); display:flex; align-items:center; justify-content:center; font-family:var(--playfair); font-size:.85rem; color:var(--paper); flex-shrink:0; }
+.about__text { flex:1; }
+.about__name { font-size:.95rem; font-weight:600; font-family:var(--playfair); margin-bottom:2px; }
+.about__bio  { font-family:var(--mono); font-size:.72rem; color:var(--b400); }
+.about__links { display:flex; gap:.6rem; }
+
+@media (max-width:900px) {
+  .post-grid { grid-template-columns:1fr 1fr; }
+  .building__grid { grid-template-columns:1fr 1fr; }
+}
+@media (max-width:600px) {
+  .post-grid { grid-template-columns:1fr; }
+  .building__grid { grid-template-columns:1fr; }
+  .featured__img { height:180px; }
+  .about__links { display:none; }
+}
+</style>

@@ -1,0 +1,115 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter(p => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const categories = ['All', ...new Set(posts.map(p => p.data.category))];
+
+function fmt(date: Date) {
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+---
+
+<Base title="Blog — syhai.xyz">
+
+  <div class="blog-header">
+    <div class="container">
+      <h1 class="fade-up-1" data-lang="en">Blog</h1>
+      <h1 class="fade-up-1" data-lang="vn">Blog</h1>
+      <p class="fade-up-2" data-lang="en">Everything I learn about AI and crypto — posted publicly.</p>
+      <p class="fade-up-2" data-lang="vn">Tất cả những gì tôi học về AI và crypto — chia sẻ công khai.</p>
+    </div>
+  </div>
+
+  <div class="container" style="padding-bottom:3rem">
+
+    <div class="filter-row fade-up-2">
+      {categories.map(cat => (
+        <button class={`filter-btn ${cat === 'All' ? 'active' : ''}`} data-cat={cat} onclick="filterPosts(this)">
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    <div id="post-list">
+      {posts.map(post => (
+        <a href={`/blog/${post.slug}`} class="post-row" data-cat={post.data.category}>
+          <div class="post-row__img img-frame">
+            {post.data.cover
+              ? <img src={post.data.cover} alt={post.data.title} />
+              : <div class="img-frame__placeholder--sm">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <rect x="2" y="5" width="20" height="14" rx="2" stroke="#85B7EB" stroke-width="1.5"/>
+                    <path d="M2 11l5 4 4-3 6 4" stroke="#85B7EB" stroke-width="1"/>
+                    <circle cx="7.5" cy="9" r="1.5" fill="#C3DEFA"/>
+                  </svg>
+                </div>
+            }
+          </div>
+          <div class="post-row__body">
+            <span class="tag">{post.data.category}</span>
+            <h2 class="post-row__title" data-lang="en">{post.data.title}</h2>
+            <h2 class="post-row__title" data-lang="vn">{post.data.titleVN ?? post.data.title}</h2>
+            <p class="post-row__desc" data-lang="en">{post.data.description}</p>
+            <p class="post-row__desc" data-lang="vn">{post.data.descriptionVN ?? post.data.description}</p>
+          </div>
+          <div class="post-row__meta">
+            <span class="mono muted">{fmt(post.data.pubDate)}</span>
+            <span class="mono muted" data-lang="en">{post.data.readTime} min</span>
+            <span class="mono muted" data-lang="vn">{post.data.readTime} phút</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+  </div>
+
+</Base>
+
+<style>
+.blog-header { padding:3rem 0 2rem; border-bottom:2.5px solid var(--navy); background:var(--paper); }
+.blog-header h1 { font-size:clamp(2rem,5vw,3rem); }
+.blog-header p  { font-size:1rem; color:var(--ink2); font-weight:300; margin-top:.5rem; max-width:480px; }
+
+.mono  { font-family:var(--mono); }
+.muted { color:var(--b300); font-size:.72rem; }
+
+.filter-row { display:flex; gap:6px; flex-wrap:wrap; padding:1.5rem 0 1.25rem; border-bottom:0.5px solid var(--rule); }
+.filter-btn { font-family:var(--mono); font-size:.68rem; padding:4px 12px; border-radius:10px; border:0.5px solid var(--b200); background:transparent; color:var(--b400); cursor:pointer; letter-spacing:.06em; text-transform:uppercase; transition:all .15s; }
+.filter-btn:hover  { border-color:var(--b400); color:var(--b500); }
+.filter-btn.active { background:var(--b500); color:var(--paper); border-color:var(--b500); }
+
+.post-row { display:grid; grid-template-columns:100px 1fr auto; gap:1.25rem; align-items:start; padding:1.25rem 0; border-bottom:0.5px solid var(--rule); color:inherit; }
+.post-row:hover { color:inherit; }
+.post-row:hover .post-row__title { color:var(--b500); }
+.post-row.hidden { display:none; }
+
+.post-row__img { height:68px; width:100px; border-radius:var(--radius); flex-shrink:0; }
+.img-frame__placeholder--sm { display:flex; align-items:center; justify-content:center; width:100%; height:100%; background:var(--b100); }
+
+.post-row__body .tag { margin-bottom:.4rem; }
+.post-row__title { font-family:var(--playfair); font-size:1.05rem; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:.3rem; transition:color .2s; }
+.post-row__desc  { font-size:.82rem; color:var(--ink2); line-height:1.6; font-weight:300; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+.post-row__meta { display:flex; flex-direction:column; align-items:flex-end; gap:3px; font-size:.68rem; padding-top:2px; flex-shrink:0; }
+
+@media (max-width:600px) {
+  .post-row { grid-template-columns:72px 1fr; }
+  .post-row__meta { display:none; }
+}
+</style>
+
+<script>
+function filterPosts(btn: HTMLButtonElement) {
+  const cat = btn.dataset.cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.post-row').forEach((row: Element) => {
+    const el = row as HTMLElement;
+    el.classList.toggle('hidden', cat !== 'All' && el.dataset.cat !== cat);
+  });
+}
+</script>

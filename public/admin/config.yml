@@ -1,0 +1,29 @@
+backend:
+  name: github
+  repo: haihsn/syhai-blog
+  branch: main
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: blog
+    label: Blog Posts
+    folder: src/content/blog
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: "Title (English)", name: title, widget: string }
+      - { label: "Title (Vietnamese)", name: titleVN, widget: string, required: false }
+      - { label: "Description (English)", name: description, widget: text }
+      - { label: "Description (Vietnamese)", name: descriptionVN, widget: text, required: false }
+      - { label: "Publish Date", name: pubDate, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Category", name: category, widget: select, options: ["Crypto", "AI Tutorial", "Research", "Tech", "Personal"] }
+      - { label: "Read Time (minutes)", name: readTime, widget: number, value_type: int, min: 1 }
+      - { label: "Cover Image", name: cover, widget: image, required: false }
+      - { label: "Tags (English)", name: tags, widget: list, required: false }
+      - { label: "Tags (Vietnamese)", name: tagsVN, widget: list, required: false }
+      - { label: "Draft", name: draft, widget: boolean, default: false }
+      - { label: "Body", name: body, widget: markdown }

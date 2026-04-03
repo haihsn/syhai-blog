@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="About — syhai.xyz">
+  <div class="about-page">
+    <div class="container">
+
+      <header class="about-page__header fade-up">
+        <div class="about-page__avatar">SH</div>
+        <div>
+          <h1>Sy Hai</h1>
+          <p class="about-page__role" data-lang="en">AI learner · Crypto trader · Learning in public</p>
+          <p class="about-page__role" data-lang="vn">Học AI · Trader crypto · Học hỏi công khai</p>
+        </div>
+      </header>
+
+      <div class="about-page__body fade-up-1">
+
+        <p data-lang="en">I'm an AI learner working at the intersection of crypto trading and artificial intelligence. I started this blog to share everything I learn publicly — the experiments, the failures, and the things that actually work.</p>
+        <p data-lang="vn">Tôi là người học AI, làm việc tại giao điểm giữa giao dịch crypto và trí tuệ nhân tạo. Tôi bắt đầu blog này để chia sẻ mọi thứ tôi học được — những thử nghiệm, thất bại và những thứ thực sự hoạt động.</p>
+
+        <p data-lang="en">Most of my posts are about how I use Claude and other AI tools to do things that used to require expensive software or a quant team: building trading signal systems, automating research, analyzing on-chain data.</p>
+        <p data-lang="vn">Hầu hết bài viết của tôi là về cách tôi dùng Claude và các công cụ AI để làm những việc trước đây cần phần mềm đắt tiền hoặc đội quant: xây dựng hệ thống tín hiệu, tự động hóa nghiên cứu, phân tích dữ liệu on-chain.</p>
+
+        <h2 data-lang="en">What I write about</h2>
+        <h2 data-lang="vn">Tôi viết về gì</h2>
+        <ul>
+          <li data-lang="en">Building AI-powered trading systems with Claude</li>
+          <li data-lang="vn">Xây dựng hệ thống giao dịch AI với Claude</li>
+          <li data-lang="en">Crypto research workflows using AI tools</li>
+          <li data-lang="vn">Quy trình nghiên cứu crypto dùng AI</li>
+          <li data-lang="en">On-chain data analysis without needing to code</li>
+          <li data-lang="vn">Phân tích dữ liệu on-chain không cần lập trình</li>
+          <li data-lang="en">Practical AI tutorials for traders and researchers</li>
+          <li data-lang="vn">Hướng dẫn AI thực tế cho trader và nhà nghiên cứu</li>
+        </ul>
+
+        <h2 data-lang="en">Get in touch</h2>
+        <h2 data-lang="vn">Liên hệ</h2>
+        <p data-lang="en">Best way to reach me is on <a href="https://twitter.com/syhai_ai" target="_blank" rel="noopener">X (@syhai_ai)</a>. I reply to everyone who reaches out about AI, crypto, or trading.</p>
+        <p data-lang="vn">Cách tốt nhất để liên hệ là qua <a href="https://twitter.com/syhai_ai" target="_blank" rel="noopener">X (@syhai_ai)</a>. Tôi trả lời tất cả mọi người hỏi về AI, crypto hoặc giao dịch.</p>
+
+        <div class="about-page__cta">
+          <a href="/blog" class="btn" data-lang="en">Read the blog →</a>
+          <a href="/blog" class="btn" data-lang="vn">Đọc blog →</a>
+          <a href="https://twitter.com/syhai_ai" target="_blank" rel="noopener" class="btn">X →</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+.about-page { padding:3.5rem 0; }
+.about-page__header { display:flex; align-items:center; gap:1.25rem; margin-bottom:2.5rem; padding-bottom:2rem; border-bottom:2.5px solid var(--navy); }
+.about-page__avatar { width:64px; height:64px; border-radius:50%; background:var(--b500); display:flex; align-items:center; justify-content:center; font-family:var(--playfair); font-size:1.1rem; color:var(--paper); flex-shrink:0; }
+.about-page__role { font-family:var(--mono); font-size:.78rem; color:var(--b400); margin-top:4px; }
+.about-page__body { max-width:620px; }
+.about-page__body p  { font-size:1rem; color:var(--ink2); font-weight:300; line-height:1.8; margin-bottom:1.25rem; }
+.about-page__body h2 { font-size:1.4rem; margin-top:2.5rem; margin-bottom:.75rem; padding-top:1.5rem; border-top:0.5px solid var(--rule); }
+.about-page__body ul { padding-left:1.5rem; margin-bottom:1.25rem; color:var(--ink2); font-weight:300; }
+.about-page__body li { margin-bottom:.4rem; line-height:1.75; font-size:1rem; }
+.about-page__cta { display:flex; gap:.75rem; margin-top:2.5rem; padding-top:2rem; border-top:0.5px solid var(--rule); flex-wrap:wrap; }
+</style>

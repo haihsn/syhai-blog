@@ -1,0 +1,280 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title:       string;
+  description?: string;
+  ogImage?:    string;
+}
+
+const {
+  title,
+  description = 'AI & crypto research. Building trading systems with Claude. Learning in public.',
+  ogImage,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href={canonical} />
+  <meta name="generator" content={Astro.generator} />
+
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content={canonical} />
+  <meta property="og:title"       content={title} />
+  <meta property="og:description" content={description} />
+  {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.site)} />}
+
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@syhai_ai" />
+  <meta name="twitter:title"       content={title} />
+  <meta name="twitter:description" content={description} />
+  {ogImage && <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />}
+</head>
+
+<body>
+
+  <!-- ══ NAV ══ -->
+  <nav class="nav">
+
+    <!-- Masthead row -->
+    <div class="nav__masthead">
+      <div class="nav__masthead-spacer"></div>
+
+      <div class="nav__masthead-center">
+        <a href="/" class="nav__logo">syhai.xyz</a>
+        <p class="nav__tagline">AI &amp; Crypto Research &nbsp;·&nbsp; Learning in public</p>
+      </div>
+
+      <!-- EN / VN switcher -->
+      <div class="lang-switcher" id="lang-switcher">
+        <button class="lang-btn lang-btn--en" onclick="setLang('en')">EN</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn lang-btn--vn" onclick="setLang('vn')">VN</button>
+      </div>
+    </div>
+
+    <!-- Link row -->
+    <div class="nav__links">
+      <a href="/blog"             data-lang="en">Blog</a>
+      <a href="/blog"             data-lang="vn">Blog</a>
+      <a href="/blog?cat=AI+Tutorial" data-lang="en">AI Tutorials</a>
+      <a href="/blog?cat=AI+Tutorial" data-lang="vn">Hướng dẫn AI</a>
+      <a href="/blog?cat=Research"    data-lang="en">Research</a>
+      <a href="/blog?cat=Research"    data-lang="vn">Nghiên cứu</a>
+      <a href="/blog?cat=Crypto"      data-lang="en">Crypto</a>
+      <a href="/blog?cat=Crypto"      data-lang="vn">Crypto</a>
+      <a href="/#building"            data-lang="en">Building</a>
+      <a href="/#building"            data-lang="vn">Đang xây dựng</a>
+      <a href="/about"                data-lang="en">About</a>
+      <a href="/about"                data-lang="vn">Về tôi</a>
+      <a href="https://twitter.com/syhai_ai" target="_blank" rel="noopener">X →</a>
+    </div>
+
+  </nav>
+
+  <main>
+    <slot />
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer">
+    <div class="footer__inner container--wide">
+      <span class="footer__name">syhai.xyz</span>
+      <div class="footer__links">
+        <a href="/blog"  data-lang="en">Blog</a>
+        <a href="/blog"  data-lang="vn">Blog</a>
+        <a href="/about" data-lang="en">About</a>
+        <a href="/about" data-lang="vn">Về tôi</a>
+        <a href="https://twitter.com/syhai_ai" target="_blank" rel="noopener">X</a>
+        <a href="/rss.xml">RSS</a>
+      </div>
+      <span class="footer__copy">AI · Crypto · © {new Date().getFullYear()}</span>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+<!-- ══ LANGUAGE SWITCHER SCRIPT ══ -->
+<script is:inline>
+  // Restore saved lang preference
+  (function() {
+    const saved = localStorage.getItem('syhai-lang') || 'en';
+    applyLang(saved);
+  })();
+
+  function setLang(lang) {
+    localStorage.setItem('syhai-lang', lang);
+    applyLang(lang);
+  }
+
+  function applyLang(lang) {
+    const switcher = document.getElementById('lang-switcher');
+    if (!switcher) return;
+
+    // Toggle switcher active state
+    if (lang === 'vn') {
+      switcher.classList.add('vn-active');
+    } else {
+      switcher.classList.remove('vn-active');
+    }
+
+    // Show/hide all lang-tagged elements
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      const elLang = el.getAttribute('data-lang');
+      el.style.display = (elLang === lang) ? '' : 'none';
+    });
+  }
+
+  // Expose globally so inline onclick works
+  window.setLang = setLang;
+</script>
+
+<style>
+/* ── NAV ── */
+.nav {
+  background: var(--navy);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav__masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 1.75rem 12px;
+  border-bottom: 0.5px solid var(--rule-navy);
+}
+.nav__masthead-spacer { width: 80px; }
+
+.nav__masthead-center { text-align: center; flex: 1; }
+
+.nav__logo {
+  font-family: var(--playfair);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  display: block;
+}
+.nav__logo:hover { color: #fff; }
+
+.nav__tagline {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--b300);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Lang switcher */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 80px;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+.lang-btn {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  letter-spacing: 0.04em;
+  transition: color 0.15s;
+}
+.lang-sep {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.2);
+  padding: 0 1px;
+  user-select: none;
+}
+/* Default: EN active */
+.lang-btn--en { color: #fff; font-weight: 700; }
+.lang-btn--vn { color: rgba(255,255,255,0.3); }
+/* VN active */
+.lang-switcher.vn-active .lang-btn--en { color: rgba(255,255,255,0.3); font-weight: 500; }
+.lang-switcher.vn-active .lang-btn--vn { color: #fff; font-weight: 700; }
+
+/* Nav links */
+.nav__links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.nav__links a {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--b300);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border-right: 0.5px solid var(--rule-navy);
+  transition: background 0.15s, color 0.15s;
+}
+.nav__links a:first-child { border-left: 0.5px solid var(--rule-navy); }
+.nav__links a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--navy);
+  padding: 1.25rem 0;
+  margin-top: 4rem;
+}
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer__name {
+  font-family: var(--playfair);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+.footer__links {
+  display: flex;
+  gap: 1.25rem;
+}
+.footer__links a {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--b300);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.footer__links a:hover { color: #fff; }
+.footer__copy {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 600px) {
+  .nav__masthead-spacer { display: none; }
+  .nav__links a { padding: 7px 9px; font-size: 0.62rem; }
+  .footer__copy { display: none; }
+}
+</style>
