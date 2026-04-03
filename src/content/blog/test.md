@@ -10,6 +10,7 @@ cover: /images/ethereum-eth-coin-banner-eth-coin-cryptocurrency-concept-banner-b
 tags: []
 tagsVN: []
 draft: false
+bodyVN: Xin chào
 ---
 
 Hello Hello
