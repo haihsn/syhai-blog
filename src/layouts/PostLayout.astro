@@ -4,9 +4,10 @@ import type { CollectionEntry } from 'astro:content';
 
 export interface Props {
   post: CollectionEntry<'blog'>;
+  bodyVNHtml?: string | null;
 }
 
-const { post } = Astro.props;
+const { post, bodyVNHtml } = Astro.props;
 const { title, titleVN, description, descriptionVN, pubDate, category, readTime, tags, tagsVN, cover } = post.data;
 
 function fmt(date: Date) {
@@ -81,9 +82,12 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
     <div class="post__body container">
       <div class="post__layout">
 
-        <div class="prose">
+        <div class="prose" data-lang="en">
           <slot />
         </div>
+        {bodyVNHtml && (
+          <div class="prose" data-lang="vn" set:html={bodyVNHtml} />
+        )}
 
         <aside class="post__sidebar">
 

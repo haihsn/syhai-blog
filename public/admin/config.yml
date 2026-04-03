@@ -26,4 +26,5 @@ collections:
       - { label: "Tags (English)", name: tags, widget: list, required: false }
       - { label: "Tags (Vietnamese)", name: tagsVN, widget: list, required: false }
       - { label: "Draft", name: draft, widget: boolean, default: false }
-      - { label: "Body", name: body, widget: markdown }
+      - { label: "Body (English)", name: body, widget: markdown }
+      - { label: "Body (Vietnamese)", name: bodyVN, widget: markdown, required: false }
