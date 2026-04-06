@@ -38,10 +38,9 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
       }
     </div>
 
-    <!-- HEADER -->
-    <header class="post__header">
+    <!-- META BAR -->
+    <header class="post__metabar">
       <div class="container">
-
         <div class="post__meta fade-up">
           <a href="/blog" class="post__back" data-lang="en">← All posts</a>
           <a href="/blog" class="post__back" data-lang="vn">← Tất cả bài</a>
@@ -53,41 +52,45 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
           <span class="post__meta-text" data-lang="en">{readTime} min read</span>
           <span class="post__meta-text" data-lang="vn">{readTime} phút đọc</span>
         </div>
-
-        <h1 class="post__title fade-up-1" data-lang="en">{title}</h1>
-        <h1 class="post__title fade-up-1" data-lang="vn">{titleVN ?? title}</h1>
-
-        <p class="post__desc fade-up-2" data-lang="en">{description}</p>
-        <p class="post__desc fade-up-2" data-lang="vn">{descriptionVN ?? description}</p>
-
-        <div class="post__byline-row fade-up-3">
-          <div class="post__byline">
-            <span data-lang="en">By Sy Hai &nbsp;·&nbsp; {readTime} min &nbsp;·&nbsp; {tags?.join(' · ')}</span>
-            <span data-lang="vn">Bởi Sy Hai &nbsp;·&nbsp; {readTime} phút &nbsp;·&nbsp; {(tagsVN ?? tags)?.join(' · ')}</span>
-          </div>
-          {tags && (
-            <div class="post__tags">
-              {tags.map((t: string) => <span class="tag tag--outline" data-lang="en">{t}</span>)}
-              {(tagsVN ?? tags).map((t: string) => <span class="tag tag--outline" data-lang="vn">{t}</span>)}
-            </div>
-          )}
-        </div>
-
       </div>
     </header>
 
-    <div class="rule-thin" style="max-width:760px; margin:0 auto; padding:0 1.75rem;"><div style="height:0.5px;background:var(--rule)"></div></div>
-
-    <!-- BODY -->
+    <!-- BODY + SIDEBAR GRID -->
     <div class="post__body container">
       <div class="post__layout">
 
-        <div class="prose" data-lang="en">
-          <slot />
+        <!-- LEFT COLUMN: title, desc, byline, divider, prose -->
+        <div class="post__main">
+
+          <h1 class="post__title fade-up-1" data-lang="en">{title}</h1>
+          <h1 class="post__title fade-up-1" data-lang="vn">{titleVN ?? title}</h1>
+
+          <p class="post__desc fade-up-2" data-lang="en">{description}</p>
+          <p class="post__desc fade-up-2" data-lang="vn">{descriptionVN ?? description}</p>
+
+          <div class="post__byline-row fade-up-3">
+            <div class="post__byline">
+              <span data-lang="en">By Sy Hai &nbsp;·&nbsp; {readTime} min &nbsp;·&nbsp; {tags?.join(' · ')}</span>
+              <span data-lang="vn">Bởi Sy Hai &nbsp;·&nbsp; {readTime} phút &nbsp;·&nbsp; {(tagsVN ?? tags)?.join(' · ')}</span>
+            </div>
+            {tags && (
+              <div class="post__tags">
+                {tags.map((t: string) => <span class="tag tag--outline" data-lang="en">{t}</span>)}
+                {(tagsVN ?? tags).map((t: string) => <span class="tag tag--outline" data-lang="vn">{t}</span>)}
+              </div>
+            )}
+          </div>
+
+          <div class="post__rule"></div>
+
+          <div class="prose" data-lang="en">
+            <slot />
+          </div>
+          {bodyVNHtml && (
+            <div class="prose" data-lang="vn" set:html={bodyVNHtml} />
+          )}
+
         </div>
-        {bodyVNHtml && (
-          <div class="prose" data-lang="vn" set:html={bodyVNHtml} />
-        )}
 
         <aside class="post__sidebar">
 
@@ -152,7 +155,11 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
   border-bottom: 0.5px solid var(--rule);
 }
 
-.post__header { padding: 2.5rem 0 1.75rem; }
+.post__metabar { padding: 1.5rem 0 0; border-bottom: 0.5px solid var(--rule); }
+
+.post__main { padding-top: 2rem; }
+
+.post__rule { height: 0.5px; background: var(--rule); margin: 1.25rem 0 2rem; }
 
 .post__meta {
   display: flex;
@@ -174,7 +181,6 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
   letter-spacing: -0.025em;
   line-height: 1.12;
   margin-bottom: 1rem;
-  max-width: 700px;
 }
 .post__title em { font-style:italic; color:var(--b500); }
 
@@ -183,10 +189,7 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
   color: var(--ink2);
   font-weight: 300;
   line-height: 1.7;
-  max-width: 640px;
   margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 0.5px solid var(--rule);
 }
 
 .post__byline-row {
@@ -204,7 +207,7 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 .post__tags { display:flex; gap:5px; flex-wrap:wrap; }
 
 /* LAYOUT */
-.post__body   { padding: 2.5rem 0; }
+.post__body   { padding: 0 0 2.5rem; }
 .post__layout { display:grid; grid-template-columns:1fr 220px; gap:3rem; align-items:start; }
 
 /* PROSE */
@@ -270,5 +273,6 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 @media (max-width:780px) {
   .post__layout { grid-template-columns:1fr; }
   .post__sidebar { position:static; display:none; }
+  .post__main { padding-top: 1.5rem; }
 }
 </style>
