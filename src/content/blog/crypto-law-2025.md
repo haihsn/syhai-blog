@@ -2,8 +2,8 @@
 title: How I Use Claude and Claude Code Together to Build
 titleVN: Cách Tôi Phối Hợp Claude và Claude Code Để Xây Dựng
 description: People often ask me about my AI workflow, specifically how I use Claude for research and writing while also using Claude Code for building things. The honest answer is that they are not interchangeable. They serve different roles, and the projects where I have tried to use only one or the other always end up worse.
-descriptionVN: ''
-pubDate: 2025-02-20
+descriptionVN: Khi tôi nói chuyện với Claude trong giao diện chat, tôi đang ở chế độ lập kế hoạch. Tôi đang suy nghĩ to, khám phá các lựa chọn, xem trực quan hóa trước khi cam kết. Không có hệ thống tệp. Không có triển khai. Không có hậu quả.
+pubDate: 2026-04-06
 category: Crypto
 readTime: 7
 cover: /images/Gemini_Generated_Image_ykt71eykt71eykt7.png
