@@ -55,67 +55,38 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
       </div>
     </header>
 
+    <!-- TITLE + DESC: full width -->
+    <div class="post__header container">
+      <h1 class="post__title fade-up-1" data-lang="en">{title}</h1>
+      <h1 class="post__title fade-up-1" data-lang="vn">{titleVN ?? title}</h1>
+      <p class="post__desc fade-up-2" data-lang="en">{description}</p>
+      <p class="post__desc fade-up-2" data-lang="vn">{descriptionVN ?? description}</p>
+      <div class="post__byline fade-up-3">
+        <span data-lang="en">By Sy Hai &nbsp;·&nbsp; {readTime} min &nbsp;·&nbsp; {tags?.join(' · ')}</span>
+        <span data-lang="vn">Bởi Sy Hai &nbsp;·&nbsp; {readTime} phút &nbsp;·&nbsp; {(tagsVN ?? tags)?.join(' · ')}</span>
+      </div>
+    </div>
+
+    <div class="post__divider container"><div></div></div>
+
     <!-- BODY + SIDEBAR GRID -->
     <div class="post__body container">
       <div class="post__layout">
 
-        <!-- LEFT COLUMN: title, desc, byline, divider, prose -->
-        <div class="post__main">
-
-          <h1 class="post__title fade-up-1" data-lang="en">{title}</h1>
-          <h1 class="post__title fade-up-1" data-lang="vn">{titleVN ?? title}</h1>
-
-          <p class="post__desc fade-up-2" data-lang="en">{description}</p>
-          <p class="post__desc fade-up-2" data-lang="vn">{descriptionVN ?? description}</p>
-
-          <div class="post__byline-row fade-up-3">
-            <div class="post__byline">
-              <span data-lang="en">By Sy Hai &nbsp;·&nbsp; {readTime} min &nbsp;·&nbsp; {tags?.join(' · ')}</span>
-              <span data-lang="vn">Bởi Sy Hai &nbsp;·&nbsp; {readTime} phút &nbsp;·&nbsp; {(tagsVN ?? tags)?.join(' · ')}</span>
-            </div>
-            {tags && (
-              <div class="post__tags">
-                {tags.map((t: string) => <span class="tag tag--outline" data-lang="en">{t}</span>)}
-                {(tagsVN ?? tags).map((t: string) => <span class="tag tag--outline" data-lang="vn">{t}</span>)}
-              </div>
-            )}
-          </div>
-
-          <div class="post__rule"></div>
-
-          <div class="prose" data-lang="en">
-            <slot />
-          </div>
-          {bodyVNHtml && (
-            <div class="prose" data-lang="vn" set:html={bodyVNHtml} />
-          )}
-
+        <div class="prose" data-lang="en">
+          <slot />
         </div>
+        {bodyVNHtml && (
+          <div class="prose" data-lang="vn" set:html={bodyVNHtml} />
+        )}
 
         <aside class="post__sidebar">
 
-          <div class="sidebar__card">
-            <div class="sidebar__label" data-lang="en">Share</div>
-            <div class="sidebar__label" data-lang="vn">Chia sẻ</div>
-            <a href={tweetURL} target="_blank" rel="noopener" class="sidebar__share-btn" data-lang="en">Post on X →</a>
-            <a href={tweetURL} target="_blank" rel="noopener" class="sidebar__share-btn" data-lang="vn">Chia sẻ lên X →</a>
-          </div>
-
-          <div class="sidebar__card">
-            <div class="sidebar__label" data-lang="en">Author</div>
-            <div class="sidebar__label" data-lang="vn">Tác giả</div>
-            <div class="sidebar__author">
-              <div class="sidebar__avatar">SH</div>
-              <div>
-                <div class="sidebar__author-name">Sy Hai</div>
-                <div class="sidebar__author-bio" data-lang="en">AI learner · Crypto trader</div>
-                <div class="sidebar__author-bio" data-lang="vn">Học AI · Trader crypto</div>
-              </div>
-            </div>
-          </div>
+          <a href={tweetURL} target="_blank" rel="noopener" class="sidebar__share-btn" data-lang="en">Post on X →</a>
+          <a href={tweetURL} target="_blank" rel="noopener" class="sidebar__share-btn" data-lang="vn">Chia sẻ lên X →</a>
 
           {tags && (
-            <div class="sidebar__card">
+            <div class="sidebar__card" style="margin-top:.75rem">
               <div class="sidebar__label" data-lang="en">Tags</div>
               <div class="sidebar__label" data-lang="vn">Thẻ</div>
               <div class="sidebar__tags">
@@ -157,9 +128,10 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 
 .post__metabar { padding: 1.5rem 0 0; border-bottom: 0.5px solid var(--rule); }
 
-.post__main { padding-top: 2rem; }
+.post__header { padding: 2rem 0 0; }
 
-.post__rule { height: 0.5px; background: var(--rule); margin: 1.25rem 0 2rem; }
+.post__divider { padding: 0; margin: 1.25rem auto; }
+.post__divider div { height: 0.5px; background: var(--rule); }
 
 .post__meta {
   display: flex;
@@ -192,23 +164,16 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
   margin-bottom: 1rem;
 }
 
-.post__byline-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: .75rem;
-}
 .post__byline {
   font-family: var(--mono);
   font-size: 0.72rem;
   color: var(--b300);
+  margin-top: .5rem;
 }
-.post__tags { display:flex; gap:5px; flex-wrap:wrap; }
 
 /* LAYOUT */
 .post__body   { padding: 0 0 2.5rem; }
-.post__layout { display:grid; grid-template-columns:1fr 220px; gap:3rem; align-items:start; }
+.post__layout { display:grid; grid-template-columns:1fr 180px; gap:3rem; align-items:start; }
 
 /* PROSE */
 .prose { max-width: 640px; }
@@ -259,8 +224,6 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
   transition: all .15s;
 }
 .sidebar__share-btn:hover { background:var(--b500); color:#fff; }
-.sidebar__author { display:flex; align-items:center; gap:.6rem; }
-.sidebar__avatar { width:32px; height:32px; border-radius:50%; background:var(--b500); display:flex; align-items:center; justify-content:center; font-family:var(--playfair); font-size:.72rem; color:var(--paper); flex-shrink:0; }
 .sidebar__author-name { font-size:.85rem; font-weight:600; font-family:var(--playfair); }
 .sidebar__author-bio  { font-size:.68rem; color:var(--b400); font-family:var(--mono); margin-top:1px; }
 .sidebar__tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:.25rem; }
@@ -273,6 +236,6 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 @media (max-width:780px) {
   .post__layout { grid-template-columns:1fr; }
   .post__sidebar { position:static; display:none; }
-  .post__main { padding-top: 1.5rem; }
+  .post__header { padding: 1.5rem 0 0; }
 }
 </style>
