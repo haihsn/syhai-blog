@@ -2,8 +2,8 @@
 title: Is Ethereum Undervalued or Overvalued Right Now?
 titleVN: '# ETH Hiện Đang Bị Định Giá Thấp Hay Cao?'
 description: ETH is sitting at roughly $2,050 as I write this. Down nearly 60% from its 2021 all-time high of $4,953. Down against Bitcoin for most of the past two years. The narrative feels broken.
-descriptionVN: ''
-pubDate: 2026-04-03
+descriptionVN: Mô hình App Capital định giá ETH dựa trên tổng tài sản on-chain bao gồm stablecoin, token ERC-20, NFT, tài sản thực được token hóa. Mô hình này định giá hợp lý khoảng 4.918 USD.
+pubDate: 2026-04-06
 category: AI Tutorial
 readTime: 4
 cover: /images/Gemini_Generated_Image_a2eboua2eboua2eb.png
