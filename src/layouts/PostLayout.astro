@@ -62,43 +62,23 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
       <p class="post__desc fade-up-2" data-lang="en">{description}</p>
       <p class="post__desc fade-up-2" data-lang="vn">{descriptionVN ?? description}</p>
       <div class="post__byline fade-up-3">
-        <span data-lang="en">By Sy Hai &nbsp;·&nbsp; {readTime} min &nbsp;·&nbsp; {tags?.join(' · ')}</span>
-        <span data-lang="vn">Bởi Sy Hai &nbsp;·&nbsp; {readTime} phút &nbsp;·&nbsp; {(tagsVN ?? tags)?.join(' · ')}</span>
+        <span data-lang="en">By Sy Hai {tags && tags.length > 0 ? ` · ${tags.join(' · ')}` : ''}</span>
+        <span data-lang="vn">Bởi Sy Hai {(tagsVN ?? tags) && (tagsVN ?? tags)!.length > 0 ? ` · ${(tagsVN ?? tags)!.join(' · ')}` : ''}</span>
+        <a href={tweetURL} target="_blank" rel="noopener" class="post__share-btn" data-lang="en">Post on X →</a>
+        <a href={tweetURL} target="_blank" rel="noopener" class="post__share-btn" data-lang="vn">Chia sẻ lên X →</a>
       </div>
     </div>
 
     <div class="post__divider container"><div></div></div>
 
-    <!-- BODY + SIDEBAR GRID -->
+    <!-- BODY -->
     <div class="post__body container">
-      <div class="post__layout">
-
-        <div class="prose" data-lang="en">
-          <slot />
-        </div>
-        {bodyVNHtml && (
-          <div class="prose" data-lang="vn" set:html={bodyVNHtml} />
-        )}
-
-        <aside class="post__sidebar">
-
-          <a href={tweetURL} target="_blank" rel="noopener" class="sidebar__share-btn" data-lang="en">Post on X →</a>
-          <a href={tweetURL} target="_blank" rel="noopener" class="sidebar__share-btn" data-lang="vn">Chia sẻ lên X →</a>
-
-          {tags && (
-            <div class="sidebar__card" style="margin-top:.75rem">
-              <div class="sidebar__label" data-lang="en">Tags</div>
-              <div class="sidebar__label" data-lang="vn">Thẻ</div>
-              <div class="sidebar__tags">
-                {tags.map((t: string) => <span class="tag" data-lang="en">{t}</span>)}
-                {(tagsVN ?? tags).map((t: string) => <span class="tag" data-lang="vn">{t}</span>)}
-              </div>
-            </div>
-          )}
-
-        </aside>
-
+      <div class="prose" data-lang="en">
+        <slot />
       </div>
+      {bodyVNHtml && (
+        <div class="prose" data-lang="vn" set:html={bodyVNHtml} />
+      )}
     </div>
 
     <!-- POST FOOTER -->
@@ -165,6 +145,10 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 }
 
 .post__byline {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-wrap: wrap;
   font-family: var(--mono);
   font-size: 0.72rem;
   color: var(--b300);
@@ -172,11 +156,10 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 }
 
 /* LAYOUT */
-.post__body   { padding: 0 0 2.5rem; }
-.post__layout { display:grid; grid-template-columns:1fr 180px; gap:3rem; align-items:start; }
+.post__body { padding: 0 0 2.5rem; }
 
 /* PROSE */
-.prose { max-width: 640px; }
+.prose { max-width: 680px; }
 .prose :global(h2) { font-size:1.5rem; margin-top:2.5rem; margin-bottom:.75rem; padding-top:1.5rem; border-top:0.5px solid var(--rule); }
 .prose :global(h3) { font-size:1.15rem; margin-top:1.75rem; margin-bottom:.6rem; color:var(--b600); }
 .prose :global(p)  { font-size:1rem; color:var(--ink2); line-height:1.85; font-weight:300; margin-bottom:1.1rem; }
@@ -188,54 +171,27 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 .prose :global(strong)  { color:var(--ink); font-weight:600; }
 .prose :global(img)     { margin:1.5rem 0; }
 
-/* SIDEBAR */
-.post__sidebar { position:sticky; top:80px; }
-.sidebar__card {
-  background: var(--b100);
-  border: 0.5px solid var(--b200);
-  border-radius: 4px;
-  padding: 1rem;
-  margin-bottom: .75rem;
-}
-.sidebar__label {
+/* Inline share button in byline */
+.post__share-btn {
   font-family: var(--mono);
-  font-size: .62rem;
-  color: var(--b400);
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  margin-bottom: .6rem;
-  padding-bottom: .5rem;
-  border-bottom: 0.5px solid var(--b200);
-}
-.sidebar__share-btn {
-  display: block;
-  width: 100%;
-  font-family: var(--mono);
-  font-size: .72rem;
-  padding: 7px;
+  font-size: .68rem;
+  padding: 3px 10px;
   border-radius: 3px;
   border: 0.5px solid var(--b400);
-  background: transparent;
   color: var(--b500);
-  cursor: pointer;
-  text-align: center;
   text-transform: uppercase;
   letter-spacing: .06em;
   transition: all .15s;
+  white-space: nowrap;
 }
-.sidebar__share-btn:hover { background:var(--b500); color:#fff; }
-.sidebar__author-name { font-size:.85rem; font-weight:600; font-family:var(--playfair); }
-.sidebar__author-bio  { font-size:.68rem; color:var(--b400); font-family:var(--mono); margin-top:1px; }
-.sidebar__tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:.25rem; }
+.post__share-btn:hover { background: var(--b500); color: #fff; border-color: var(--b500); }
 
 /* FOOTER */
 .post__footer { border-top:0.5px solid var(--rule); padding:1.5rem 0; background:var(--b100); }
 .post__footer-inner { display:flex; align-items:center; justify-content:space-between; }
 .post__footer-back  { font-family:var(--mono); font-size:.78rem; color:var(--b400); }
 
-@media (max-width:780px) {
-  .post__layout { grid-template-columns:1fr; }
-  .post__sidebar { position:static; display:none; }
+@media (max-width:600px) {
   .post__header { padding: 1.5rem 0 0; }
 }
 </style>
