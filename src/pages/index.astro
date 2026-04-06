@@ -24,21 +24,27 @@ function fmt(date: Date) {
       <div class="container--wide">
         <a href={`/blog/${featured.slug}`} class="featured__card fade-up-1">
 
-          <div class="featured__img img-frame">
-            {featured.data.cover
-              ? <img src={featured.data.cover} alt={featured.data.title} />
-              : <div class="img-frame__placeholder">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <rect x="3" y="7" width="26" height="18" rx="2" stroke="#85B7EB" stroke-width="1.5"/>
-                    <path d="M3 15l7 6 6-5 9 6" stroke="#85B7EB" stroke-width="1"/>
-                    <circle cx="10" cy="12" r="2.5" fill="#C3DEFA"/>
-                  </svg>
-                  <span data-lang="en">Cover image</span>
-                  <span data-lang="vn">Ảnh bìa</span>
-                </div>
-            }
+          <!-- LEFT: image + title -->
+          <div class="featured__left">
+            <div class="featured__img img-frame">
+              {featured.data.cover
+                ? <img src={featured.data.cover} alt={featured.data.title} />
+                : <div class="img-frame__placeholder">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                      <rect x="3" y="7" width="26" height="18" rx="2" stroke="#85B7EB" stroke-width="1.5"/>
+                      <path d="M3 15l7 6 6-5 9 6" stroke="#85B7EB" stroke-width="1"/>
+                      <circle cx="10" cy="12" r="2.5" fill="#C3DEFA"/>
+                    </svg>
+                    <span data-lang="en">Cover image</span>
+                    <span data-lang="vn">Ảnh bìa</span>
+                  </div>
+              }
+            </div>
+            <h1 class="featured__title" data-lang="en">{featured.data.title}</h1>
+            <h1 class="featured__title" data-lang="vn">{featured.data.titleVN ?? featured.data.title}</h1>
           </div>
 
+          <!-- RIGHT: meta + desc + cta -->
           <div class="featured__body">
             <div class="featured__kicker">
               <div class="featured__kicker-line"></div>
@@ -47,8 +53,6 @@ function fmt(date: Date) {
               <span class="mono muted" data-lang="en">{featured.data.readTime} min read</span>
               <span class="mono muted" data-lang="vn">{featured.data.readTime} phút đọc</span>
             </div>
-            <h1 class="featured__title" data-lang="en">{featured.data.title}</h1>
-            <h1 class="featured__title" data-lang="vn">{featured.data.titleVN ?? featured.data.title}</h1>
             <p class="featured__desc" data-lang="en">{featured.data.description}</p>
             <p class="featured__desc" data-lang="vn">{featured.data.descriptionVN ?? featured.data.description}</p>
             <span class="featured__cta">
@@ -210,11 +214,12 @@ function fmt(date: Date) {
 .featured__card { display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; align-items:start; color:inherit; }
 .featured__card:hover { color:inherit; }
 .featured__card:hover .featured__title { color: var(--b500); }
-.featured__img { height: 320px; margin-bottom: 0; }
+.featured__left { display:flex; flex-direction:column; }
+.featured__img { height: 260px; margin-bottom: 1rem; flex-shrink:0; }
 .featured__body { padding-top: .25rem; }
 .featured__kicker { display:flex; align-items:center; gap:12px; margin-bottom:.9rem; flex-wrap:wrap; }
 .featured__kicker-line { width:24px; height:1.5px; background:var(--b400); flex-shrink:0; }
-.featured__title { font-size:clamp(1.6rem,3vw,2.4rem); letter-spacing:-.02em; margin-bottom:.75rem; transition:color .2s; }
+.featured__title { font-size:clamp(1.4rem,2.5vw,2rem); letter-spacing:-.02em; margin-bottom:0; transition:color .2s; line-height:1.2; }
 .featured__title em { font-style:italic; color:var(--b500); }
 .featured__desc { font-size:1rem; color:var(--ink2); line-height:1.7; font-weight:300; margin-bottom:1rem; padding-top:.75rem; border-top:0.5px solid var(--rule); }
 .featured__cta { font-family:var(--mono); font-size:0.78rem; color:var(--b400); }
@@ -261,7 +266,7 @@ function fmt(date: Date) {
 }
 @media (max-width:700px) {
   .featured__card { grid-template-columns:1fr; }
-  .featured__img { height:200px; margin-bottom:1rem; }
+  .featured__img { height:200px; }
 }
 @media (max-width:600px) {
   .post-grid { grid-template-columns:1fr; }
