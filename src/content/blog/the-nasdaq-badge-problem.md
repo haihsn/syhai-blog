@@ -141,3 +141,7 @@ The regulatory response in late 2025 and early 2026 is the most aggressive crack
 But it is still catching up to a problem that was years in the making. The companies already inside are grandfathered. The VIE structure itself remains legal. The incentive to get the badge before the door closes further remains intact.
 
 The number to watch is not total listings. It is what happens to the new listing quality over the next two or three cycles. If the companies entering under the new rules delist at lower rates and trade at higher volumes than their predecessors, the crackdown will have worked. If the new entrants look like the old ones, just fewer of them, the badge problem will have survived the cleanup.
+
+## Data visualization
+
+<iframe src="/viz/nasdaq-badge.html" width="100%" height="1800" style="border:none;border-radius:8px;margin-top:1rem;" loading="lazy"></iframe>

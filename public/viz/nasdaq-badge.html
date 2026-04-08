@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Nasdaq Badge Problem — Data Visualization</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Instrument Sans',sans-serif;background:#f8f8f8;color:#0a0a0a;padding:28px;max-width:900px;margin:0 auto}
+h1{font-size:22px;font-weight:600;margin-bottom:4px}
+.subtitle{font-size:13px;color:#666;margin-bottom:32px}
+.section{margin-bottom:40px}
+.sec-label{font-family:'DM Mono',monospace;font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::after{content:'';flex:1;height:.5px;background:#ddd}
+h2{font-size:15px;font-weight:600;margin-bottom:3px}
+.sub{font-size:12px;color:#666;margin-bottom:14px;line-height:1.5}
+
+/* TIERS */
+.tiers{display:flex;flex-direction:column;gap:8px}
+.tier{border-radius:8px;padding:14px 18px;border:1px solid;position:relative}
+.tier-top{background:#EBF4FD;border-color:#C3DEFA}
+.tier-mid{background:#f5f5f5;border-color:#ddd}
+.tier-bot{background:#FAEEDA;border-color:#FAC775}
+.tier-label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}
+.tier-top .tier-label{color:#185FA5}
+.tier-mid .tier-label{color:#666}
+.tier-bot .tier-label{color:#854F0B}
+.tier-name{font-size:13px;font-weight:600;margin-bottom:4px}
+.tier-req{font-size:11px;color:#444;line-height:1.5}
+.tier-examples{font-family:'DM Mono',monospace;font-size:10px;color:#888;margin-top:5px}
+.tier-badge{position:absolute;right:14px;top:14px;font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:10px}
+.tier-top .tier-badge{background:#C3DEFA;color:#0C447C}
+.tier-bot .tier-badge{background:#FAC775;color:#633806}
+
+/* BAR CHART */
+.count-chart{display:flex;flex-direction:column;gap:7px}
+.count-row{display:grid;grid-template-columns:90px 1fr 60px;gap:10px;align-items:center}
+.count-year{font-family:'DM Mono',monospace;font-size:11px;color:#555}
+.count-bar-wrap{background:#eee;border-radius:3px;height:26px;overflow:hidden}
+.count-bar{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:10px}
+.bar-label{font-size:10px;color:rgba(255,255,255,.9);font-family:'DM Mono',monospace}
+.count-val{font-family:'DM Mono',monospace;font-size:11px;color:#555;text-align:right}
+.bar-blue{background:#378ADD}
+.bar-red{background:#E24B4A}
+.source-note{font-size:10px;color:#999;margin-top:8px;font-family:'DM Mono',monospace;line-height:1.5}
+
+/* RULES */
+.rules-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.rule-card{background:#fff;border:1px solid #eee;border-radius:8px;padding:14px}
+.rule-metric{font-family:'DM Mono',monospace;font-size:9px;color:#999;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.rule-before{font-size:20px;font-weight:500;color:#bbb;text-decoration:line-through;margin-bottom:2px}
+.rule-arrow{font-size:12px;color:#999;margin:3px 0}
+.rule-after{font-size:28px;font-weight:600;color:#E24B4A;margin-bottom:5px}
+.rule-label{font-size:11px;color:#555;line-height:1.45}
+
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column}
+.tl-item{display:grid;grid-template-columns:100px 1fr;gap:14px;padding:11px 0;border-bottom:0.5px solid #eee}
+.tl-item:last-child{border-bottom:none}
+.tl-date{font-family:'DM Mono',monospace;font-size:10px;color:#888;padding-top:2px}
+.tl-title{font-size:12px;font-weight:600;margin-bottom:3px}
+.tl-desc{font-size:11px;color:#555;line-height:1.5}
+.tl-pill{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;margin-top:4px}
+.pill-red{background:#FCEBEB;color:#A32D2D;border:0.5px solid #F09595}
+.pill-amber{background:#FAEEDA;color:#633806;border:0.5px solid #FAC775}
+.pill-blue{background:#EBF4FD;color:#0C447C;border:0.5px solid #C3DEFA}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse}
+th{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:#888;text-align:left;padding:7px 10px;border-bottom:1px solid #eee}
+td{font-size:12px;padding:9px 10px;border-bottom:0.5px solid #eee;vertical-align:top;color:#333}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafafa}
+.tag-r{font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:10px;display:inline-block;background:#FCEBEB;color:#A32D2D;border:0.5px solid #F09595;white-space:nowrap}
+.tag-a{font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:10px;display:inline-block;background:#FAEEDA;color:#633806;border:0.5px solid #FAC775;white-space:nowrap}
+.tag-b{font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:10px;display:inline-block;background:#EBF4FD;color:#0C447C;border:0.5px solid #C3DEFA;white-space:nowrap}
+
+@media(max-width:600px){
+  .rules-grid{grid-template-columns:1fr}
+  .count-row{grid-template-columns:70px 1fr 50px}
+}
+</style>
+</head>
+<body>
+
+<h1>The Nasdaq Badge Problem</h1>
+<p class="subtitle">Data visualization · syhai.xyz · April 2026</p>
+
+<!-- TIER STRUCTURE -->
+<div class="section">
+  <div class="sec-label">Structure</div>
+  <h2>Three tiers, one brand — very different standards</h2>
+  <p class="sub">All three tiers carry the "listed on Nasdaq" designation. Entry requirements vary dramatically.</p>
+  <div class="tiers">
+    <div class="tier tier-top">
+      <div class="tier-label">Tier 1</div>
+      <div class="tier-name">Nasdaq Global Select Market</div>
+      <div class="tier-req">Min market cap $110M+ · Strict revenue/asset requirements · Highest governance standards</div>
+      <div class="tier-examples">Apple · Microsoft · Nvidia · Meta · Amazon</div>
+      <div class="tier-badge">High bar</div>
+    </div>
+    <div class="tier tier-mid">
+      <div class="tier-label">Tier 2</div>
+      <div class="tier-name">Nasdaq Global Market</div>
+      <div class="tier-req">Moderate financial thresholds · Meaningful revenue or asset requirements · Standard governance</div>
+      <div class="tier-examples">Mid-cap growth companies with established track records</div>
+    </div>
+    <div class="tier tier-bot">
+      <div class="tier-label">Tier 3 — The problem tier</div>
+      <div class="tier-name">Nasdaq Capital Market</div>
+      <div class="tier-req">Previously: min $5M public float only · No revenue requirement · No track record required · Easy to engineer compliance · ~95 Chinese companies had IPO values below $25M · ~20 had market caps below $5M (March 2025)</div>
+      <div class="tier-badge">Back door</div>
+    </div>
+  </div>
+</div>
+
+<!-- LISTING COUNT -->
+<div class="section">
+  <div class="sec-label">Listing count trend</div>
+  <h2>Nasdaq total listings: peak to present</h2>
+  <p class="sub">The exchange is deliberately shrinking. New rules effective January 2026 are accelerating the decline.</p>
+  <div class="count-chart">
+    <div class="count-row">
+      <div class="count-year">2020</div>
+      <div class="count-bar-wrap"><div class="count-bar bar-blue" style="width:88%"><span class="bar-label">~3,600</span></div></div>
+      <div class="count-val">3,600</div>
+    </div>
+    <div class="count-row">
+      <div class="count-year">2021</div>
+      <div class="count-bar-wrap"><div class="count-bar bar-blue" style="width:93%"><span class="bar-label">~3,800</span></div></div>
+      <div class="count-val">3,800</div>
+    </div>
+    <div class="count-row">
+      <div class="count-year">2022</div>
+      <div class="count-bar-wrap"><div class="count-bar bar-blue" style="width:95%"><span class="bar-label">~3,900</span></div></div>
+      <div class="count-val">3,900</div>
+    </div>
+    <div class="count-row">
+      <div class="count-year">2023</div>
+      <div class="count-bar-wrap"><div class="count-bar bar-blue" style="width:97%"><span class="bar-label">~3,970</span></div></div>
+      <div class="count-val">3,970</div>
+    </div>
+    <div class="count-row">
+      <div class="count-year">2024 peak</div>
+      <div class="count-bar-wrap"><div class="count-bar bar-blue" style="width:100%"><span class="bar-label">4,075 — all-time peak</span></div></div>
+      <div class="count-val" style="font-weight:600">4,075</div>
+    </div>
+    <div class="count-row">
+      <div class="count-year">Early 2026</div>
+      <div class="count-bar-wrap"><div class="count-bar bar-red" style="width:91%"><span class="bar-label">3,450–3,772 (declining)</span></div></div>
+      <div class="count-val" style="color:#E24B4A;font-weight:600">~3,600</div>
+    </div>
+  </div>
+  <p class="source-note">Sources: Nasdaq.com (~4,000 total securities), market data tracker (3,772 active stocks), Motley Fool (3,450 unique companies). Variation reflects different counting methods — tickers vs companies vs all instruments.</p>
+</div>
+
+<!-- RULE CHANGES -->
+<div class="section">
+  <div class="sec-label">Rule changes</div>
+  <h2>What changed — the new thresholds effective January 2026</h2>
+  <p class="sub">Three concrete changes approved by the SEC and operative January 16–19, 2026.</p>
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="rule-metric">Min public float (net income standard)</div>
+      <div class="rule-before">$5M</div>
+      <div class="rule-arrow">↓</div>
+      <div class="rule-after">$15M</div>
+      <div class="rule-label">3x increase. Companies must have more meaningful capital at risk to list on Nasdaq Capital Market.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-metric">Min IPO proceeds (China-based companies)</div>
+      <div class="rule-before">None</div>
+      <div class="rule-arrow">↓</div>
+      <div class="rule-after">$25M</div>
+      <div class="rule-label">Chinese companies cannot raise minimal capital and claim a Nasdaq listing badge. (Pending final SEC approval.)</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-metric">Accelerated delisting trigger</div>
+      <div class="rule-before">$1.00</div>
+      <div class="rule-arrow">↓</div>
+      <div class="rule-after">$0.10</div>
+      <div class="rule-label">Stocks at $0.10 or below for 10 days face immediate suspension. No cure period. No exceptions for recent reverse splits.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="section">
+  <div class="sec-label">Regulatory timeline</div>
+  <h2>The crackdown: key events 2020 to 2026</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">2020</div>
+      <div>
+        <div class="tl-title">Holding Foreign Companies Accountable Act (HFCAA)</div>
+        <div class="tl-desc">Threatens delisting if PCAOB cannot inspect audits for 3 consecutive years. First formal legislative pressure on Chinese listings.</div>
+        <span class="tl-pill pill-blue">Legislative</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Late 2022</div>
+      <div>
+        <div class="tl-title">Chinese IPO freeze</div>
+        <div class="tl-desc">China-based IPOs effectively paused due to enforcement fears. Short-lived reprieve — volumes resumed by 2023.</div>
+        <span class="tl-pill pill-amber">Market</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">May 2025</div>
+      <div>
+        <div class="tl-title">7 Chinese VIEs delisted</div>
+        <div class="tl-desc">NYSE and Nasdaq delisted 7 Chinese VIE companies for failing to file annual or quarterly reports with the SEC.</div>
+        <span class="tl-pill pill-red">Delisting</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Sep 3, 2025</div>
+      <div>
+        <div class="tl-title">Nasdaq proposes rule overhaul</div>
+        <div class="tl-desc">Proposed $15M float minimum, $25M IPO threshold for Chinese companies, accelerated delisting for sub-$5M market cap companies.</div>
+        <span class="tl-pill pill-blue">Proposed</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Dec 5, 2025</div>
+      <div>
+        <div class="tl-title">SEC approves low price rule</div>
+        <div class="tl-desc">Accelerated delisting for stocks at $0.10 or below for 10 consecutive days. No cure period. Operative January 19, 2026.</div>
+        <span class="tl-pill pill-red">Approved</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Dec 18, 2025</div>
+      <div>
+        <div class="tl-title">SEC approves financial threshold changes</div>
+        <div class="tl-desc">New $15M public float minimum approved on accelerated basis. Operative January 16, 2026. China-specific IPO threshold still under SEC review.</div>
+        <span class="tl-pill pill-red">Approved</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Jan 2026</div>
+      <div>
+        <div class="tl-title">New rules become operative</div>
+        <div class="tl-desc">Stricter thresholds in effect for new listings. ~95 existing Chinese companies with sub-$25M IPO values are grandfathered — rules do not apply retroactively.</div>
+        <span class="tl-pill pill-amber">Active</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Now</div>
+      <div>
+        <div class="tl-title">China-specific IPO rule still pending</div>
+        <div class="tl-desc">The $25M IPO threshold for Chinese companies awaits final SEC approval. Companies already listed remain inside under grandfathering provisions.</div>
+        <span class="tl-pill pill-amber">Pending</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GAP TABLE -->
+<div class="section">
+  <div class="sec-label">Gap analysis</div>
+  <h2>What the crackdown does and does not fix</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:38%">Issue</th>
+        <th style="width:22%">Status</th>
+        <th>Why it matters</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>New micro-cap Chinese listings below $25M IPO</td>
+        <td><span class="tag-b">Blocked (pending)</span></td>
+        <td style="font-size:11px;color:#555">$25M IPO threshold closes the front door for the smallest entrants once approved</td>
+      </tr>
+      <tr>
+        <td>Existing sub-$25M Chinese listings already inside</td>
+        <td><span class="tag-r">Not affected</span></td>
+        <td style="font-size:11px;color:#555">~95 companies grandfathered. New rules do not apply retroactively</td>
+      </tr>
+      <tr>
+        <td>VIE structure (Cayman Islands shell listings)</td>
+        <td><span class="tag-r">Still legal</span></td>
+        <td style="font-size:11px;color:#555">The core mechanism allowing Chinese companies to list via offshore shells remains valid</td>
+      </tr>
+      <tr>
+        <td>Stocks trading below $0.10 for 10 days</td>
+        <td><span class="tag-b">Accelerated delisting</span></td>
+        <td style="font-size:11px;color:#555">Removes the most distressed listings faster with no cure period</td>
+      </tr>
+      <tr>
+        <td>Reverse stock splits to avoid delisting</td>
+        <td><span class="tag-r">Still permitted</span></td>
+        <td style="font-size:11px;color:#555">Charles Schwab flagged these as "clear indicators of fraud" — not addressed in current rules</td>
+      </tr>
+      <tr>
+        <td>Qualitative manipulation discretion (Rule IM-5101-3)</td>
+        <td><span class="tag-a">New — pending</span></td>
+        <td style="font-size:11px;color:#555">Nasdaq filed new rule giving discretion to deny listings even if all thresholds are technically met</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p style="font-size:10px;color:#999;font-family:'DM Mono',monospace;border-top:0.5px solid #eee;padding-top:14px">Sources: Norton Rose Fulbright (Jan 2026), K&L Gates (Sep 2025), Harvard Law Corporate Governance (Feb 2026), CII Behind the Veil Report (Aug 2025), Colonial Stock Exchange Blog (Oct 2025) · syhai.xyz</p>
+
+</body>
+</html>
