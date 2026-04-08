@@ -124,6 +124,8 @@ That decline is not random. It tracks almost exactly with the tightening of stan
 
 The exchange is shrinking by design.
 
+<iframe src="/viz/nasdaq-badge.html" width="100%" height="1800" style="border:none;border-radius:8px;margin:1.5rem 0;" loading="lazy"></iframe>
+
 ## The part that does not get said out loud
 
 Charles Schwab indicated general support for the proposed rule changes while expressing concern that they do not go far enough — noting that many microcap companies at risk of delisting will initiate reverse stock splits to bring their stock price in line with exchange requirements, and that such reverse splits have resulted in significant losses for retail investors and tend to be clear indicators of fraud, such as pump-and-dump schemes. [Harvard Law School Forum on Corporate Governance](https://corpgov.law.harvard.edu/2026/02/23/comment-letter-on-nasdaqs-proposed-additional-initial-listing-criteria-for-companies-primarily-operating-in-china/)
@@ -142,6 +144,3 @@ But it is still catching up to a problem that was years in the making. The compa
 
 The number to watch is not total listings. It is what happens to the new listing quality over the next two or three cycles. If the companies entering under the new rules delist at lower rates and trade at higher volumes than their predecessors, the crackdown will have worked. If the new entrants look like the old ones, just fewer of them, the badge problem will have survived the cleanup.
 
-## Data visualization
-
-<iframe src="/viz/nasdaq-badge.html" width="100%" height="1800" style="border:none;border-radius:8px;margin-top:1rem;" loading="lazy"></iframe>
