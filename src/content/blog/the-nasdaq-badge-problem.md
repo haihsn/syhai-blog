@@ -1,8 +1,8 @@
 ---
 title: The Nasdaq Badge Problem
-titleVN: ''
+titleVN: Phía sau Nasdaq
 description: To understand why, you need to understand how Nasdaq is structured — because the headline number hides a story that most financial media does not explain clearly.
-descriptionVN: ''
+descriptionVN: Để hiểu tại sao, bạn cần hiểu cách Nasdaq được cấu trúc, vì con số tổng thể che giấu một câu chuyện mà hầu hết báo chí tài chính không giải thích rõ ràng.
 pubDate: 2026-04-08
 category: Research
 readTime: 6
@@ -10,7 +10,68 @@ cover: /images/Gemini_Generated_Image_gnuicjgnuicjgnui.png
 tags: []
 tagsVN: []
 draft: false
-bodyVN: ''
+bodyVN: |-
+  Nasdaq hiện có khoảng 3.700 đến 4.000 cổ phiếu niêm yết tùy theo cách tính. Con số đó đang giảm. Đỉnh điểm là 4.075 vào năm 2024 và đã giảm dần từ đó. Sàn giao dịch đang thu nhỏ lại, và lần này đó chính là mục tiêu có chủ ý.
+
+  Để hiểu tại sao, bạn cần hiểu cách Nasdaq được cấu trúc, vì con số tổng thể che giấu một câu chuyện mà hầu hết báo chí tài chính không giải thích rõ ràng.
+
+  ## Ba tầng, một thương hiệu
+
+  Nasdaq không phải một thị trường. Đó là ba thị trường xếp chồng lên nhau, dùng chung một cái tên.
+
+  Nasdaq Global Select Market nằm ở trên cùng. Đây là nơi Apple, Microsoft, Nvidia và Meta giao dịch. Yêu cầu niêm yết rất nghiêm ngặt: vốn hóa thị trường tối thiểu trên 110 triệu USD, yêu cầu doanh thu và tài sản đáng kể, tiêu chuẩn quản trị cao nhất. Đây là tầng mà hầu hết mọi người hình dung khi nghe "niêm yết trên Nasdaq."
+
+  Nasdaq Global Market nằm ở giữa. Yêu cầu vẫn có ý nghĩa. Các công ty ở tầng này là doanh nghiệp thực sự với lịch sử hoạt động thực sự.
+
+  Rồi đến Nasdaq Capital Market. Đây là tầng thấp nhất, được thiết kế để cho các công ty nhỏ hơn và ở giai đoạn sớm hơn tiếp cận vốn công cộng. Trước đây, ngưỡng vào rất thấp: theo tiêu chuẩn thu nhập ròng, một công ty chỉ cần 5 triệu USD vốn lưu hành công khai tối thiểu để đủ điều kiện. Không có yêu cầu doanh thu có ý nghĩa. Không có yêu cầu lịch sử hoạt động. Chỉ cần vài ngưỡng tài chính mà với các cố vấn phù hợp, không khó để đáp ứng.
+
+  Cả ba tầng đều mang cùng thương hiệu. Một công ty giao dịch trên Nasdaq Capital Market với vốn hóa 4 triệu USD và không có khách hàng vẫn có thể nói với nhà đầu tư rằng họ "niêm yết trên Nasdaq." Cùng huy hiệu với Apple.
+
+  ## Cách lỗ hổng này bị khai thác
+
+  Vào tháng 9/2025, Nasdaq đề xuất những thay đổi đáng kể đối với các yêu cầu niêm yết nhắm vào các công ty có trụ sở tại Trung Quốc, bao gồm Hồng Kông và Ma Cao, sau nhiều năm lo ngại về rủi ro mà các tổ chức phát hành Trung Quốc gây ra cho nhà đầu tư Mỹ.
+
+  Mối lo ngại rất cụ thể và có tài liệu. Gần 160 công ty Trung Quốc sử dụng cấu trúc Variable Interest Entity (VIE) để lách các hạn chế về đầu tư nước ngoài vào các lĩnh vực nhạy cảm chiến lược. Bằng cách niêm yết trên sàn Mỹ thông qua một công ty proxy tại Quần đảo Cayman, các công ty hoạt động tại Trung Quốc tránh phải tuân thủ các quy tắc yêu cầu minh bạch tài chính có ý nghĩa, và còn nằm ngoài tầm với của các hành động thực thi của cơ quan chức năng Mỹ.
+
+  Cơ chế hoạt động như sau: một công ty hoạt động Trung Quốc không thể niêm yết trực tiếp trên sàn Mỹ sẽ tạo ra một thực thể vỏ bọc tại Quần đảo Cayman. Thực thể vỏ bọc đó ký kết hợp đồng với công ty hoạt động thực tế, trao cho nó quyền lợi kinh tế từ lợi nhuận. Thực thể Cayman niêm yết trên Nasdaq. Nhà đầu tư nghĩ họ sở hữu một phần doanh nghiệp Trung Quốc. Thứ họ thực sự sở hữu là một hợp đồng mà các tòa án Trung Quốc đã nhiều lần từ chối thực thi khi bị thách thức.
+
+  Tính đến tháng 3/2025, khoảng 95 công ty Trung Quốc niêm yết trên Nasdaq có giá trị IPO dưới 25 triệu USD, và khoảng 20 công ty có vốn hóa thị trường dưới 5 triệu USD. Đây không phải các công ty tăng trưởng mới nổi đang chờ mở rộng quy mô. Đây là các công ty nhỏ đến mức hầu như không tạo ra khối lượng giao dịch, một số chỉ giao dịch vài nghìn đô la mỗi ngày, trong khi mang huy hiệu niêm yết Nasdaq ngụ ý tính hợp pháp đẳng cấp tổ chức.
+
+  ## Dòng thời gian quy định
+
+  Việc siết chặt đến theo từng giai đoạn, mỗi giai đoạn thắt chặt các quy tắc vốn được thực thi lỏng lẻo trong nhiều năm.
+
+  Ngày 5/12/2025, SEC phê duyệt đề xuất của Nasdaq sửa đổi Yêu cầu Giá Thấp, đẩy nhanh các quyết định hủy niêm yết và đình chỉ giao dịch khi giá đặt mua đóng cửa của chứng khoán công ty ở mức 0,10 USD hoặc thấp hơn trong 10 ngày giao dịch liên tiếp.
+
+  Ngày 18/12/2025, SEC phê duyệt đề xuất sửa đổi Quy tắc Niêm yết Nasdaq 5405 và 5505, nâng cao các tiêu chuẩn tài chính cho niêm yết ban đầu. Các quy tắc sửa đổi này có hiệu lực vào ngày 16/1/2026.
+
+  Những thay đổi cụ thể có hiệu lực vào tháng 1/2026:
+
+  Giá trị thị trường tối thiểu của cổ phiếu lưu hành công khai không hạn chế cho các đợt niêm yết mới theo tiêu chuẩn thu nhập ròng tăng từ 5 triệu lên 15 triệu USD, tăng 3 lần.
+
+  Các công ty Trung Quốc cụ thể hiện phải đáp ứng ngưỡng thu nhập IPO tối thiểu 25 triệu USD. Bạn không thể huy động 8 triệu USD trong một đợt chào bán nhỏ, tuyên bố niêm yết Nasdaq, rồi dùng huy hiệu đó để thu hút nhà đầu tư bán lẻ không đọc chữ nhỏ.
+
+  Nasdaq cũng đệ trình đề xuất quy tắc mới cung cấp quyền hạn chế để từ chối niêm yết ban đầu cho một số công ty dựa trên các yếu tố có thể khiến chứng khoán niêm yết dễ bị thao túng, ngay cả khi công ty đáp ứng tất cả các yêu cầu niêm yết hiện hành. Đây là điều quan trọng, trao cho Nasdaq quyền phủ quyết định tính, không chỉ là ngưỡng định lượng.
+
+  ## Điều không được nói thẳng
+
+  Charles Schwab bày tỏ ủng hộ chung cho các thay đổi quy tắc được đề xuất trong khi lo ngại chúng chưa đủ xa, lưu ý rằng nhiều công ty vốn hóa nhỏ có nguy cơ bị hủy niêm yết sẽ thực hiện chia cổ phiếu ngược chiều để đưa giá cổ phiếu về đúng yêu cầu của sàn giao dịch, và những lần chia cổ phiếu ngược chiều đó đã gây ra tổn thất đáng kể cho nhà đầu tư bán lẻ và là "dấu hiệu rõ ràng của gian lận" như các âm mưu bơm và xả.
+
+  Đây là khoảng trống trong đợt siết chặt hiện tại. Các quy tắc mới nâng ngưỡng. Chúng không giải quyết cấu trúc khuyến khích cơ bản khiến tầng Nasdaq Capital Market hấp dẫn với các tác nhân xấu ngay từ đầu.
+
+  Các quy tắc cũng không áp dụng hồi tố. Khoảng 95 công ty Trung Quốc niêm yết trên Nasdaq tính đến tháng 3/2025 có giá trị IPO dưới 25 triệu USD sẽ không bị ảnh hưởng. Họ đã ở bên trong. Cầu bật mới chỉ ảnh hưởng đến ai có thể vào tiếp theo.
+
+  ## Kết luận
+
+  Tầng Nasdaq Capital Market đã hoạt động như một cửa hậu trong thực tế. Huy hiệu "niêm yết trên Nasdaq," đạt được thông qua một tầng với yêu cầu vào thị trường lịch sử yếu, mang uy tín của một sàn giao dịch gắn liền với Apple và Microsoft. Các công ty Trung Quốc nhỏ hơn hiểu điều này và sử dụng nó một cách có hệ thống, niêm yết thông qua cấu trúc VIE, huy động vốn tối thiểu, tạo ra khối lượng giao dịch tối thiểu, nhưng mang chỉ định ngụ ý sự giám sát quy định mà họ thực sự chưa trải qua.
+
+  Phản ứng quy định vào cuối năm 2025 và đầu năm 2026 là đợt siết chặt mạnh mẽ nhất trong nhiều năm. Các ngưỡng mới là có thực. Quy trình hủy niêm yết nhanh hơn là có thực. Quyền hạn tùy ý định tính mà Nasdaq tự trao cho mình là mới và có ý nghĩa.
+
+  Nhưng nó vẫn đang bắt kịp một vấn đề được hình thành trong nhiều năm. Các công ty đã ở trong được miễn trừ. Bản thân cấu trúc VIE vẫn hợp pháp. Động lực để có được huy hiệu trước khi cánh cửa đóng thêm vẫn còn nguyên vẹn.
+
+  Con số cần theo dõi không phải tổng số niêm yết. Đó là điều gì xảy ra với chất lượng niêm yết mới trong hai đến ba chu kỳ tới. Nếu các công ty vào theo quy tắc mới bị hủy niêm yết ít hơn và giao dịch ở khối lượng cao hơn so với các công ty tiền nhiệm, đợt siết chặt sẽ có tác dụng. Nếu các đợt niêm yết mới trông giống các đợt cũ, chỉ ít hơn, vấn đề huy hiệu sẽ sống sót qua đợt dọn dẹp.
+
+  Nguồn: Norton Rose Fulbright (tháng 1/2026), K&L Gates (tháng 9/2025), Harvard Law Corporate Governance (tháng 2/2026), CII Behind the Veil Report (tháng 8/2025), Colonial Stock Exchange Blog (tháng 10/2025).
 ---
 
 Nasdaq has roughly 3,700 to 4,000 listed stocks right now depending on how you count. That number is falling. It peaked at 4,075 in 2024 and has been declining since. The exchange is getting smaller, and for once that is actually the point.
