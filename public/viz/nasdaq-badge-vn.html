@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Vấn đề Huy hiệu Nasdaq — Trực quan hóa dữ liệu</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Instrument Sans',sans-serif;background:#f8f8f8;color:#0a0a0a;padding:28px;max-width:900px;margin:0 auto}
+h1{font-size:22px;font-weight:600;margin-bottom:4px}
+.subtitle{font-size:13px;color:#666;margin-bottom:32px}
+.section{margin-bottom:40px}
+.sec-label{font-family:'DM Mono',monospace;font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::after{content:'';flex:1;height:.5px;background:#ddd}
+h2{font-size:15px;font-weight:600;margin-bottom:3px}
+.sub{font-size:12px;color:#666;margin-bottom:14px;line-height:1.5}
+
+/* TIERS */
+.tiers{display:flex;flex-direction:column;gap:8px}
+.tier{border-radius:8px;padding:14px 18px;border:1px solid;position:relative}
+.tier-top{background:#EBF4FD;border-color:#C3DEFA}
+.tier-mid{background:#f5f5f5;border-color:#ddd}
+.tier-bot{background:#FAEEDA;border-color:#FAC775}
+.tier-label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}
+.tier-top .tier-label{color:#185FA5}
+.tier-mid .tier-label{color:#666}
+.tier-bot .tier-label{color:#854F0B}
+.tier-name{font-size:13px;font-weight:600;margin-bottom:4px}
+.tier-req{font-size:11px;color:#444;line-height:1.5}
+.tier-examples{font-family:'DM Mono',monospace;font-size:10px;color:#888;margin-top:5px}
+.tier-badge{position:absolute;right:14px;top:14px;font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:10px}
+.tier-top .tier-badge{background:#C3DEFA;color:#0C447C}
+.tier-bot .tier-badge{background:#FAC775;color:#633806}
+
+/* BAR CHART */
+.count-chart{display:flex;flex-direction:column;gap:7px}
+.count-row{display:grid;grid-template-columns:90px 1fr 60px;gap:10px;align-items:center}
+.count-year{font-family:'DM Mono',monospace;font-size:11px;color:#555}
+.count-bar-wrap{background:#eee;border-radius:3px;height:26px;overflow:hidden}
+.count-bar{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:10px}
+.bar-label{font-size:10px;color:rgba(255,255,255,.9);font-family:'DM Mono',monospace}
+.count-val{font-family:'DM Mono',monospace;font-size:11px;color:#555;text-align:right}
+.bar-blue{background:#378ADD}
+.bar-red{background:#E24B4A}
+.source-note{font-size:10px;color:#999;margin-top:8px;font-family:'DM Mono',monospace;line-height:1.5}
+
+/* RULES */
+.rules-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.rule-card{background:#fff;border:1px solid #eee;border-radius:8px;padding:14px}
+.rule-metric{font-family:'DM Mono',monospace;font-size:9px;color:#999;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.rule-before{font-size:20px;font-weight:500;color:#bbb;text-decoration:line-through;margin-bottom:2px}
+.rule-arrow{font-size:12px;color:#999;margin:3px 0}
+.rule-after{font-size:28px;font-weight:600;color:#E24B4A;margin-bottom:5px}
+.rule-label{font-size:11px;color:#555;line-height:1.45}
+
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column}
+.tl-item{display:grid;grid-template-columns:100px 1fr;gap:14px;padding:11px 0;border-bottom:0.5px solid #eee}
+.tl-item:last-child{border-bottom:none}
+.tl-date{font-family:'DM Mono',monospace;font-size:10px;color:#888;padding-top:2px}
+.tl-title{font-size:12px;font-weight:600;margin-bottom:3px}
+.tl-desc{font-size:11px;color:#555;line-height:1.5}
+.tl-pill{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;margin-top:4px}
+.pill-red{background:#FCEBEB;color:#A32D2D;border:0.5px solid #F09595}
+.pill-amber{background:#FAEEDA;color:#633806;border:0.5px solid #FAC775}
+.pill-blue{background:#EBF4FD;color:#0C447C;border:0.5px solid #C3DEFA}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse}
+th{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:#888;text-align:left;padding:7px 10px;border-bottom:1px solid #eee}
+td{font-size:12px;padding:9px 10px;border-bottom:0.5px solid #eee;vertical-align:top;color:#333}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafafa}
+.tag-r{font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:10px;display:inline-block;background:#FCEBEB;color:#A32D2D;border:0.5px solid #F09595;white-space:nowrap}
+.tag-a{font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:10px;display:inline-block;background:#FAEEDA;color:#633806;border:0.5px solid #FAC775;white-space:nowrap}
+.tag-b{font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:10px;display:inline-block;background:#EBF4FD;color:#0C447C;border:0.5px solid #C3DEFA;white-space:nowrap}
+
+@media(max-width:600px){
+  .rules-grid{grid-template-columns:1fr}
+  .count-row{grid-template-columns:70px 1fr 50px}
+}
+</style>
+</head>
+<body>
+
+<h1>Vấn đề Huy hiệu Nasdaq</h1>
+<p class="subtitle">Trực quan hóa dữ liệu · syhai.xyz · Tháng 4/2026</p>
+
+<!-- TIER STRUCTURE -->
+<div class="section">
+  <div class="sec-label">Cấu trúc</div>
+  <h2>Ba tầng, một thương hiệu — tiêu chuẩn rất khác nhau</h2>
+  <p class="sub">Cả ba tầng đều mang chỉ định "niêm yết trên Nasdaq". Yêu cầu gia nhập chênh lệch rất lớn.</p>
+  <div class="tiers">
+    <div class="tier tier-top">
+      <div class="tier-label">Tầng 1</div>
+      <div class="tier-name">Nasdaq Global Select Market</div>
+      <div class="tier-req">Vốn hóa tối thiểu $110 triệu+ · Yêu cầu doanh thu/tài sản nghiêm ngặt · Tiêu chuẩn quản trị cao nhất</div>
+      <div class="tier-examples">Apple · Microsoft · Nvidia · Meta · Amazon</div>
+      <div class="tier-badge">Tiêu chuẩn cao</div>
+    </div>
+    <div class="tier tier-mid">
+      <div class="tier-label">Tầng 2</div>
+      <div class="tier-name">Nasdaq Global Market</div>
+      <div class="tier-req">Ngưỡng tài chính vừa phải · Yêu cầu doanh thu hoặc tài sản có ý nghĩa · Quản trị tiêu chuẩn</div>
+      <div class="tier-examples">Các công ty tăng trưởng vốn hóa vừa với lịch sử hoạt động đã được chứng minh</div>
+    </div>
+    <div class="tier tier-bot">
+      <div class="tier-label">Tầng 3 — Tầng có vấn đề</div>
+      <div class="tier-name">Nasdaq Capital Market</div>
+      <div class="tier-req">Trước đây: chỉ cần tối thiểu $5 triệu vốn lưu hành công khai · Không yêu cầu doanh thu · Không yêu cầu lịch sử hoạt động · Dễ dàng đáp ứng điều kiện · ~95 công ty Trung Quốc có giá trị IPO dưới $25 triệu · ~20 công ty có vốn hóa dưới $5 triệu (tháng 3/2025)</div>
+      <div class="tier-badge">Cửa hậu</div>
+    </div>
+  </div>
+</div>
+
+<!-- LISTING COUNT -->
+<div class="section">
+  <div class="sec-label">Xu hướng số lượng niêm yết</div>
+  <h2>Tổng số niêm yết Nasdaq: từ đỉnh đến hiện tại</h2>
+  <p class="sub">Sàn giao dịch đang thu nhỏ có chủ ý. Các quy tắc mới có hiệu lực tháng 1/2026 đang đẩy nhanh đà giảm.</p>
+  <div class="count-chart">
+    <div class="count-row">
+      <div class="count-year">2020</div>
+      <div class="count-bar-wrap"><div class="count-bar bar-blue" style="width:88%"><span class="bar-label">~3.600</span></div></div>
+      <div class="count-val">3.600</div>
+    </div>
+    <div class="count-row">
+      <div class="count-year">2021</div>
+      <div class="count-bar-wrap"><div class="count-bar bar-blue" style="width:93%"><span class="bar-label">~3.800</span></div></div>
+      <div class="count-val">3.800</div>
+    </div>
+    <div class="count-row">
+      <div class="count-year">2022</div>
+      <div class="count-bar-wrap"><div class="count-bar bar-blue" style="width:95%"><span class="bar-label">~3.900</span></div></div>
+      <div class="count-val">3.900</div>
+    </div>
+    <div class="count-row">
+      <div class="count-year">2023</div>
+      <div class="count-bar-wrap"><div class="count-bar bar-blue" style="width:97%"><span class="bar-label">~3.970</span></div></div>
+      <div class="count-val">3.970</div>
+    </div>
+    <div class="count-row">
+      <div class="count-year">Đỉnh 2024</div>
+      <div class="count-bar-wrap"><div class="count-bar bar-blue" style="width:100%"><span class="bar-label">4.075 — đỉnh mọi thời đại</span></div></div>
+      <div class="count-val" style="font-weight:600">4.075</div>
+    </div>
+    <div class="count-row">
+      <div class="count-year">Đầu 2026</div>
+      <div class="count-bar-wrap"><div class="count-bar bar-red" style="width:91%"><span class="bar-label">3.450–3.772 (đang giảm)</span></div></div>
+      <div class="count-val" style="color:#E24B4A;font-weight:600">~3.600</div>
+    </div>
+  </div>
+  <p class="source-note">Nguồn: Nasdaq.com (~4.000 chứng khoán), theo dõi dữ liệu thị trường (3.772 cổ phiếu đang hoạt động), Motley Fool (3.450 công ty riêng lẻ). Sự chênh lệch phản ánh các phương pháp đếm khác nhau — mã chứng khoán so với công ty so với tất cả công cụ tài chính.</p>
+</div>
+
+<!-- RULE CHANGES -->
+<div class="section">
+  <div class="sec-label">Thay đổi quy tắc</div>
+  <h2>Những gì thay đổi — ngưỡng mới có hiệu lực tháng 1/2026</h2>
+  <p class="sub">Ba thay đổi cụ thể được SEC phê duyệt và có hiệu lực ngày 16–19/1/2026.</p>
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="rule-metric">Vốn lưu hành công khai tối thiểu (tiêu chuẩn thu nhập ròng)</div>
+      <div class="rule-before">$5 triệu</div>
+      <div class="rule-arrow">↓</div>
+      <div class="rule-after">$15 triệu</div>
+      <div class="rule-label">Tăng 3 lần. Các công ty phải có vốn thực chất hơn để niêm yết trên Nasdaq Capital Market.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-metric">Thu nhập IPO tối thiểu (công ty Trung Quốc)</div>
+      <div class="rule-before">Không có</div>
+      <div class="rule-arrow">↓</div>
+      <div class="rule-after">$25 triệu</div>
+      <div class="rule-label">Công ty Trung Quốc không thể huy động vốn tối thiểu rồi tuyên bố có huy hiệu niêm yết Nasdaq. (Chờ SEC phê duyệt cuối cùng.)</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-metric">Ngưỡng hủy niêm yết tăng tốc</div>
+      <div class="rule-before">$1,00</div>
+      <div class="rule-arrow">↓</div>
+      <div class="rule-after">$0,10</div>
+      <div class="rule-label">Cổ phiếu ở mức $0,10 hoặc thấp hơn trong 10 ngày bị đình chỉ ngay lập tức. Không có thời gian khắc phục. Không có ngoại lệ cho các lần chia cổ phiếu ngược chiều gần đây.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="section">
+  <div class="sec-label">Dòng thời gian quy định</div>
+  <h2>Đợt siết chặt: các sự kiện quan trọng 2020–2026</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">2020</div>
+      <div>
+        <div class="tl-title">Đạo luật Trách nhiệm Công ty Nước ngoài (HFCAA)</div>
+        <div class="tl-desc">Đe dọa hủy niêm yết nếu PCAOB không thể kiểm tra kiểm toán trong 3 năm liên tiếp. Áp lực lập pháp chính thức đầu tiên đối với các công ty niêm yết Trung Quốc.</div>
+        <span class="tl-pill pill-blue">Lập pháp</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Cuối 2022</div>
+      <div>
+        <div class="tl-title">IPO Trung Quốc đóng băng</div>
+        <div class="tl-desc">IPO từ Trung Quốc thực tế bị tạm dừng do lo ngại về thực thi. Tạm nghỉ ngắn — khối lượng tiếp tục trở lại vào năm 2023.</div>
+        <span class="tl-pill pill-amber">Thị trường</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Tháng 5/2025</div>
+      <div>
+        <div class="tl-title">7 công ty VIE Trung Quốc bị hủy niêm yết</div>
+        <div class="tl-desc">NYSE và Nasdaq hủy niêm yết 7 công ty VIE Trung Quốc vì không nộp báo cáo thường niên hoặc hàng quý cho SEC.</div>
+        <span class="tl-pill pill-red">Hủy niêm yết</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">3/9/2025</div>
+      <div>
+        <div class="tl-title">Nasdaq đề xuất cải tổ quy tắc</div>
+        <div class="tl-desc">Đề xuất vốn lưu hành tối thiểu $15 triệu, ngưỡng IPO $25 triệu cho công ty Trung Quốc, hủy niêm yết tăng tốc cho công ty vốn hóa dưới $5 triệu.</div>
+        <span class="tl-pill pill-blue">Đề xuất</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">5/12/2025</div>
+      <div>
+        <div class="tl-title">SEC phê duyệt quy tắc giá thấp</div>
+        <div class="tl-desc">Hủy niêm yết tăng tốc cho cổ phiếu ở mức $0,10 hoặc thấp hơn trong 10 ngày giao dịch liên tiếp. Không có thời gian khắc phục. Có hiệu lực ngày 19/1/2026.</div>
+        <span class="tl-pill pill-red">Đã phê duyệt</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">18/12/2025</div>
+      <div>
+        <div class="tl-title">SEC phê duyệt thay đổi ngưỡng tài chính</div>
+        <div class="tl-desc">Vốn lưu hành công khai tối thiểu $15 triệu mới được phê duyệt trên cơ sở thúc đẩy. Có hiệu lực ngày 16/1/2026. Ngưỡng IPO dành riêng cho Trung Quốc vẫn đang được SEC xem xét.</div>
+        <span class="tl-pill pill-red">Đã phê duyệt</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Tháng 1/2026</div>
+      <div>
+        <div class="tl-title">Quy tắc mới có hiệu lực</div>
+        <div class="tl-desc">Ngưỡng nghiêm ngặt hơn có hiệu lực với các niêm yết mới. ~95 công ty Trung Quốc hiện có với giá trị IPO dưới $25 triệu được miễn áp dụng — quy tắc không áp dụng hồi tố.</div>
+        <span class="tl-pill pill-amber">Đang áp dụng</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Hiện tại</div>
+      <div>
+        <div class="tl-title">Quy tắc IPO dành riêng cho Trung Quốc vẫn chờ phê duyệt</div>
+        <div class="tl-desc">Ngưỡng IPO $25 triệu cho công ty Trung Quốc đang chờ SEC phê duyệt cuối cùng. Các công ty đã niêm yết vẫn được bảo vệ theo điều khoản miễn áp dụng.</div>
+        <span class="tl-pill pill-amber">Đang chờ</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GAP TABLE -->
+<div class="section">
+  <div class="sec-label">Phân tích khoảng trống</div>
+  <h2>Đợt siết chặt giải quyết và không giải quyết được gì</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:38%">Vấn đề</th>
+        <th style="width:22%">Tình trạng</th>
+        <th>Tại sao quan trọng</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Niêm yết mới của công ty Trung Quốc vốn hóa nhỏ dưới $25 triệu IPO</td>
+        <td><span class="tag-b">Bị chặn (chờ duyệt)</span></td>
+        <td style="font-size:11px;color:#555">Ngưỡng IPO $25 triệu đóng cửa chính cho những người vào nhỏ nhất sau khi được phê duyệt</td>
+      </tr>
+      <tr>
+        <td>Niêm yết Trung Quốc hiện tại dưới $25 triệu đã ở bên trong</td>
+        <td><span class="tag-r">Không bị ảnh hưởng</span></td>
+        <td style="font-size:11px;color:#555">~95 công ty được miễn áp dụng. Quy tắc mới không áp dụng hồi tố</td>
+      </tr>
+      <tr>
+        <td>Cấu trúc VIE (niêm yết vỏ bọc Quần đảo Cayman)</td>
+        <td><span class="tag-r">Vẫn hợp pháp</span></td>
+        <td style="font-size:11px;color:#555">Cơ chế cốt lõi cho phép công ty Trung Quốc niêm yết qua vỏ bọc offshore vẫn có hiệu lực</td>
+      </tr>
+      <tr>
+        <td>Cổ phiếu giao dịch dưới $0,10 trong 10 ngày</td>
+        <td><span class="tag-b">Hủy niêm yết tăng tốc</span></td>
+        <td style="font-size:11px;color:#555">Loại bỏ các niêm yết kém nhất nhanh hơn mà không có thời gian khắc phục</td>
+      </tr>
+      <tr>
+        <td>Chia cổ phiếu ngược chiều để tránh hủy niêm yết</td>
+        <td><span class="tag-r">Vẫn được phép</span></td>
+        <td style="font-size:11px;color:#555">Charles Schwab gọi đây là "dấu hiệu rõ ràng của gian lận" — không được đề cập trong quy tắc hiện hành</td>
+      </tr>
+      <tr>
+        <td>Quyền hạn chế thao túng định tính (Quy tắc IM-5101-3)</td>
+        <td><span class="tag-a">Mới — đang chờ</span></td>
+        <td style="font-size:11px;color:#555">Nasdaq đệ trình quy tắc mới cho phép từ chối niêm yết ngay cả khi đáp ứng tất cả các ngưỡng</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p style="font-size:10px;color:#999;font-family:'DM Mono',monospace;border-top:0.5px solid #eee;padding-top:14px">Nguồn: Norton Rose Fulbright (tháng 1/2026), K&L Gates (tháng 9/2025), Harvard Law Corporate Governance (tháng 2/2026), CII Behind the Veil Report (tháng 8/2025), Colonial Stock Exchange Blog (tháng 10/2025) · syhai.xyz</p>
+
+</body>
+</html>
