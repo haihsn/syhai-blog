@@ -53,6 +53,8 @@ bodyVN: |-
 
   Nasdaq cũng đệ trình đề xuất quy tắc mới cung cấp quyền hạn chế để từ chối niêm yết ban đầu cho một số công ty dựa trên các yếu tố có thể khiến chứng khoán niêm yết dễ bị thao túng, ngay cả khi công ty đáp ứng tất cả các yêu cầu niêm yết hiện hành. Đây là điều quan trọng, trao cho Nasdaq quyền phủ quyết định tính, không chỉ là ngưỡng định lượng.
 
+  <iframe src="/viz/nasdaq-badge.html" width="100%" height="1800" style="border:none;border-radius:8px;margin:1.5rem 0;" loading="lazy"></iframe>
+
   ## Điều không được nói thẳng
 
   Charles Schwab bày tỏ ủng hộ chung cho các thay đổi quy tắc được đề xuất trong khi lo ngại chúng chưa đủ xa, lưu ý rằng nhiều công ty vốn hóa nhỏ có nguy cơ bị hủy niêm yết sẽ thực hiện chia cổ phiếu ngược chiều để đưa giá cổ phiếu về đúng yêu cầu của sàn giao dịch, và những lần chia cổ phiếu ngược chiều đó đã gây ra tổn thất đáng kể cho nhà đầu tư bán lẻ và là "dấu hiệu rõ ràng của gian lận" như các âm mưu bơm và xả.
