@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap');
 
 :root {
   /* Backgrounds */
@@ -25,7 +25,7 @@
 
   /* Typography */
   --playfair: 'Inter', sans-serif;
-  --source:   'Inter', sans-serif;
+  --source:   'Lora', serif;
   --mono:     'DM Mono', monospace;
 
   --radius: 4px;
