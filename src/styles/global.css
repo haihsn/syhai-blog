@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
 :root {
   /* Backgrounds */
@@ -24,7 +24,7 @@
   --rule-navy:    rgba(255,255,255,0.10);
 
   /* Typography */
-  --playfair: 'Instrument Serif', serif;
+  --playfair: 'Inter', sans-serif;
   --source:   'Inter', sans-serif;
   --mono:     'DM Mono', monospace;
 
