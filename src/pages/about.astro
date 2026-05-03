@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base title="About — syhai.xyz">
+  <div class="container--wide"><div class="rule-thick"></div></div>
   <div class="about-page">
     <div class="container">
 
@@ -53,14 +54,36 @@ import Base from '../layouts/Base.astro';
 </Base>
 
 <style>
-.about-page { padding:3.5rem 0; }
-.about-page__header { display:flex; align-items:center; gap:1.25rem; margin-bottom:2.5rem; padding-bottom:2rem; border-bottom:2.5px solid var(--navy); }
-.about-page__avatar { width:64px; height:64px; border-radius:50%; background:var(--b500); display:flex; align-items:center; justify-content:center; font-family:var(--playfair); font-size:1.1rem; color:var(--paper); flex-shrink:0; }
-.about-page__role { font-family:var(--mono); font-size:.78rem; color:var(--b400); margin-top:4px; }
-.about-page__body { max-width:620px; }
-.about-page__body p  { font-size:1rem; color:var(--ink2); font-weight:300; line-height:1.8; margin-bottom:1.25rem; }
-.about-page__body h2 { font-size:1.4rem; margin-top:2.5rem; margin-bottom:.75rem; padding-top:1.5rem; border-top:0.5px solid var(--rule); }
-.about-page__body ul { padding-left:1.5rem; margin-bottom:1.25rem; color:var(--ink2); font-weight:300; }
-.about-page__body li { margin-bottom:.4rem; line-height:1.75; font-size:1rem; }
-.about-page__cta { display:flex; gap:.75rem; margin-top:2.5rem; padding-top:2rem; border-top:0.5px solid var(--rule); flex-wrap:wrap; }
+.about-page { padding: 0 0 4rem; }
+.about-page__header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+  padding: 2.5rem 0 2rem;
+  border-bottom: 0.5px solid var(--rule);
+}
+.about-page__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 0;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--playfair);
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: -0.02em;
+}
+.about-page__header h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.04em; }
+.about-page__role { font-family: var(--mono); font-size: 0.72rem; color: var(--b400); margin-top: 5px; letter-spacing: 0.04em; }
+.about-page__body { max-width: 640px; }
+.about-page__body p  { font-size: 1.05rem; color: var(--ink2); line-height: 1.8; margin-bottom: 1.25rem; font-family: var(--source); }
+.about-page__body h2 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; margin-top: 2.5rem; margin-bottom: 0.75rem; padding-top: 1.75rem; border-top: 0.5px solid var(--rule); }
+.about-page__body ul { padding-left: 1.5rem; margin-bottom: 1.25rem; color: var(--ink2); }
+.about-page__body li { margin-bottom: 0.4rem; line-height: 1.75; font-size: 1rem; font-family: var(--source); }
+.about-page__cta { display: flex; gap: 0.75rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 0.5px solid var(--rule); flex-wrap: wrap; }
 </style>

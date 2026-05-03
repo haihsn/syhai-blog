@@ -22,54 +22,57 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 
   <article class="post">
 
-    <!-- COVER -->
+    <!-- POST HEADER — Bloomberg: category + big headline + deck + byline, THEN image -->
+    <div class="post__header">
+      <div class="container">
+
+        <!-- Kicker: back link + category -->
+        <div class="post__kicker fade-up">
+          <a href="/blog" class="post__back" data-lang="en">← All posts</a>
+          <a href="/blog" class="post__back" data-lang="vn">← Tất cả bài</a>
+          <span class="post__kicker-sep">|</span>
+          <span class="tag">{category}</span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="post__title fade-up-1" data-lang="en">{title}</h1>
+        <h1 class="post__title fade-up-1" data-lang="vn">{titleVN ?? title}</h1>
+
+        <!-- Deck / description (italic) -->
+        <p class="post__desc fade-up-2" data-lang="en">{description}</p>
+        <p class="post__desc fade-up-2" data-lang="vn">{descriptionVN ?? description}</p>
+
+        <!-- Byline -->
+        <div class="post__byline fade-up-3">
+          <span class="post__byline-author" data-lang="en">By Sy Hai</span>
+          <span class="post__byline-author" data-lang="vn">Bởi Sy Hai</span>
+          <span class="post__byline-sep">·</span>
+          <span class="post__meta-text">{fmt(pubDate)}</span>
+          <span class="post__byline-sep">·</span>
+          <span class="post__meta-text" data-lang="en">{readTime} min read</span>
+          <span class="post__meta-text" data-lang="vn">{readTime} phút đọc</span>
+          <a href={tweetURL} target="_blank" rel="noopener" class="post__share-btn" data-lang="en">Post on X →</a>
+          <a href={tweetURL} target="_blank" rel="noopener" class="post__share-btn" data-lang="vn">Chia sẻ lên X →</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- COVER IMAGE — below header, Bloomberg style -->
     <div class="post__cover img-frame">
       {cover
         ? <img src={cover} alt={title} />
         : <div class="img-frame__placeholder">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-              <rect x="3" y="8" width="30" height="20" rx="2" stroke="#85B7EB" stroke-width="1.5"/>
-              <path d="M3 17l8 7 7-6 10 7" stroke="#85B7EB" stroke-width="1"/>
-              <circle cx="11" cy="14" r="3" fill="#C3DEFA"/>
+            <svg width="40" height="40" viewBox="0 0 36 36" fill="none">
+              <rect x="3" y="8" width="30" height="20" rx="1" stroke="#999" stroke-width="1.5"/>
+              <path d="M3 17l8 7 7-6 10 7" stroke="#999" stroke-width="1"/>
+              <circle cx="11" cy="14" r="3" fill="#E5E5E5"/>
             </svg>
             <span data-lang="en">Cover image</span>
             <span data-lang="vn">Ảnh bìa bài viết</span>
           </div>
       }
     </div>
-
-    <!-- META BAR -->
-    <header class="post__metabar">
-      <div class="container">
-        <div class="post__meta fade-up">
-          <a href="/blog" class="post__back" data-lang="en">← All posts</a>
-          <a href="/blog" class="post__back" data-lang="vn">← Tất cả bài</a>
-          <div class="post__meta-divider"></div>
-          <span class="tag">{category}</span>
-          <div class="post__meta-divider"></div>
-          <span class="post__meta-text">{fmt(pubDate)}</span>
-          <div class="post__meta-divider"></div>
-          <span class="post__meta-text" data-lang="en">{readTime} min read</span>
-          <span class="post__meta-text" data-lang="vn">{readTime} phút đọc</span>
-        </div>
-      </div>
-    </header>
-
-    <!-- TITLE + DESC: full width -->
-    <div class="post__header container">
-      <h1 class="post__title fade-up-1" data-lang="en">{title}</h1>
-      <h1 class="post__title fade-up-1" data-lang="vn">{titleVN ?? title}</h1>
-      <p class="post__desc fade-up-2" data-lang="en">{description}</p>
-      <p class="post__desc fade-up-2" data-lang="vn">{descriptionVN ?? description}</p>
-      <div class="post__byline fade-up-3">
-        <span data-lang="en">By Sy Hai {tags && tags.length > 0 ? ` · ${tags.join(' · ')}` : ''}</span>
-        <span data-lang="vn">Bởi Sy Hai {(tagsVN ?? tags) && (tagsVN ?? tags)!.length > 0 ? ` · ${(tagsVN ?? tags)!.join(' · ')}` : ''}</span>
-        <a href={tweetURL} target="_blank" rel="noopener" class="post__share-btn" data-lang="en">Post on X →</a>
-        <a href={tweetURL} target="_blank" rel="noopener" class="post__share-btn" data-lang="vn">Chia sẻ lên X →</a>
-      </div>
-    </div>
-
-    <div class="post__divider container"><div></div></div>
 
     <!-- BODY -->
     <div class="post__body container">
@@ -98,100 +101,152 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 </Base>
 
 <style>
-.post__cover {
-  width: 100%;
-  height: clamp(200px, 35vw, 340px);
-  border-radius: 0;
-  border: none;
+/* ── POST HEADER ── */
+.post__header {
+  padding: 2.5rem 0 2rem;
   border-bottom: 0.5px solid var(--rule);
 }
 
-.post__metabar { padding: 1.5rem 0 0; border-bottom: 0.5px solid var(--rule); }
-
-.post__header { padding: 2rem 0 0; }
-
-.post__divider { padding: 0; margin: 1.25rem auto; }
-.post__divider div { height: 0.5px; background: var(--rule); }
-
-.post__meta {
+.post__kicker {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
 .post__back {
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   color: var(--b300);
+  letter-spacing: 0.04em;
+  transition: color 0.15s;
 }
-.post__meta-divider { width:1px; height:10px; background:var(--rule); }
-.post__meta-text    { font-family:var(--mono); font-size:0.72rem; color:var(--b300); }
+.post__back:hover { color: var(--ink); }
+.post__kicker-sep { color: var(--b200); font-family: var(--mono); font-size: 0.66rem; }
 
 .post__title {
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  letter-spacing: -0.025em;
-  line-height: 1.12;
+  font-size: clamp(2rem, 5.5vw, 3.75rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
   margin-bottom: 1rem;
+  color: var(--ink);
 }
-.post__title em { font-style:italic; color:var(--b500); }
 
+/* Deck in italic — Bloomberg style */
 .post__desc {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   color: var(--ink2);
-  font-weight: 300;
-  line-height: 1.7;
-  margin-bottom: 1rem;
+  font-family: var(--source);
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  max-width: 680px;
 }
 
 .post__byline {
   display: flex;
   align-items: center;
-  gap: .75rem;
+  gap: 8px;
   flex-wrap: wrap;
+  border-top: 0.5px solid var(--rule);
+  padding-top: 1rem;
+}
+.post__byline-author {
   font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--b300);
-  margin-top: .5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.post__byline-sep { color: var(--b200); font-family: var(--mono); font-size: 0.7rem; }
+.post__meta-text  { font-family: var(--mono); font-size: 0.66rem; color: var(--b300); }
+
+/* ── COVER IMAGE ── */
+.post__cover {
+  width: 100%;
+  height: clamp(260px, 42vw, 460px);
+  border-bottom: 0.5px solid var(--rule);
 }
 
-/* LAYOUT */
-.post__body { padding: 0 0 2.5rem; }
+/* ── BODY ── */
+.post__body { padding: 3rem 0 2.5rem; }
 
-/* PROSE */
 .prose { max-width: 680px; }
-.prose :global(h2) { font-size:1.5rem; margin-top:2.5rem; margin-bottom:.75rem; padding-top:1.5rem; border-top:0.5px solid var(--rule); }
-.prose :global(h3) { font-size:1.15rem; margin-top:1.75rem; margin-bottom:.6rem; color:var(--b600); }
-.prose :global(p)  { font-size:1.05rem; color:var(--ink2); line-height:1.8; font-weight:400; margin-bottom:1.25rem; }
-.prose :global(ul),
-.prose :global(ol) { padding-left:1.5rem; margin-bottom:1.25rem; color:var(--ink2); font-weight:300; }
-.prose :global(li) { margin-bottom:.4rem; line-height:1.75; font-size:1rem; }
-.prose :global(a)  { color:var(--b500); border-bottom:0.5px solid var(--b200); }
-.prose :global(a:hover) { color:var(--b700); border-bottom-color:var(--b700); }
-.prose :global(strong)  { color:var(--ink); font-weight:600; }
-.prose :global(img)     { margin:1.5rem 0; }
 
-/* Inline share button in byline */
+.prose :global(h2) {
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-top: 3rem;
+  margin-bottom: 0.75rem;
+  padding-top: 1.75rem;
+  border-top: 0.5px solid var(--rule);
+  color: var(--ink);
+}
+.prose :global(h3) {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 2rem;
+  margin-bottom: 0.6rem;
+  color: var(--ink);
+}
+.prose :global(p) {
+  font-size: 1.05rem;
+  color: var(--ink2);
+  line-height: 1.82;
+  margin-bottom: 1.3rem;
+  font-family: var(--source);
+}
+.prose :global(ul),
+.prose :global(ol) { padding-left: 1.5rem; margin-bottom: 1.25rem; color: var(--ink2); }
+.prose :global(li) { margin-bottom: 0.4rem; line-height: 1.75; font-size: 1rem; font-family: var(--source); }
+.prose :global(a)  { color: var(--ink); border-bottom: 1px solid var(--rule); transition: color 0.15s, border-color 0.15s; }
+.prose :global(a:hover) { color: var(--accent); border-bottom-color: var(--accent); }
+.prose :global(strong)  { color: var(--ink); font-weight: 700; }
+.prose :global(img)     { margin: 2rem 0; width: 100%; }
+.prose :global(iframe)  { margin: 2rem 0; }
+
+/* Share button in byline */
 .post__share-btn {
   font-family: var(--mono);
-  font-size: .68rem;
-  padding: 3px 10px;
-  border-radius: 3px;
-  border: 0.5px solid var(--b400);
-  color: var(--b500);
+  font-size: 0.64rem;
+  padding: 4px 12px;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
   text-transform: uppercase;
-  letter-spacing: .06em;
-  transition: all .15s;
+  letter-spacing: 0.08em;
+  transition: all 0.12s;
   white-space: nowrap;
+  font-weight: 600;
 }
-.post__share-btn:hover { background: var(--b500); color: #fff; border-color: var(--b500); }
+.post__share-btn:hover { background: var(--ink); color: #fff; }
 
-/* FOOTER */
-.post__footer { border-top:0.5px solid var(--rule); padding:1.5rem 0; background:var(--b100); }
-.post__footer-inner { display:flex; align-items:center; justify-content:space-between; }
-.post__footer-back  { font-family:var(--mono); font-size:.78rem; color:var(--b400); }
+/* ── POST FOOTER ── */
+.post__footer {
+  border-top: 0.5px solid var(--rule);
+  padding: 1.5rem 0;
+  background: var(--b100);
+}
+.post__footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.post__footer-back {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--b400);
+  letter-spacing: 0.04em;
+  transition: color 0.15s;
+}
+.post__footer-back:hover { color: var(--ink); }
 
-@media (max-width:600px) {
-  .post__header { padding: 1.5rem 0 0; }
+@media (max-width: 600px) {
+  .post__header { padding: 1.75rem 0 1.5rem; }
+  .post__title  { font-size: 1.85rem; }
+  .post__desc   { font-size: 1rem; }
 }
 </style>

@@ -15,16 +15,18 @@ function fmt(date: Date) {
 
 <Base title="Blog — syhai.xyz">
 
+  <div class="container--wide"><div class="rule-thick"></div></div>
+
   <div class="blog-header">
-    <div class="container">
-      <h1 class="fade-up-1" data-lang="en">Blog</h1>
-      <h1 class="fade-up-1" data-lang="vn">Blog</h1>
+    <div class="container--wide">
+      <h1 class="fade-up-1" data-lang="en">All Posts</h1>
+      <h1 class="fade-up-1" data-lang="vn">Tất cả bài viết</h1>
       <p class="fade-up-2" data-lang="en">Everything I learn about AI and crypto — posted publicly.</p>
       <p class="fade-up-2" data-lang="vn">Tất cả những gì tôi học về AI và crypto — chia sẻ công khai.</p>
     </div>
   </div>
 
-  <div class="container" style="padding-bottom:3rem">
+  <div class="container--wide" style="padding-bottom:3rem">
 
     <div class="filter-row fade-up-2">
       {categories.map(cat => (
@@ -42,9 +44,9 @@ function fmt(date: Date) {
               ? <img src={post.data.cover} alt={post.data.title} />
               : <div class="img-frame__placeholder--sm">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <rect x="2" y="5" width="20" height="14" rx="2" stroke="#85B7EB" stroke-width="1.5"/>
-                    <path d="M2 11l5 4 4-3 6 4" stroke="#85B7EB" stroke-width="1"/>
-                    <circle cx="7.5" cy="9" r="1.5" fill="#C3DEFA"/>
+                    <rect x="2" y="5" width="20" height="14" rx="1" stroke="#999" stroke-width="1.5"/>
+                    <path d="M2 11l5 4 4-3 6 4" stroke="#999" stroke-width="1"/>
+                    <circle cx="7.5" cy="9" r="1.5" fill="#E5E5E5"/>
                   </svg>
                 </div>
             }
@@ -70,35 +72,112 @@ function fmt(date: Date) {
 </Base>
 
 <style>
-.blog-header { padding:3rem 0 2rem; border-bottom:2.5px solid var(--navy); background:var(--paper); }
-.blog-header h1 { font-size:clamp(2rem,5vw,3rem); }
-.blog-header p  { font-size:1rem; color:var(--ink2); font-weight:300; margin-top:.5rem; max-width:480px; }
+.blog-header {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 0.5px solid var(--rule);
+}
+.blog-header h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.06;
+}
+.blog-header p {
+  font-size: 1rem;
+  color: var(--ink2);
+  margin-top: 0.6rem;
+  font-family: var(--source);
+}
 
-.mono  { font-family:var(--mono); }
-.muted { color:var(--b300); font-size:.72rem; }
+.mono  { font-family: var(--mono); }
+.muted { color: var(--b300); font-size: 0.66rem; }
 
-.filter-row { display:flex; gap:6px; flex-wrap:wrap; padding:1.5rem 0 1.25rem; border-bottom:0.5px solid var(--rule); }
-.filter-btn { font-family:var(--mono); font-size:.68rem; padding:4px 12px; border-radius:10px; border:0.5px solid var(--b200); background:transparent; color:var(--b400); cursor:pointer; letter-spacing:.06em; text-transform:uppercase; transition:all .15s; }
-.filter-btn:hover  { border-color:var(--b400); color:var(--b500); }
-.filter-btn.active { background:var(--b500); color:var(--paper); border-color:var(--b500); }
+/* Filter row — Bloomberg bar style */
+.filter-row {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+  padding: 1.5rem 0 0;
+  border-bottom: 0.5px solid var(--rule);
+  margin-bottom: 0;
+}
+.filter-btn {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  padding: 8px 16px;
+  border: none;
+  border-right: 0.5px solid var(--rule);
+  background: transparent;
+  color: var(--b400);
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.12s;
+  font-weight: 500;
+}
+.filter-btn:first-child { border-left: 0.5px solid var(--rule); }
+.filter-btn:hover { color: var(--ink); background: var(--b100); }
+.filter-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-.post-row { display:grid; grid-template-columns:100px 1fr auto; gap:1.25rem; align-items:start; padding:1.25rem 0; border-bottom:0.5px solid var(--rule); color:inherit; }
-.post-row:hover { color:inherit; }
-.post-row:hover .post-row__title { color:var(--b500); }
-.post-row.hidden { display:none; }
+/* Post rows */
+.post-row {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  gap: 1.5rem;
+  align-items: start;
+  padding: 1.5rem 0;
+  border-bottom: 0.5px solid var(--rule);
+  color: inherit;
+  transition: background 0.12s;
+}
+.post-row:hover { color: inherit; background: #fafafa; }
+.post-row:hover .post-row__title { color: var(--accent); }
+.post-row.hidden { display: none; }
 
-.post-row__img { height:68px; width:100px; border-radius:var(--radius); flex-shrink:0; }
-.img-frame__placeholder--sm { display:flex; align-items:center; justify-content:center; width:100%; height:100%; background:var(--b100); }
+.post-row__img { height: 74px; width: 110px; flex-shrink: 0; }
+.img-frame__placeholder--sm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--b100);
+}
 
-.post-row__body .tag { margin-bottom:.4rem; }
-.post-row__title { font-family:var(--playfair); font-size:1.05rem; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:.3rem; transition:color .2s; }
-.post-row__desc  { font-size:.82rem; color:var(--ink2); line-height:1.6; font-weight:300; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.post-row__body .tag { margin-bottom: 0.35rem; }
+.post-row__title {
+  font-family: var(--playfair);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.3rem;
+  transition: color 0.15s;
+}
+.post-row__desc {
+  font-size: 0.82rem;
+  color: var(--ink2);
+  line-height: 1.55;
+  font-family: var(--source);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.post-row__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
 
-.post-row__meta { display:flex; flex-direction:column; align-items:flex-end; gap:3px; font-size:.68rem; padding-top:2px; flex-shrink:0; }
-
-@media (max-width:600px) {
-  .post-row { grid-template-columns:72px 1fr; }
-  .post-row__meta { display:none; }
+@media (max-width: 600px) {
+  .post-row { grid-template-columns: 80px 1fr; }
+  .post-row__img { width: 80px; }
+  .post-row__meta { display: none; }
 }
 </style>
 
