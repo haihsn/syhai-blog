@@ -6,7 +6,7 @@ descriptionVN: Mô hình App Capital định giá ETH dựa trên tổng tài s�
 pubDate: 2026-04-06
 category: AI Tutorial
 readTime: 4
-cover: /images/Gemini_Generated_Image_ps5c2bps5c2bps5c.png
+cover: /images/Gemini_Generated_Image_vvq0p6vvq0p6vvq0.png
 tags: []
 tagsVN: []
 draft: false
