@@ -183,7 +183,6 @@ function fmt(date: Date) {
 .featured__card {
   display: grid;
   grid-template-columns: 55% 45%;
-  min-height: 340px;
   color: inherit;
   border-bottom: 0.5px solid var(--rule);
 }
@@ -191,8 +190,7 @@ function fmt(date: Date) {
 .featured__card:hover .featured__title { color: var(--accent); }
 
 .featured__img {
-  height: 100%;
-  min-height: 300px;
+  height: 240px;
   border-right: 0.5px solid var(--rule);
 }
 
@@ -264,18 +262,16 @@ function fmt(date: Date) {
 .post-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  border-top: 0.5px solid var(--rule);
+  gap: 1.5rem;
 }
 
 .post-card {
   display: block;
   color: inherit;
   background: var(--paper);
-  border-right: 0.5px solid var(--rule);
+  border: 0.5px solid var(--rule);
   transition: background 0.12s;
 }
-.post-card:last-child { border-right: none; }
 .post-card:hover { color: inherit; background: #fafafa; }
 .post-card:hover .post-card__title { color: var(--accent); }
 
@@ -404,8 +400,7 @@ function fmt(date: Date) {
   .featured__body { padding: 1.5rem; }
 }
 @media (max-width: 600px) {
-  .post-grid { grid-template-columns: 1fr; }
-  .post-card { border-right: none; border-bottom: 0.5px solid var(--rule); }
+  .post-grid { grid-template-columns: 1fr; gap: 1rem; }
   .building__grid { grid-template-columns: 1fr; }
   .about__links { display: none; }
 }
