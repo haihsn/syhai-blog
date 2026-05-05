@@ -16,8 +16,6 @@ function fmt(date: Date) {
 
 <Base title="syhai.xyz — AI & Crypto Research">
 
-  <div class="container--wide"><div class="rule-thick fade-up"></div></div>
-
   <!-- FEATURED -->
   {featured && (
     <section class="featured fade-up-1">
@@ -190,8 +188,9 @@ function fmt(date: Date) {
 .featured__card:hover .featured__title { color: var(--accent); }
 
 .featured__img {
-  height: 240px;
+  min-height: 240px;
   border-right: 0.5px solid var(--rule);
+  align-self: stretch;
 }
 
 .featured__body {
