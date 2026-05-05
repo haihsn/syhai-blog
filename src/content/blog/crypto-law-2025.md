@@ -6,7 +6,7 @@ descriptionVN: Khi tôi nói chuyện với Claude trong giao diện chat, tôi 
 pubDate: 2026-04-06
 category: Crypto
 readTime: 7
-cover: /images/Gemini_Generated_Image_ykt71eykt71eykt7.png
+cover: /images/Gemini_Generated_Image_nvnzbsnvnzbsnvnz.png
 bodyVN: |-
   Mọi người thường hỏi tôi về quy trình AI, cụ thể cách tôi dùng Claude để nghiên cứu và viết trong khi cũng dùng Claude Code để xây dựng. Câu trả lời thực sự là chúng không thay thế được nhau. Chúng phục vụ những vai trò khác nhau, và các dự án tôi cố chỉ dùng một trong hai luôn có kết quả tệ hơn.
 
