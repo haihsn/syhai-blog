@@ -6,7 +6,7 @@ descriptionVN: Hầu hết mọi người mua Mac Mini cho OpenClaw không thự
 pubDate: 2026-04-06
 category: Research
 readTime: 5
-cover: /images/Gemini_Generated_Image_np2zmcnp2zmcnp2z.png
+cover: /images/Gemini_Generated_Image_lxan5hlxan5hlxan.png
 tags:
   - Claude
   - Research
