@@ -181,6 +181,7 @@ function fmt(date: Date) {
 .featured__card {
   display: grid;
   grid-template-columns: 55% 45%;
+  height: 340px;
   color: inherit;
   border-bottom: 0.5px solid var(--rule);
 }
@@ -188,9 +189,8 @@ function fmt(date: Date) {
 .featured__card:hover .featured__title { color: var(--accent); }
 
 .featured__img {
-  min-height: 240px;
+  height: 100%;
   border-right: 0.5px solid var(--rule);
-  align-self: stretch;
 }
 
 .featured__body {
@@ -394,8 +394,8 @@ function fmt(date: Date) {
   .building__grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 700px) {
-  .featured__card { grid-template-columns: 1fr; }
-  .featured__img { min-height: 220px; border-right: none; border-bottom: 0.5px solid var(--rule); }
+  .featured__card { grid-template-columns: 1fr; height: auto; }
+  .featured__img { height: 220px; border-right: none; border-bottom: 0.5px solid var(--rule); }
   .featured__body { padding: 1.5rem; }
 }
 @media (max-width: 600px) {
