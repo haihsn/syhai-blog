@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import WorkingOn3D from '../components/WorkingOn3D';
 
 const posts = (await getCollection('blog'))
   .filter(p => !p.data.draft)
@@ -16,13 +17,29 @@ function fmt(date: Date) {
 
 <Base title="syhai.xyz — AI & Crypto Research">
 
-  <!-- FEATURED -->
+  <!-- ── HERO ── -->
+  <section class="hero fade-up">
+    <div class="container--wide">
+      <h1 class="hero__name">Sy Hai</h1>
+      <p class="hero__bio" data-lang="en">
+        I work at the intersection of AI, crypto trading, and quantitative research —
+        building systems that give individual traders access to tools that used to require a team.
+      </p>
+      <p class="hero__bio" data-lang="vn">
+        Tôi làm việc tại giao điểm giữa AI, giao dịch crypto và nghiên cứu định lượng —
+        xây dựng hệ thống giúp trader cá nhân tiếp cận công cụ chỉ đội ngũ lớn mới có.
+      </p>
+      <span class="hero__note" data-lang="en">Learning in public.</span>
+      <span class="hero__note" data-lang="vn">Học hỏi công khai.</span>
+    </div>
+  </section>
+
+  <!-- ── FEATURED ── -->
   {featured && (
     <section class="featured fade-up-1">
       <div class="container--wide">
         <a href={`/blog/${featured.slug}`} class="featured__card">
 
-          <!-- LEFT: image -->
           <div class="featured__img img-frame">
             {featured.data.cover
               ? <img src={featured.data.cover} alt={featured.data.title} />
@@ -38,11 +55,10 @@ function fmt(date: Date) {
             }
           </div>
 
-          <!-- RIGHT: category + title + desc + meta -->
           <div class="featured__body">
             <span class="tag">{featured.data.category}</span>
-            <h1 class="featured__title" data-lang="en">{featured.data.title}</h1>
-            <h1 class="featured__title" data-lang="vn">{featured.data.titleVN ?? featured.data.title}</h1>
+            <h2 class="featured__title" data-lang="en">{featured.data.title}</h2>
+            <h2 class="featured__title" data-lang="vn">{featured.data.titleVN ?? featured.data.title}</h2>
             <p class="featured__desc" data-lang="en">{featured.data.description}</p>
             <p class="featured__desc" data-lang="vn">{featured.data.descriptionVN ?? featured.data.description}</p>
             <div class="featured__footer">
@@ -64,7 +80,7 @@ function fmt(date: Date) {
     </section>
   )}
 
-  <!-- LATEST SECTION HEADER -->
+  <!-- ── LATEST ── -->
   <div class="container--wide section-row fade-up-2">
     <span class="section-label" data-lang="en">Latest</span>
     <span class="section-label" data-lang="vn">Mới nhất</span>
@@ -110,50 +126,10 @@ function fmt(date: Date) {
     </section>
   )}
 
-  <div class="container--wide" style="padding-top: 1rem;"><div class="rule-thick"></div></div>
+  <!-- ── 3D SCROLL SECTION ── -->
+  <WorkingOn3D client:only="react" />
 
-  <!-- WHAT I'M BUILDING -->
-  <section class="building" id="building">
-    <div class="container--wide">
-      <div class="section-row" style="margin-bottom:1.5rem; padding-top:2rem;">
-        <span class="section-label" data-lang="en">What I'm building</span>
-        <span class="section-label" data-lang="vn">Những gì tôi đang xây dựng</span>
-        <div class="rule-thin" style="flex:1"></div>
-      </div>
-      <div class="building__grid">
-
-        <div class="building__card">
-          <span class="building__status building__status--live" data-lang="en">● Live</span>
-          <span class="building__status building__status--live" data-lang="vn">● Đang hoạt động</span>
-          <h3 class="building__title" data-lang="en">AI Trading Signal System</h3>
-          <h3 class="building__title" data-lang="vn">Hệ thống tín hiệu giao dịch AI</h3>
-          <p class="building__desc" data-lang="en">Automated signal engine built with Claude. Runs on Binance data, fires alerts to Telegram.</p>
-          <p class="building__desc" data-lang="vn">Hệ thống tín hiệu tự động dùng Claude. Chạy trên dữ liệu Binance, gửi cảnh báo qua Telegram.</p>
-        </div>
-
-        <div class="building__card">
-          <span class="building__status building__status--building" data-lang="en">◐ Building</span>
-          <span class="building__status building__status--building" data-lang="vn">◐ Đang xây dựng</span>
-          <h3 class="building__title" data-lang="en">TikTok — AI for Traders</h3>
-          <h3 class="building__title" data-lang="vn">TikTok — AI cho trader</h3>
-          <p class="building__desc" data-lang="en">Short-form videos teaching how to use Claude for crypto research. Posting weekly.</p>
-          <p class="building__desc" data-lang="vn">Video ngắn hướng dẫn dùng Claude cho nghiên cứu crypto. Đăng hàng tuần.</p>
-        </div>
-
-        <div class="building__card">
-          <span class="building__status building__status--soon" data-lang="en">○ Coming soon</span>
-          <span class="building__status building__status--soon" data-lang="vn">○ Sắp ra mắt</span>
-          <h3 class="building__title" data-lang="en">Crypto Research Newsletter</h3>
-          <h3 class="building__title" data-lang="vn">Bản tin nghiên cứu crypto</h3>
-          <p class="building__desc" data-lang="en">Weekly AI-powered market digest for traders. Launching Q2 2025.</p>
-          <p class="building__desc" data-lang="vn">Tổng hợp thị trường hàng tuần dùng AI. Ra mắt Q2 2025.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT STRIP -->
+  <!-- ── ABOUT STRIP ── -->
   <section class="about">
     <div class="container--wide">
       <div class="about__inner">
@@ -175,9 +151,39 @@ function fmt(date: Date) {
 </Base>
 
 <style>
+/* ── HERO ── */
+.hero {
+  padding: 3.5rem 0 3rem;
+  border-bottom: 0.5px solid var(--rule);
+}
+.hero__name {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  margin-bottom: 1.5rem;
+  color: var(--ink);
+}
+.hero__bio {
+  font-family: var(--source);
+  font-size: clamp(1rem, 1.4vw, 1.12rem);
+  color: var(--ink2);
+  line-height: 1.72;
+  max-width: 540px;
+  margin-bottom: 0.75rem;
+}
+.hero__note {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--b400);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 0.25rem;
+}
+
 /* ── FEATURED ── */
 .featured { padding: 0; }
-
 .featured__card {
   display: grid;
   grid-template-columns: 55% 45%;
@@ -192,7 +198,6 @@ function fmt(date: Date) {
   height: 100%;
   border-right: 0.5px solid var(--rule);
 }
-
 .featured__body {
   padding: 2.5rem 2.5rem 2rem;
   display: flex;
@@ -200,7 +205,6 @@ function fmt(date: Date) {
   justify-content: center;
   gap: 1rem;
 }
-
 .featured__title {
   font-size: clamp(1.6rem, 2.8vw, 2.6rem);
   font-weight: 800;
@@ -209,14 +213,12 @@ function fmt(date: Date) {
   color: var(--ink);
   transition: color 0.15s;
 }
-
 .featured__desc {
   font-size: 1rem;
   color: var(--ink2);
   line-height: 1.65;
   font-family: var(--source);
 }
-
 .featured__footer {
   display: flex;
   align-items: center;
@@ -232,7 +234,6 @@ function fmt(date: Date) {
 }
 .featured__meta .mono { font-family: var(--mono); font-size: 0.66rem; color: var(--b300); }
 .mid-dot { color: var(--b200) !important; }
-
 .featured__cta {
   font-family: var(--mono);
   font-size: 0.7rem;
@@ -243,7 +244,7 @@ function fmt(date: Date) {
 
 /* ── SECTION ROW ── */
 .section-row { display: flex; align-items: center; gap: 12px; padding: 2rem 0 1rem; }
-.mono { font-family: var(--mono); }
+.mono  { font-family: var(--mono); }
 .muted { color: var(--b300); font-size: 0.66rem; }
 .view-all {
   font-family: var(--mono);
@@ -261,19 +262,17 @@ function fmt(date: Date) {
 .post-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  border-top: 0.5px solid var(--rule);
 }
-
 .post-card {
   display: block;
   color: inherit;
-  background: var(--paper);
-  border: 0.5px solid var(--rule);
+  border-right: 0.5px solid var(--rule);
   transition: background 0.12s;
 }
+.post-card:last-child { border-right: none; }
 .post-card:hover { color: inherit; background: #fafafa; }
 .post-card:hover .post-card__title { color: var(--accent); }
-
 .post-card__img {
   height: 180px;
   border-bottom: 0.5px solid var(--rule);
@@ -286,10 +285,8 @@ function fmt(date: Date) {
   height: 100%;
   background: var(--b100);
 }
-
 .post-card__body { padding: 1.25rem 1.25rem 1rem; }
 .post-card__body .tag { margin-bottom: 0.5rem; }
-
 .post-card__title {
   font-family: var(--playfair);
   font-size: 1.05rem;
@@ -318,47 +315,6 @@ function fmt(date: Date) {
   padding-top: 0.6rem;
 }
 
-/* ── BUILDING ── */
-.building { padding: 1rem 0 2.5rem; }
-.building__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  border: 0.5px solid var(--rule);
-  border-right: none;
-}
-.building__card {
-  border-right: 0.5px solid var(--rule);
-  padding: 1.5rem 1.5rem 1.25rem;
-}
-.building__status {
-  font-family: var(--mono);
-  font-size: 0.64rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  display: block;
-  margin-bottom: 0.75rem;
-  font-weight: 600;
-}
-.building__status--live     { color: #16a34a; }
-.building__status--building { color: var(--b400); }
-.building__status--soon     { color: var(--b300); }
-.building__title {
-  font-family: var(--playfair);
-  font-size: 1rem;
-  font-weight: 800;
-  color: var(--ink);
-  margin-bottom: 0.5rem;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-.building__desc {
-  font-size: 0.82rem;
-  color: var(--ink2);
-  line-height: 1.55;
-  font-family: var(--source);
-}
-
 /* ── ABOUT ── */
 .about { padding: 2rem 0 3.5rem; }
 .about__inner {
@@ -372,7 +328,6 @@ function fmt(date: Date) {
 .about__avatar {
   width: 44px;
   height: 44px;
-  border-radius: 0;
   background: var(--accent);
   display: flex;
   align-items: center;
@@ -382,7 +337,6 @@ function fmt(date: Date) {
   font-weight: 900;
   color: #fff;
   flex-shrink: 0;
-  letter-spacing: -0.01em;
 }
 .about__text { flex: 1; }
 .about__name { font-size: 1rem; font-weight: 800; font-family: var(--playfair); margin-bottom: 3px; letter-spacing: -0.02em; }
@@ -391,16 +345,16 @@ function fmt(date: Date) {
 
 @media (max-width: 900px) {
   .post-grid { grid-template-columns: 1fr 1fr; }
-  .building__grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 700px) {
   .featured__card { grid-template-columns: 1fr; height: auto; }
   .featured__img { height: 220px; border-right: none; border-bottom: 0.5px solid var(--rule); }
   .featured__body { padding: 1.5rem; }
+  .hero__name { font-size: 2.5rem; }
 }
 @media (max-width: 600px) {
-  .post-grid { grid-template-columns: 1fr; gap: 1rem; }
-  .building__grid { grid-template-columns: 1fr; }
+  .post-grid { grid-template-columns: 1fr; }
+  .post-card { border-right: none; border-bottom: 0.5px solid var(--rule); }
   .about__links { display: none; }
 }
 </style>
