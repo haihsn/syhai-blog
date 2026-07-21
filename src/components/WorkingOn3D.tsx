@@ -8,8 +8,6 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-// ── Helpers ──────────────────────────────────────────────────
-
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 
 const smoothstep = (a: number, b: number, t: number) => {
@@ -23,8 +21,6 @@ const STATES = [
   { label: 'Trading', desc: 'Markets as systems, not as noise.' },
 ]
 
-// ── Scene: all animation logic in one useFrame ───────────────
-
 interface SceneProps {
   progressRef: React.RefObject<number>
   labelRef:    React.RefObject<HTMLSpanElement | null>
@@ -32,10 +28,34 @@ interface SceneProps {
   pipsRef:     React.RefObject<HTMLDivElement | null>
 }
 
+// Fan pivot: cards rotate around a shared base point (like held in a hand).
+// Each card is a straight rectangle; only its angle differs — no bowtie distortion.
+const HALF_H = 0.53  // half of card height 1.06
+const POKER_CARDS = Array.from({ length: 5 }, (_, i) => {
+  const a = (i - 2) * 0.22                        // angles: -0.44 … +0.44 rad
+  return {
+    x: Math.sin(a) * HALF_H,                      // card center x after pivot rotation
+    y: HALF_H * (Math.cos(a) - 1) + 0.1,          // tiny y-drop at edges; +0.1 centers fan
+    z: i * 0.055,                                  // slight z-offset prevents z-fighting
+    rz: a,
+  }
+})
+
+const CODE_LAYERS = [
+  { w: 2.8, y:  0.9, wire: false },
+  { w: 2.1, y:  0.45, wire: true  },
+  { w: 2.8, y:  0.0, wire: false },
+  { w: 1.4, y: -0.45, wire: true  },
+  { w: 2.8, y: -0.9, wire: false },
+]
+
+const BAR_HEIGHTS = [0.55, 1.05, 0.70, 1.65, 1.00, 1.35, 0.80]
+
 function Scene({ progressRef, labelRef, descRef, pipsRef }: SceneProps) {
   const pokerRef   = useRef<THREE.Group>(null!)
   const codeRef    = useRef<THREE.Group>(null!)
   const financeRef = useRef<THREE.Group>(null!)
+  const shadowRef  = useRef<THREE.Mesh>(null!)
   const lerpW      = useRef({ poker: 1, code: 0, finance: 0 })
   const lastState  = useRef(0)
 
@@ -43,19 +63,17 @@ function Scene({ progressRef, labelRef, descRef, pipsRef }: SceneProps) {
     const p = Math.max(0, Math.min(1, progressRef.current ?? 0))
     const t = clock.elapsedTime
 
-    // Target weights — poker fades as user scrolls, finance fades in
     const tp = 1 - smoothstep(0.22, 0.42, p)
     const tc = smoothstep(0.28, 0.44, p) * (1 - smoothstep(0.58, 0.74, p))
     const tf = smoothstep(0.58, 0.76, p)
 
-    // Smooth lerp toward targets (acts like spring easing)
     lerpW.current.poker   = lerp(lerpW.current.poker,   tp, 0.07)
     lerpW.current.code    = lerp(lerpW.current.code,    tc, 0.07)
     lerpW.current.finance = lerp(lerpW.current.finance, tf, 0.07)
 
     const { poker, code, finance } = lerpW.current
 
-    // ── Poker: fan of 5 cards ─────────────────────────────
+    // Poker — subtle sway; X tilt is held by the group's initial rotation
     if (pokerRef.current) {
       pokerRef.current.visible = poker > 0.01
       if (pokerRef.current.visible) {
@@ -67,7 +85,11 @@ function Scene({ progressRef, labelRef, descRef, pipsRef }: SceneProps) {
       }
     }
 
-    // ── Code: stacked panels ──────────────────────────────
+    // Faux shadow fades with poker weight
+    if (shadowRef.current) {
+      ;(shadowRef.current.material as THREE.MeshBasicMaterial).opacity = poker * 0.11
+    }
+
     if (codeRef.current) {
       codeRef.current.visible = code > 0.01
       if (codeRef.current.visible) {
@@ -80,7 +102,6 @@ function Scene({ progressRef, labelRef, descRef, pipsRef }: SceneProps) {
       }
     }
 
-    // ── Finance: bar chart ────────────────────────────────
     if (financeRef.current) {
       financeRef.current.visible = finance > 0.01
       if (financeRef.current.visible) {
@@ -89,13 +110,12 @@ function Scene({ progressRef, labelRef, descRef, pipsRef }: SceneProps) {
         financeRef.current.children.forEach((c, i) => {
           const mesh = c as THREE.Mesh
           ;(mesh.material as THREE.MeshStandardMaterial).opacity = finance
-          // subtle pulse per bar
           mesh.scale.y = 1 + Math.sin(t * 0.5 + i * 0.9) * 0.04 * finance
         })
       }
     }
 
-    // ── Label: direct DOM update, no re-render ────────────
+    // Label: direct DOM update — no React re-render
     const maxW = Math.max(poker, code, finance)
     if (maxW > 0.25) {
       let idx = 0
@@ -116,42 +136,38 @@ function Scene({ progressRef, labelRef, descRef, pipsRef }: SceneProps) {
     }
   })
 
-  // Static geometry definitions
-  const POKER_CARDS = Array.from({ length: 5 }, (_, i) => {
-    const a = (i - 2) * 0.28
-    return { x: Math.sin(a) * 1.8, y: Math.cos(a) * -0.18, z: i * 0.02, rz: a * 0.75 }
-  })
-
-  const CODE_LAYERS = [
-    { w: 2.8, y:  0.9, wire: false },
-    { w: 2.1, y:  0.45, wire: true  },
-    { w: 2.8, y:  0.0, wire: false },
-    { w: 1.4, y: -0.45, wire: true  },
-    { w: 2.8, y: -0.9, wire: false },
-  ]
-
-  const BAR_HEIGHTS = [0.55, 1.05, 0.70, 1.65, 1.00, 1.35, 0.80]
-
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[4, 6, 4]} intensity={1.2} />
-      <directionalLight position={[-4, -2, -4]} intensity={0.2} />
+      {/* Lighting: warm key from top-right-front; cool fill from left; soft bounce from below */}
+      <ambientLight intensity={0.28} />
+      <directionalLight position={[3, 5, 5]}  intensity={2.2} />
+      <directionalLight position={[-4, 1, 3]} intensity={0.45} />
+      <directionalLight position={[0, -4, 2]} intensity={0.12} />
 
-      {/* Poker */}
-      <group ref={pokerRef}>
+      {/* Faux drop shadow beneath the card fan */}
+      <mesh ref={shadowRef} position={[0, -0.55, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[3.2, 1.2]} />
+        <meshBasicMaterial color="#000" transparent opacity={0} depthWrite={false} />
+      </mesh>
+
+      {/* Poker: fan of extruded cards with visible edges */}
+      {/* rotation.x=-0.28 tilts the fan toward viewer so overlap + depth read clearly */}
+      <group ref={pokerRef} rotation={[-0.28, 0, 0]}>
         {POKER_CARDS.map(({ x, y, z, rz }, i) => (
-          <mesh key={i} position={[x, y, z]} rotation={[0.05, 0, rz]}>
-            <planeGeometry args={[0.72, 1.06]} />
+          <mesh key={i} position={[x, y, z]} rotation={[0, 0, rz]}>
+            <boxGeometry args={[0.72, 1.06, 0.028]} />
             <meshStandardMaterial
-              color="#0d0d0d" metalness={0.45} roughness={0.35}
-              transparent opacity={1} side={THREE.DoubleSide}
+              color="#1c1c1c"
+              metalness={0.55}
+              roughness={0.20}
+              transparent
+              opacity={1}
             />
           </mesh>
         ))}
       </group>
 
-      {/* Code */}
+      {/* Code: stacked panels */}
       <group ref={codeRef} visible={false}>
         {CODE_LAYERS.map((l, i) => (
           <mesh key={i} position={[0, l.y, 0]}>
@@ -164,7 +180,7 @@ function Scene({ progressRef, labelRef, descRef, pipsRef }: SceneProps) {
         ))}
       </group>
 
-      {/* Finance */}
+      {/* Finance: bar chart */}
       <group ref={financeRef} visible={false}>
         {BAR_HEIGHTS.map((h, i) => (
           <mesh key={i} position={[(i - 3) * 0.46, -1 + h / 2, 0]}>
@@ -178,8 +194,6 @@ function Scene({ progressRef, labelRef, descRef, pipsRef }: SceneProps) {
     </>
   )
 }
-
-// ── Public component ─────────────────────────────────────────
 
 export default function WorkingOn3D() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -213,7 +227,6 @@ export default function WorkingOn3D() {
     return () => ctx.revert()
   }, [prefersReduced])
 
-  // Reduced motion: simple text list
   if (prefersReduced) {
     return (
       <section className="w3d-static">
@@ -234,10 +247,8 @@ export default function WorkingOn3D() {
 
   return (
     <section ref={containerRef} className="w3d">
-
       <div className="w3d__sticky">
 
-        {/* Text overlay */}
         <div className="w3d__overlay">
           <span className="w3d__pretitle">What I'm working on</span>
           <span className="w3d__label" ref={labelRef}>Poker</span>
@@ -249,9 +260,9 @@ export default function WorkingOn3D() {
           </div>
         </div>
 
-        {/* 3D */}
+        {/* Camera raised slightly above center so fan's depth and overlap read in perspective */}
         <Canvas
-          camera={{ position: [0, 0, 4.5], fov: 42 }}
+          camera={{ position: [0, 0.8, 4.5], fov: 42 }}
           gl={{ antialias: true, alpha: true }}
           dpr={[1, 2]}
           style={{ width: '100%', height: '100%', position: 'absolute', inset: 0 }}
@@ -265,7 +276,6 @@ export default function WorkingOn3D() {
         </Canvas>
 
       </div>
-
     </section>
   )
 }
