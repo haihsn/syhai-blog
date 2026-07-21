@@ -6,8 +6,7 @@ const posts = (await getCollection('blog'))
   .filter(p => !p.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-const featured = posts[0];
-const rest     = posts.slice(1, 6);
+const rest = posts.slice(0, 6);
 ---
 
 <Base title="syhai.xyz — AI & Crypto Research">
@@ -28,24 +27,6 @@ const rest     = posts.slice(1, 6);
       <span class="hero__note" data-lang="vn">Học hỏi công khai.</span>
     </div>
   </section>
-
-  <!-- ── FEATURED ── -->
-  {featured && (
-    <section class="featured">
-      <div class="container--wide">
-        <div class="section-row">
-          <span class="section-label" data-lang="en">Featured</span>
-          <span class="section-label" data-lang="vn">Nổi bật</span>
-          <div class="rule-thin" style="flex:1"></div>
-        </div>
-        <a href={`/blog/${featured.slug}`} class="featured__link">
-          <span class="tag">{featured.data.category}</span>
-          <h2 class="featured__title" data-lang="en">{featured.data.title}</h2>
-          <h2 class="featured__title" data-lang="vn">{featured.data.titleVN ?? featured.data.title}</h2>
-        </a>
-      </div>
-    </section>
-  )}
 
   <!-- ── LATEST ── -->
   {rest.length > 0 && (
@@ -135,24 +116,6 @@ const rest     = posts.slice(1, 6);
   white-space: nowrap;
 }
 .view-all:hover { color: var(--accent); }
-
-/* ── FEATURED ── */
-.featured { padding-bottom: 1rem; border-bottom: 0.5px solid var(--rule); }
-.featured__link {
-  display: block;
-  padding: 1rem 0 2rem;
-  color: inherit;
-}
-.featured__link .tag { margin-bottom: 0.75rem; display: block; }
-.featured__link:hover .featured__title { color: var(--accent); }
-.featured__title {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.05;
-  color: var(--ink);
-  transition: color 0.15s;
-}
 
 /* ── LATEST ── */
 .latest { padding-bottom: 3rem; }
