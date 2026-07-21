@@ -7,10 +7,6 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const categories = ['All', ...new Set(posts.map(p => p.data.category))];
-
-function fmt(date: Date) {
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-}
 ---
 
 <Base title="Blog — syhai.xyz">
@@ -21,8 +17,6 @@ function fmt(date: Date) {
     <div class="container--wide">
       <h1 class="fade-up-1" data-lang="en">All Posts</h1>
       <h1 class="fade-up-1" data-lang="vn">Tất cả bài viết</h1>
-      <p class="fade-up-2" data-lang="en">Everything I learn about AI and crypto — posted publicly.</p>
-      <p class="fade-up-2" data-lang="vn">Tất cả những gì tôi học về AI và crypto — chia sẻ công khai.</p>
     </div>
   </div>
 
@@ -36,21 +30,12 @@ function fmt(date: Date) {
       ))}
     </div>
 
-    <div id="post-list">
+    <div id="post-list" class="post-list">
       {posts.map(post => (
         <a href={`/blog/${post.slug}`} class="post-row" data-cat={post.data.category}>
-          <div class="post-row__left">
-            <span class="tag">{post.data.category}</span>
-            <h2 class="post-row__title" data-lang="en">{post.data.title}</h2>
-            <h2 class="post-row__title" data-lang="vn">{post.data.titleVN ?? post.data.title}</h2>
-            <p class="post-row__desc" data-lang="en">{post.data.description}</p>
-            <p class="post-row__desc" data-lang="vn">{post.data.descriptionVN ?? post.data.description}</p>
-          </div>
-          <div class="post-row__meta">
-            <span class="mono muted">{fmt(post.data.pubDate)}</span>
-            <span class="mono muted" data-lang="en">{post.data.readTime} min read</span>
-            <span class="mono muted" data-lang="vn">{post.data.readTime} phút đọc</span>
-          </div>
+          <span class="tag post-row__cat">{post.data.category}</span>
+          <span class="post-row__title" data-lang="en">{post.data.title}</span>
+          <span class="post-row__title" data-lang="vn">{post.data.titleVN ?? post.data.title}</span>
         </a>
       ))}
     </div>
@@ -61,7 +46,7 @@ function fmt(date: Date) {
 
 <style>
 .blog-header {
-  padding: 2.5rem 0 2rem;
+  padding: 2.5rem 0 1.5rem;
   border-bottom: 0.5px solid var(--rule);
 }
 .blog-header h1 {
@@ -70,24 +55,12 @@ function fmt(date: Date) {
   letter-spacing: -0.04em;
   line-height: 1.06;
 }
-.blog-header p {
-  font-size: 1rem;
-  color: var(--ink2);
-  margin-top: 0.6rem;
-  font-family: var(--source);
-}
 
-.mono  { font-family: var(--mono); }
-.muted { color: var(--b300); font-size: 0.66rem; }
-
-/* Filter row */
 .filter-row {
   display: flex;
-  gap: 0;
   flex-wrap: wrap;
   padding: 1.5rem 0 0;
   border-bottom: 0.5px solid var(--rule);
-  margin-bottom: 0;
 }
 .filter-btn {
   font-family: var(--mono);
@@ -107,56 +80,31 @@ function fmt(date: Date) {
 .filter-btn:hover { color: var(--ink); background: var(--b100); }
 .filter-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-/* Post rows — text-only */
+.post-list { border-top: 0.5px solid var(--rule); }
+
 .post-row {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: 1.75rem 0;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.1rem 0;
   border-bottom: 0.5px solid var(--rule);
   color: inherit;
 }
-.post-row:hover { color: inherit; }
 .post-row:hover .post-row__title { color: var(--accent); }
 .post-row.hidden { display: none; }
-
-.post-row__left { flex: 1; min-width: 0; }
-.post-row__left .tag { margin-bottom: 0.4rem; }
-
+.post-row__cat { flex-shrink: 0; }
 .post-row__title {
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  font-weight: 800;
+  font-family: var(--playfair);
+  font-size: 1.05rem;
+  font-weight: 700;
   color: var(--ink);
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-  margin-bottom: 0.45rem;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
   transition: color 0.15s;
-}
-.post-row__desc {
-  font-size: 0.88rem;
-  color: var(--ink2);
-  line-height: 1.62;
-  font-family: var(--source);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 60ch;
-}
-
-.post-row__meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 3px;
-  padding-top: 4px;
-  flex-shrink: 0;
-  white-space: nowrap;
 }
 
 @media (max-width: 600px) {
-  .post-row { flex-direction: column; gap: 0.5rem; }
-  .post-row__meta { flex-direction: row; align-items: center; gap: 0.5rem; }
+  .post-row__cat { display: none; }
 }
 </style>
 

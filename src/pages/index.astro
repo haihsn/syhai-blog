@@ -1,24 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
-import WorkingOn3D from '../components/WorkingOn3D';
 
 const posts = (await getCollection('blog'))
   .filter(p => !p.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const featured = posts[0];
-const grid     = posts.slice(1, 4);
-
-function fmt(date: Date) {
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-}
+const rest     = posts.slice(1, 6);
 ---
 
 <Base title="syhai.xyz — AI & Crypto Research">
 
   <!-- ── HERO ── -->
-  <section class="hero fade-up">
+  <section class="hero">
     <div class="container--wide">
       <h1 class="hero__name">Sy Hai</h1>
       <p class="hero__bio" data-lang="en">
@@ -36,98 +31,45 @@ function fmt(date: Date) {
 
   <!-- ── FEATURED ── -->
   {featured && (
-    <section class="featured fade-up-1">
+    <section class="featured">
       <div class="container--wide">
-        <a href={`/blog/${featured.slug}`} class="featured__card">
-
-          <div class="featured__img img-frame">
-            {featured.data.cover
-              ? <img src={featured.data.cover} alt={featured.data.title} />
-              : <div class="img-frame__placeholder">
-                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-                    <rect x="3" y="8" width="30" height="20" rx="1" stroke="#999" stroke-width="1.5"/>
-                    <path d="M3 17l8 7 7-6 10 7" stroke="#999" stroke-width="1"/>
-                    <circle cx="11" cy="14" r="3" fill="#E5E5E5"/>
-                  </svg>
-                  <span data-lang="en">Cover image</span>
-                  <span data-lang="vn">Ảnh bìa</span>
-                </div>
-            }
-          </div>
-
-          <div class="featured__body">
-            <span class="tag">{featured.data.category}</span>
-            <h2 class="featured__title" data-lang="en">{featured.data.title}</h2>
-            <h2 class="featured__title" data-lang="vn">{featured.data.titleVN ?? featured.data.title}</h2>
-            <p class="featured__desc" data-lang="en">{featured.data.description}</p>
-            <p class="featured__desc" data-lang="vn">{featured.data.descriptionVN ?? featured.data.description}</p>
-            <div class="featured__footer">
-              <span class="featured__meta">
-                <span class="mono">{fmt(featured.data.pubDate)}</span>
-                <span class="mono mid-dot">·</span>
-                <span class="mono" data-lang="en">{featured.data.readTime} min read</span>
-                <span class="mono" data-lang="vn">{featured.data.readTime} phút đọc</span>
-              </span>
-              <span class="featured__cta">
-                <span data-lang="en">Read →</span>
-                <span data-lang="vn">Đọc →</span>
-              </span>
-            </div>
-          </div>
-
+        <div class="section-row">
+          <span class="section-label" data-lang="en">Featured</span>
+          <span class="section-label" data-lang="vn">Nổi bật</span>
+          <div class="rule-thin" style="flex:1"></div>
+        </div>
+        <a href={`/blog/${featured.slug}`} class="featured__link">
+          <span class="tag">{featured.data.category}</span>
+          <h2 class="featured__title" data-lang="en">{featured.data.title}</h2>
+          <h2 class="featured__title" data-lang="vn">{featured.data.titleVN ?? featured.data.title}</h2>
         </a>
       </div>
     </section>
   )}
 
   <!-- ── LATEST ── -->
-  <div class="container--wide section-row fade-up-2">
-    <span class="section-label" data-lang="en">Latest</span>
-    <span class="section-label" data-lang="vn">Mới nhất</span>
-    <div class="rule-thin" style="flex:1"></div>
-    <a href="/blog" class="view-all" data-lang="en">View all →</a>
-    <a href="/blog" class="view-all" data-lang="vn">Xem tất cả →</a>
-  </div>
-
-  {grid.length > 0 && (
-    <section class="post-grid-section fade-up-3">
+  {rest.length > 0 && (
+    <section class="latest">
       <div class="container--wide">
-        <div class="post-grid">
-          {grid.map(post => (
-            <a href={`/blog/${post.slug}`} class="post-card">
-              <div class="post-card__img img-frame">
-                {post.data.cover
-                  ? <img src={post.data.cover} alt={post.data.title} />
-                  : <div class="img-frame__placeholder img-frame__placeholder--sm">
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                        <rect x="2" y="5" width="20" height="14" rx="1" stroke="#999" stroke-width="1.5"/>
-                        <path d="M2 11l5 4 4-3 6 4" stroke="#999" stroke-width="1"/>
-                        <circle cx="7.5" cy="9" r="1.5" fill="#E5E5E5"/>
-                      </svg>
-                    </div>
-                }
-              </div>
-              <div class="post-card__body">
-                <span class="tag">{post.data.category}</span>
-                <h2 class="post-card__title" data-lang="en">{post.data.title}</h2>
-                <h2 class="post-card__title" data-lang="vn">{post.data.titleVN ?? post.data.title}</h2>
-                <p class="post-card__desc" data-lang="en">{post.data.description}</p>
-                <p class="post-card__desc" data-lang="vn">{post.data.descriptionVN ?? post.data.description}</p>
-                <div class="post-card__meta">
-                  <span class="mono muted">{fmt(post.data.pubDate)}</span>
-                  <span class="mono muted" data-lang="en">{post.data.readTime} min</span>
-                  <span class="mono muted" data-lang="vn">{post.data.readTime} phút</span>
-                </div>
-              </div>
+        <div class="section-row">
+          <span class="section-label" data-lang="en">Latest</span>
+          <span class="section-label" data-lang="vn">Mới nhất</span>
+          <div class="rule-thin" style="flex:1"></div>
+          <a href="/blog" class="view-all" data-lang="en">View all →</a>
+          <a href="/blog" class="view-all" data-lang="vn">Xem tất cả →</a>
+        </div>
+        <div class="post-list">
+          {rest.map(post => (
+            <a href={`/blog/${post.slug}`} class="post-list__row">
+              <span class="tag post-list__cat">{post.data.category}</span>
+              <span class="post-list__title" data-lang="en">{post.data.title}</span>
+              <span class="post-list__title" data-lang="vn">{post.data.titleVN ?? post.data.title}</span>
             </a>
           ))}
         </div>
       </div>
     </section>
   )}
-
-  <!-- ── 3D SCROLL SECTION ── -->
-  <WorkingOn3D client:only="react" />
 
   <!-- ── ABOUT STRIP ── -->
   <section class="about">
@@ -182,70 +124,8 @@ function fmt(date: Date) {
   margin-top: 0.25rem;
 }
 
-/* ── FEATURED ── */
-.featured { padding: 0; }
-.featured__card {
-  display: grid;
-  grid-template-columns: 55% 45%;
-  height: 340px;
-  color: inherit;
-  border-bottom: 0.5px solid var(--rule);
-}
-.featured__card:hover { color: inherit; }
-.featured__card:hover .featured__title { color: var(--accent); }
-
-.featured__img {
-  height: 100%;
-  border-right: 0.5px solid var(--rule);
-}
-.featured__body {
-  padding: 2.5rem 2.5rem 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-}
-.featured__title {
-  font-size: clamp(1.6rem, 2.8vw, 2.6rem);
-  font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1.08;
-  color: var(--ink);
-  transition: color 0.15s;
-}
-.featured__desc {
-  font-size: 1rem;
-  color: var(--ink2);
-  line-height: 1.65;
-  font-family: var(--source);
-}
-.featured__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 0.5px solid var(--rule);
-  padding-top: 1rem;
-  margin-top: auto;
-}
-.featured__meta {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.featured__meta .mono { font-family: var(--mono); font-size: 0.66rem; color: var(--b300); }
-.mid-dot { color: var(--b200) !important; }
-.featured__cta {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--accent);
-  letter-spacing: 0.04em;
-}
-
 /* ── SECTION ROW ── */
-.section-row { display: flex; align-items: center; gap: 12px; padding: 2rem 0 1rem; }
-.mono  { font-family: var(--mono); }
-.muted { color: var(--b300); font-size: 0.66rem; }
+.section-row { display: flex; align-items: center; gap: 12px; padding: 2rem 0 1.25rem; }
 .view-all {
   font-family: var(--mono);
   font-size: 0.66rem;
@@ -253,66 +133,48 @@ function fmt(date: Date) {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   white-space: nowrap;
-  font-weight: 500;
 }
 .view-all:hover { color: var(--accent); }
 
-/* ── POST GRID ── */
-.post-grid-section { padding: 0 0 3rem; }
-.post-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-top: 0.5px solid var(--rule);
-}
-.post-card {
+/* ── FEATURED ── */
+.featured { padding-bottom: 1rem; border-bottom: 0.5px solid var(--rule); }
+.featured__link {
   display: block;
+  padding: 1rem 0 2rem;
   color: inherit;
-  border-right: 0.5px solid var(--rule);
-  transition: background 0.12s;
 }
-.post-card:last-child { border-right: none; }
-.post-card:hover { color: inherit; background: #fafafa; }
-.post-card:hover .post-card__title { color: var(--accent); }
-.post-card__img {
-  height: 180px;
-  border-bottom: 0.5px solid var(--rule);
-}
-.img-frame__placeholder--sm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: var(--b100);
-}
-.post-card__body { padding: 1.25rem 1.25rem 1rem; }
-.post-card__body .tag { margin-bottom: 0.5rem; }
-.post-card__title {
-  font-family: var(--playfair);
-  font-size: 1.05rem;
+.featured__link .tag { margin-bottom: 0.75rem; display: block; }
+.featured__link:hover .featured__title { color: var(--accent); }
+.featured__title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
   font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
   color: var(--ink);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.5rem;
   transition: color 0.15s;
 }
-.post-card__desc {
-  font-size: 0.82rem;
-  color: var(--ink2);
-  line-height: 1.55;
-  font-family: var(--source);
-  margin-bottom: 0.75rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.post-card__meta {
+
+/* ── LATEST ── */
+.latest { padding-bottom: 3rem; }
+.post-list { border-top: 0.5px solid var(--rule); }
+.post-list__row {
   display: flex;
-  gap: 0.5rem;
-  border-top: 0.5px solid var(--rule);
-  padding-top: 0.6rem;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-bottom: 0.5px solid var(--rule);
+  color: inherit;
+}
+.post-list__row:hover .post-list__title { color: var(--accent); }
+.post-list__cat { flex-shrink: 0; }
+.post-list__title {
+  font-family: var(--playfair);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  transition: color 0.15s;
 }
 
 /* ── ABOUT ── */
@@ -343,18 +205,8 @@ function fmt(date: Date) {
 .about__bio  { font-family: var(--mono); font-size: 0.66rem; color: var(--b400); letter-spacing: 0.04em; }
 .about__links { display: flex; gap: 0.5rem; }
 
-@media (max-width: 900px) {
-  .post-grid { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 700px) {
-  .featured__card { grid-template-columns: 1fr; height: auto; }
-  .featured__img { height: 220px; border-right: none; border-bottom: 0.5px solid var(--rule); }
-  .featured__body { padding: 1.5rem; }
-  .hero__name { font-size: 2.5rem; }
-}
 @media (max-width: 600px) {
-  .post-grid { grid-template-columns: 1fr; }
-  .post-card { border-right: none; border-bottom: 0.5px solid var(--rule); }
   .about__links { display: none; }
+  .post-list__cat { display: none; }
 }
 </style>
