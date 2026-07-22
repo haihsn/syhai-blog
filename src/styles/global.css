@@ -33,6 +33,32 @@
   --radius: 0px;
 }
 
+/* ── Light mode overrides ── */
+html.light {
+  --bg:       #f5f5f2;
+  --paper:    #f5f5f2;
+  --navy:     #000000;
+  --ink:      #1a1a1a;
+  --ink2:     #555555;
+  --b100:     #eaeae6;
+  --b200:     #d4d4d0;
+  --b300:     #aaaaaa;
+  --b400:     #777777;
+  --b500:     #1a1a1a;
+  --b600:     #333333;
+  --b700:     #000000;
+  --rule:       #d4d4d0;
+  --rule-navy:  rgba(0,0,0,0.10);
+}
+
+html.light code {
+  background: var(--b100);
+  border-color: var(--rule);
+  color: var(--ink2);
+}
+html.light pre { background: var(--b100); }
+html.light pre code { color: var(--ink); }
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; scroll-behavior: smooth; }
 
