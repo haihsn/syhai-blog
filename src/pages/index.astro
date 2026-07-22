@@ -31,8 +31,7 @@ const posts = (await getCollection('blog'))
     <div class="home__posts">
       {posts.map(post => (
         <a href={`/blog/${post.slug}`} class="post-row">
-          <span data-lang="en">{post.data.title}</span>
-          <span data-lang="vn">{post.data.titleVN ?? post.data.title}</span>
+          <span class="post-row__title">{post.data.title}</span>
         </a>
       ))}
     </div>
@@ -98,9 +97,14 @@ const posts = (await getCollection('blog'))
   font-weight: 600;
   line-height: 1.3;
   letter-spacing: -0.01em;
-  transition: color 0.15s;
 }
-.post-row:hover { color: var(--accent); }
+.post-row__title { transition: background 0.12s, color 0.12s; }
+.post-row:hover .post-row__title {
+  background: var(--accent);
+  color: #fff;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
 
 /* Mobile: stack vertically, banner on top (not sticky) */
 @media (max-width: 700px) {

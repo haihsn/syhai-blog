@@ -15,8 +15,7 @@ const categories = ['All', ...new Set(posts.map(p => p.data.category))];
 
   <div class="blog-header">
     <div class="container--wide">
-      <h1 class="fade-up-1" data-lang="en">All Posts</h1>
-      <h1 class="fade-up-1" data-lang="vn">Tất cả bài viết</h1>
+      <h1 class="fade-up-1">All Posts</h1>
     </div>
   </div>
 
@@ -34,8 +33,7 @@ const categories = ['All', ...new Set(posts.map(p => p.data.category))];
       {posts.map(post => (
         <a href={`/blog/${post.slug}`} class="post-row" data-cat={post.data.category}>
           <span class="tag post-row__cat">{post.data.category}</span>
-          <span class="post-row__title" data-lang="en">{post.data.title}</span>
-          <span class="post-row__title" data-lang="vn">{post.data.titleVN ?? post.data.title}</span>
+          <span class="post-row__title">{post.data.title}</span>
         </a>
       ))}
     </div>
@@ -90,7 +88,12 @@ const categories = ['All', ...new Set(posts.map(p => p.data.category))];
   border-bottom: 0.5px solid var(--rule);
   color: inherit;
 }
-.post-row:hover .post-row__title { color: var(--accent); }
+.post-row:hover .post-row__title {
+  background: var(--accent);
+  color: #fff;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
 .post-row.hidden { display: none; }
 .post-row__cat { flex-shrink: 0; }
 .post-row__title {
