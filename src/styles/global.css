@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
   /* ── Dark editorial palette ── */
@@ -25,10 +25,11 @@
   --rule-navy:  rgba(255,255,255,0.10);
 
   /* Typography */
-  --playfair: 'Inter', sans-serif;
-  --source:   'Lora', serif;
-  --mono:     'DM Mono', monospace;
+  --playfair: 'Space Grotesk', sans-serif;
+  --source:   'Space Grotesk', sans-serif;
+  --mono:     'IBM Plex Mono', monospace;
 
+  --highlight: #FDE8D8;
   --radius: 0px;
 }
 
@@ -39,7 +40,8 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--source);
-  line-height: 1.7;
+  font-size: 1.25rem;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -88,6 +90,14 @@ blockquote {
 
 hr { border: none; border-top: 0.5px solid var(--rule); margin: 2rem 0; }
 img { max-width: 100%; }
+
+mark, .highlight {
+  background: var(--highlight);
+  color: #1a1a1a;
+  padding: 2px 4px;
+  border-radius: 0;
+  font-style: normal;
+}
 
 .container       { max-width: 760px;  margin: 0 auto; padding: 0 1.75rem; }
 .container--wide { max-width: 1100px; margin: 0 auto; padding: 0 1.75rem; }
