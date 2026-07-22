@@ -23,7 +23,7 @@ const posts = (await getCollection('blog'))
         ? (BANNER.match(/\.(mp4|webm)$/i)
             ? <video src={BANNER} autoplay loop muted playsinline class="banner-media" />
             : <img src={BANNER} alt="Sy Hai" class="banner-media" />)
-        : <div class="banner-placeholder"><span>Add your image / gif / video here</span></div>
+        : <div class="banner-placeholder"><blockquote class="banner-quote">"Being right and winning are not the same game."</blockquote></div>
       }
     </aside>
 
@@ -74,12 +74,18 @@ const posts = (await getCollection('blog'))
   text-align: center;
   padding: 2rem;
 }
-.banner-placeholder span {
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  color: #666;
-  letter-spacing: 0.06em;
-  line-height: 1.8;
+.banner-quote {
+  font-family: var(--source);
+  font-size: 1.05rem;
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.65;
+  letter-spacing: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
 }
 
 /* RIGHT — title list */
@@ -89,14 +95,14 @@ const posts = (await getCollection('blog'))
 
 .post-row {
   display: block;
-  padding: 1.6rem 2rem;
+  padding: 1rem 2rem;
   border-bottom: 0.5px solid var(--rule);
   color: var(--ink);
   font-family: var(--source);
-  font-size: clamp(1.05rem, 1.7vw, 1.45rem);
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
+  font-size: 0.97rem;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
 }
 .post-row__title { transition: background 0.12s, color 0.12s; }
 .post-row:hover .post-row__title {
@@ -121,8 +127,8 @@ const posts = (await getCollection('blog'))
   }
 
   .post-row {
-    padding: 1.2rem 0;
-    font-size: 1.05rem;
+    padding: 0.85rem 0;
+    font-size: 0.97rem;
   }
 }
 </style>
