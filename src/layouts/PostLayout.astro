@@ -87,11 +87,15 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
     <!-- POST FOOTER -->
     <footer class="post__footer">
       <div class="container">
-        <div class="post__footer-inner">
-          <a href="/blog" class="post__footer-back" data-lang="en">← Back to all posts</a>
-          <a href="/blog" class="post__footer-back" data-lang="vn">← Quay lại tất cả bài</a>
-          <a href={tweetURL} target="_blank" rel="noopener" class="btn" data-lang="en">Share on X →</a>
-          <a href={tweetURL} target="_blank" rel="noopener" class="btn" data-lang="vn">Chia sẻ lên X →</a>
+        <div class="cta-strip">
+          <span class="section-label" data-lang="en">▸ Enjoyed this post?</span>
+          <span class="section-label" data-lang="vn">▸ Thích bài viết này?</span>
+          <div class="cta-strip__actions">
+            <a href="/blog" class="btn" data-lang="en">← Back to all posts</a>
+            <a href="/blog" class="btn" data-lang="vn">← Quay lại tất cả bài</a>
+            <a href={tweetURL} target="_blank" rel="noopener" class="btn btn--solid" data-lang="en">Share on X →</a>
+            <a href={tweetURL} target="_blank" rel="noopener" class="btn btn--solid" data-lang="vn">Chia sẻ lên X →</a>
+          </div>
         </div>
       </div>
     </footer>
@@ -230,19 +234,6 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
   padding: 1.5rem 0;
   background: var(--b100);
 }
-.post__footer-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.post__footer-back {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--b400);
-  letter-spacing: 0.04em;
-  transition: color 0.15s;
-}
-.post__footer-back:hover { color: var(--ink); }
 
 @media (max-width: 600px) {
   .post__header { padding: 1.75rem 0 1.5rem; }

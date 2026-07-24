@@ -23,7 +23,10 @@ const posts = (await getCollection('blog'))
         ? (BANNER.match(/\.(mp4|webm)$/i)
             ? <video src={BANNER} autoplay loop muted playsinline class="banner-media" />
             : <img src={BANNER} alt="Sy Hai" class="banner-media" />)
-        : <div class="banner-placeholder"><blockquote class="banner-quote">"Being right and winning are not the same game."</blockquote></div>
+        : <div class="banner-placeholder frame frame--accent">
+            <span class="frame-tick-tr"></span><span class="frame-tick-bl"></span>
+            <blockquote class="banner-quote">"Being right and winning are not the same game."</blockquote>
+          </div>
       }
     </aside>
 
