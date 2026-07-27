@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  book: CollectionEntry<'books'>;
+}
+
+const { book } = Astro.props;
+const { title, author, cover, category, status, progress } = book.data;
+---
+
+<div class="book-card" data-cat={category} data-favorite={book.data.favorite ? 'true' : 'false'}>
+  <div class="hub-book-cover">
+    {cover ? <img src={cover} alt={title} /> : <span>{title}</span>}
+  </div>
+  <div class="hub-book-title">{title}</div>
+  <div class="hub-book-author">{author}</div>
+  {status === 'reading' && progress != null && (
+    <div class="hub-progress"><div class="hub-progress__fill" style={`width:${progress}%`}></div></div>
+  )}
+</div>
+
+<style>
+.book-card.hidden { display: none; }
+</style>

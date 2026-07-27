@@ -5,12 +5,14 @@ export interface Props {
   title:       string;
   description?: string;
   ogImage?:    string;
+  bare?:       boolean;
 }
 
 const {
   title,
   description = 'AI & crypto research. Building trading systems with Claude. Learning in public.',
   ogImage,
+  bare = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -18,7 +20,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -42,8 +43,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 
   <!-- Prevent flash of wrong theme -->
   <script is:inline>
-    if (localStorage.getItem('theme') === 'light') {
-      document.documentElement.classList.add('light');
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
     }
   </script>
 </head>
@@ -51,43 +52,50 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <body>
 
   <!-- ══ NAV ══ -->
-  <nav class="nav">
-    <div class="nav__masthead">
-      <div class="nav__brand">
-        <a href="/" class="nav__logo">syhai.xyz</a>
-        <p class="nav__tagline">Learning in public</p>
+  {!bare && (
+    <nav class="nav">
+      <div class="nav__masthead">
+        <div class="nav__brand">
+          <a href="/" class="nav__logo">syhai.xyz</a>
+          <p class="nav__tagline">Learning in public</p>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+          <span class="icon-light">☾</span>
+          <span class="icon-dark">☀</span>
+        </button>
       </div>
-      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-        <span class="icon-dark">☀</span>
-        <span class="icon-light">☾</span>
-      </button>
-    </div>
-  </nav>
+    </nav>
+  )}
 
   <main>
     <slot />
   </main>
 
   <!-- ══ FOOTER ══ -->
-  <footer class="footer">
-    <div class="footer__inner container--wide">
-      <span class="footer__name">syhai.xyz</span>
-      <div class="footer__links">
-        <a href="/blog">Blog</a>
-        <a href="/about">About</a>
-        <a href="https://x.com/syngochai" target="_blank" rel="noopener">X</a>
-        <a href="/rss.xml">RSS</a>
+  {!bare && (
+    <footer class="footer">
+      <div class="footer__inner container--wide">
+        <span class="footer__name">syhai.xyz</span>
+        <div class="footer__links">
+          <a href="/blog">Writing</a>
+          <a href="/bookshelf">Bookshelf</a>
+          <a href="/building">Building</a>
+          <a href="/meet">Meet me</a>
+          <a href="/about">About</a>
+          <a href="https://x.com/syngochai" target="_blank" rel="noopener">X</a>
+          <a href="/rss.xml">RSS</a>
+        </div>
+        <span class="footer__copy">© {new Date().getFullYear()} Sy Hai</span>
       </div>
-      <span class="footer__copy">© {new Date().getFullYear()} Sy Hai</span>
-    </div>
-  </footer>
+    </footer>
+  )}
 
   <script>
     const toggle = document.getElementById('theme-toggle');
     toggle?.addEventListener('click', () => {
-      document.documentElement.classList.toggle('light');
+      document.documentElement.classList.toggle('dark');
       localStorage.setItem('theme',
-        document.documentElement.classList.contains('light') ? 'light' : 'dark'
+        document.documentElement.classList.contains('dark') ? 'dark' : 'light'
       );
     });
   </script>
@@ -121,22 +129,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 }
 
 .nav__logo {
-  font-family: var(--playfair);
-  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
-  font-weight: 900;
+  font-family: var(--source);
+  font-size: 1.15rem;
+  font-weight: 700;
   color: var(--ink);
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   line-height: 1;
   display: block;
 }
-.nav__logo:hover { opacity: 0.7; }
+.nav__logo:hover { color: var(--accent); }
 
 .nav__tagline {
-  font-family: var(--mono);
-  font-size: 0.58rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.9rem;
   color: var(--ink2);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
 }
 
 /* Theme toggle */
@@ -152,10 +159,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   flex-shrink: 0;
 }
 .theme-toggle:hover { color: var(--ink); }
-.icon-dark  { display: inline; }
-.icon-light { display: none; }
-:global(html.light) .icon-dark  { display: none; }
-:global(html.light) .icon-light { display: inline; }
+/* Light is the default: show the moon (switch to dark). In dark, show the sun. */
+.icon-light { display: inline; }
+.icon-dark  { display: none; }
+:global(html.dark) .icon-light { display: none; }
+:global(html.dark) .icon-dark  { display: inline; }
 
 /* ── FOOTER ── */
 .footer {
@@ -172,28 +180,27 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   gap: 1rem;
 }
 .footer__name {
-  font-family: var(--playfair);
-  font-size: 1rem;
-  font-weight: 900;
+  font-family: var(--source);
+  font-size: 0.95rem;
+  font-weight: 700;
   color: var(--ink);
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
 }
 .footer__links {
   display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
 }
 .footer__links a {
-  font-family: var(--mono);
-  font-size: 0.63rem;
+  font-family: var(--source);
+  font-size: 0.92rem;
   color: var(--ink2);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
   transition: color 0.15s;
 }
-.footer__links a:hover { color: var(--ink); }
+.footer__links a:hover { color: var(--accent); }
 .footer__copy {
-  font-family: var(--mono);
-  font-size: 0.6rem;
+  font-family: var(--serif);
+  font-size: 0.9rem;
   color: var(--b400);
 }
 

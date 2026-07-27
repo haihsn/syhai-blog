@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+import BookCard from '../components/BookCard.astro';
+import { getCollection } from 'astro:content';
+
+const books = (await getCollection('books'))
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+const categories = [...new Set(books.map(b => b.data.category))].sort();
+
+const reading  = books.filter(b => b.data.status === 'reading');
+const upNext   = books.filter(b => b.data.status === 'up-next');
+const finished = books.filter(b => b.data.status === 'read');
+---
+
+<Base title="Bookshelf — syhai.xyz" description="Books I'm reading, about to read, and have read.">
+
+  <div class="hub-page container--wide">
+
+    <a href="/" class="hub-back">← Back</a>
+    <h1 class="hub-title">Bookshelf</h1>
+
+    <div class="hub-toolbar">
+      <div class="hub-pill-row">
+        <button class="hub-pill active" data-filter="all">All</button>
+        <button class="hub-pill" data-filter="favorites">★ Favorites</button>
+        {categories.map(cat => (
+          <button class="hub-pill" data-filter={cat}>{cat}</button>
+        ))}
+      </div>
+      <span class="hub-count"><strong>{books.length}</strong> books</span>
+    </div>
+
+    {reading.length > 0 && (
+      <section class="hub-shelf" data-shelf>
+        <h2 class="hub-section-label">Currently Reading</h2>
+        <div class="hub-book-grid">
+          {reading.map(book => <BookCard book={book} />)}
+        </div>
+      </section>
+    )}
+
+    {upNext.length > 0 && (
+      <section class="hub-shelf" data-shelf>
+        <h2 class="hub-section-label">Up Next</h2>
+        <div class="hub-book-grid">
+          {upNext.map(book => <BookCard book={book} />)}
+        </div>
+      </section>
+    )}
+
+    {finished.length > 0 && (
+      <section class="hub-shelf" data-shelf>
+        <h2 class="hub-section-label">Finished</h2>
+        <div class="hub-book-grid">
+          {finished.map(book => <BookCard book={book} />)}
+        </div>
+      </section>
+    )}
+
+  </div>
+
+</Base>
+
+<style>
+.hub-page { padding: 3rem 0 5rem; }
+.hub-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.hub-shelf { margin-bottom: 2.75rem; }
+.hub-shelf.hidden { display: none; }
+.hub-shelf .hub-section-label { display: block; margin-bottom: 1rem; }
+.hub-book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+@media (max-width: 600px) {
+  .hub-book-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; }
+}
+</style>
+
+<script>
+const pills = document.querySelectorAll<HTMLButtonElement>('.hub-pill');
+const cards = document.querySelectorAll<HTMLElement>('.book-card');
+const shelves = document.querySelectorAll<HTMLElement>('[data-shelf]');
+
+pills.forEach(pill => {
+  pill.addEventListener('click', () => {
+    pills.forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    const filter = pill.dataset.filter ?? 'all';
+
+    cards.forEach(card => {
+      const matches =
+        filter === 'all' ? true :
+        filter === 'favorites' ? card.dataset.favorite === 'true' :
+        card.dataset.cat === filter;
+      card.classList.toggle('hidden', !matches);
+    });
+
+    shelves.forEach(shelf => {
+      const visible = shelf.querySelectorAll('.book-card:not(.hidden)').length > 0;
+      shelf.classList.toggle('hidden', !visible);
+    });
+  });
+});
+</script>

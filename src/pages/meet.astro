@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+
+const activities = [
+  { name: 'Pickleball',    note: 'Local courts — let\'s rally.' },
+  { name: 'PUBG',          note: 'Duo squad, add me.' },
+  { name: 'Valorant',      note: 'Ranked or unranked, your call.' },
+  { name: 'MMA sparring',  note: 'Gloves on, light work only.' },
+];
+---
+
+<Base title="Meet me — syhai.xyz" description="Ways to hang out or get in touch.">
+
+  <div class="hub-page container">
+
+    <a href="/" class="hub-back">← Back</a>
+    <h1 class="hub-title">Meet me</h1>
+
+    <p class="hub-intro">
+      Best way to reach me is <a href="https://x.com/syngochai" target="_blank" rel="noopener">X (@syngochai)</a>.
+      Or pick something below.
+    </p>
+
+    <div class="hub-list">
+      {activities.map(a => (
+        <div class="hub-list-row">
+          <div>
+            <div class="hub-list-row__title">{a.name}</div>
+            <div class="hub-list-row__desc">{a.note}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+
+</Base>
+
+<style>
+.hub-page { padding: 3rem 0 5rem; max-width: 680px; margin: 0 auto; }
+.hub-intro {
+  font-family: var(--source);
+  font-size: 1.05rem;
+  color: var(--ink2);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+.hub-intro a { color: var(--accent); }
+.hub-list { margin-top: 1rem; }
+</style>

@@ -119,29 +119,28 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
   flex-wrap: wrap;
 }
 .post__back {
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  color: var(--b300);
-  letter-spacing: 0.04em;
+  font-family: var(--source);
+  font-size: 0.95rem;
+  color: var(--ink2);
   transition: color 0.15s;
 }
-.post__back:hover { color: var(--ink); }
-.post__kicker-sep { color: var(--b200); font-family: var(--mono); font-size: 0.66rem; }
+.post__back:hover { color: var(--accent); }
+.post__kicker-sep { color: var(--b300); font-family: var(--source); font-size: 0.9rem; }
 
 .post__title {
-  font-size: clamp(2rem, 5.5vw, 3.75rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.05;
+  font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
   margin-bottom: 1rem;
   color: var(--ink);
 }
 
-/* Deck in italic — Bloomberg style */
+/* Deck in italic serif */
 .post__desc {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   color: var(--ink2);
-  font-family: var(--source);
+  font-family: var(--serif);
   font-style: italic;
   line-height: 1.6;
   margin-bottom: 1.5rem;
@@ -157,15 +156,13 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
   padding-top: 1rem;
 }
 .post__byline-author {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  font-weight: 700;
+  font-family: var(--source);
+  font-size: 0.92rem;
+  font-weight: 600;
   color: var(--ink);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
-.post__byline-sep { color: var(--b200); font-family: var(--mono); font-size: 0.7rem; }
-.post__meta-text  { font-family: var(--mono); font-size: 0.66rem; color: var(--b300); }
+.post__byline-sep { color: var(--b300); font-family: var(--source); font-size: 0.9rem; }
+.post__meta-text  { font-family: var(--source); font-size: 0.9rem; color: var(--ink2); }
 
 /* ── COVER IMAGE ── */
 .post__cover {
@@ -180,34 +177,34 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 .prose { max-width: 680px; }
 
 .prose :global(h2) {
-  font-size: 1.65rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   margin-top: 3rem;
   margin-bottom: 0.75rem;
   padding-top: 1.75rem;
-  border-top: 0.5px solid var(--rule);
+  border-top: 1px solid var(--rule);
   color: var(--ink);
 }
 .prose :global(h3) {
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.02em;
   margin-top: 2rem;
   margin-bottom: 0.6rem;
   color: var(--ink);
 }
 .prose :global(p) {
-  font-size: 1.05rem;
-  color: var(--ink2);
-  line-height: 1.82;
+  font-size: 1.2rem;
+  color: var(--ink);
+  line-height: 1.75;
   margin-bottom: 1.3rem;
-  font-family: var(--source);
+  font-family: var(--serif);
 }
 .prose :global(ul),
-.prose :global(ol) { padding-left: 1.5rem; margin-bottom: 1.25rem; color: var(--ink2); }
-.prose :global(li) { margin-bottom: 0.4rem; line-height: 1.75; font-size: 1rem; font-family: var(--source); }
-.prose :global(a)  { color: var(--ink); border-bottom: 1px solid var(--rule); transition: color 0.15s, border-color 0.15s; }
+.prose :global(ol) { padding-left: 1.5rem; margin-bottom: 1.25rem; color: var(--ink); }
+.prose :global(li) { margin-bottom: 0.4rem; line-height: 1.7; font-size: 1.15rem; font-family: var(--serif); }
+.prose :global(a)  { color: var(--accent); border-bottom: 1px solid var(--rule); transition: color 0.15s, border-color 0.15s; }
 .prose :global(a:hover) { color: var(--accent); border-bottom-color: var(--accent); }
 .prose :global(strong)  { color: var(--ink); font-weight: 700; }
 .prose :global(img)     { margin: 2rem 0; width: 100%; }
@@ -215,18 +212,17 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 
 /* Share button in byline */
 .post__share-btn {
-  font-family: var(--mono);
-  font-size: 0.64rem;
-  padding: 4px 12px;
-  border: 1.5px solid var(--ink);
+  font-family: var(--source);
+  font-size: 0.85rem;
+  padding: 5px 14px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
   color: var(--ink);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  transition: all 0.12s;
+  transition: all 0.15s;
   white-space: nowrap;
-  font-weight: 600;
+  font-weight: 500;
 }
-.post__share-btn:hover { background: var(--ink); color: #fff; }
+.post__share-btn:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ── POST FOOTER ── */
 .post__footer {
