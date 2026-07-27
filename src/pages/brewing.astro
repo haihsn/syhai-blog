@@ -1,0 +1,106 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects'))
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+const groups = [
+  { label: 'Apps',  items: projects.filter(p => p.data.kind === 'apps') },
+  { label: 'Doors', items: projects.filter(p => p.data.kind === 'doors') },
+];
+---
+
+<Base title="Brewing — syhai.xyz" description="What I'm building — software and businesses.">
+
+  <div class="hub-page container--wide">
+
+    <a href="/" class="hub-back">← Back</a>
+    <h1 class="hub-title">Brewing</h1>
+
+    {groups.map(group => (
+      <section class="hub-shelf">
+        <h2 class="hub-section-label">{group.label}</h2>
+
+        {group.items.length === 0 ? (
+          <p class="hub-empty">Nothing here yet.</p>
+        ) : (
+          <div class="brew-grid">
+            {group.items.map(p => {
+              const external = p.data.url?.startsWith('http');
+              const Tag = p.data.url ? 'a' : 'div';
+              return (
+                <Tag
+                  class="hub-card brew-card"
+                  href={p.data.url}
+                  target={external ? '_blank' : undefined}
+                  rel={external ? 'noopener' : undefined}
+                >
+                  <span class="brew-card__head">
+                    <span class="hub-logo">
+                      {p.data.logo
+                        ? <img src={p.data.logo} alt="" />
+                        : <span>{p.data.title.charAt(0)}</span>}
+                    </span>
+                    {p.data.status && <span class="hub-list-row__status">{p.data.status}</span>}
+                  </span>
+                  <span class="brew-card__title">{p.data.title}</span>
+                  {p.data.description && (
+                    <span class="brew-card__desc">{p.data.description}</span>
+                  )}
+                </Tag>
+              );
+            })}
+          </div>
+        )}
+      </section>
+    ))}
+
+  </div>
+
+</Base>
+
+<style>
+.hub-page { padding: 3rem 0 5rem; }
+.hub-shelf { margin-bottom: 2.75rem; }
+.hub-shelf .hub-section-label { display: block; margin-bottom: 1rem; }
+
+.hub-empty {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--ink2);
+}
+
+.brew-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.brew-card { display: block; }
+.brew-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+.brew-card__title {
+  display: block;
+  font-family: var(--source);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+}
+.brew-card__desc {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink2);
+  margin-top: 3px;
+}
+
+@media (max-width: 600px) {
+  .brew-grid { grid-template-columns: 1fr; }
+}
+</style>

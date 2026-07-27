@@ -324,7 +324,7 @@ mark, .highlight {
 .cta-strip__actions { display: flex; gap: 0.75rem; }
 
 /* ══════════════════════════════════════════════
-   Hub components — Bookshelf / Building / Meet me
+   Hub components — Read / Brewing / Meet me
    (used together with html.hub tokens above)
    ══════════════════════════════════════════════ */
 
@@ -530,6 +530,27 @@ a.hub-card:hover { border-color: var(--ink2); }
   color: inherit;
 }
 .hub-list-row:last-child { border-bottom: none; }
+/* Small square logo / favicon — used on Brewing cards */
+.hub-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 9px;
+  border: 1px solid var(--rule);
+  background: var(--b100);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.hub-logo img { width: 100%; height: 100%; object-fit: cover; }
+.hub-logo span {
+  font-family: var(--source);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink2);
+}
+
 .hub-list-row__title { font-family: var(--source); font-weight: 600; font-size: 1rem; color: var(--ink); }
 .hub-list-row__desc { font-family: var(--serif); font-size: 1rem; color: var(--ink2); margin-top: 3px; line-height: 1.55; }
 .hub-list-row__url { font-family: var(--source); font-size: 0.88rem; color: var(--accent); }

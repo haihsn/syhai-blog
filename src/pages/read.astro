@@ -26,12 +26,12 @@ const shelves = [
 ].filter(s => s.items.length > 0);
 ---
 
-<Base title="Bookshelf — syhai.xyz" description="Books I'm reading, about to read, and have read.">
+<Base title="Read — syhai.xyz" description="Books, research and reports I'm reading, about to read, and have read.">
 
   <div class="hub-page container--wide">
 
     <a href="/" class="hub-back">← Back</a>
-    <h1 class="hub-title">Bookshelf</h1>
+    <h1 class="hub-title">Read</h1>
 
     <div class="hub-toolbar">
       <div class="hub-pill-row">
@@ -41,7 +41,7 @@ const shelves = [
           <button class="hub-pill" data-filter={cat}>{cat}</button>
         ))}
       </div>
-      <span class="hub-count"><strong>{books.length}</strong> books</span>
+      <span class="hub-count"><strong>{books.length}</strong> items</span>
     </div>
 
     {shelves.map(shelf => (

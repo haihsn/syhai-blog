@@ -16,8 +16,8 @@ const blog = defineCollection({
 
 const books = defineCollection({
   type: 'content',
-  // The markdown body of each book file is its "key takeaways", shown in a
-  // modal when the book is clicked on /bookshelf.
+  // Books, research, reports — anything read. The markdown body of each file
+  // is its "key takeaways", shown in a modal when clicked on /read.
   schema: z.object({
     title:    z.string(),
     author:   z.string(),
@@ -33,8 +33,12 @@ const projects = defineCollection({
   type: 'content',
   schema: z.object({
     title:       z.string(),
+    // 'apps' = software, 'doors' = physical/traditional businesses.
+    kind:        z.enum(['apps', 'doors']),
     url:         z.string().optional(),
-    description: z.string(),
+    description: z.string().optional(),
+    // Small square logo/favicon, e.g. "/images/brewing/my-app.png"
+    logo:        z.string().optional(),
     status:      z.enum(['active', 'shipped', 'paused']).optional(),
   }),
 });
