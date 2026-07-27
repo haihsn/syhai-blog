@@ -1,73 +1,12 @@
 ---
 title: Is Ethereum Undervalued or Overvalued Right Now?
-titleVN: '# ETH Hiện Đang Bị Định Giá Thấp Hay Cao?'
 description: ETH is sitting at roughly $2,050 as I write this. Down nearly 60% from its 2021 all-time high of $4,953. Down against Bitcoin for most of the past two years. The narrative feels broken.
-descriptionVN: Mô hình App Capital định giá ETH dựa trên tổng tài sản on-chain bao gồm stablecoin, token ERC-20, NFT, tài sản thực được token hóa. Mô hình này định giá hợp lý khoảng 4.918 USD.
 pubDate: 2026-04-06
 category: AI Tutorial
 readTime: 4
 cover: /images/Gemini_Generated_Image_vvq0p6vvq0p6vvq0.png
 tags: []
-tagsVN: []
 draft: false
-bodyVN: |-
-  ETH đang giao dịch ở mức khoảng 2.050 USD khi tôi viết bài này. Giảm gần 60% so với mức đỉnh mọi thời đại năm 2021 là 4.953 USD. Thua kém Bitcoin trong phần lớn hai năm qua. Câu chuyện dường như đã vỡ tan.
-
-  Thế nhưng, khi chạy con số qua hầu hết các mô hình định giá nghiêm túc, Ethereum trông khá rẻ. Rẻ đáng kể. Vậy điều gì đang xảy ra? Thị trường đúng, hay các mô hình đúng?
-
-  Hãy để tôi cố giải mã điều này, bởi câu trả lời không đơn giản như bất kỳ phe nào muốn.
-
-  ## Đầu tiên, "định giá thấp" có nghĩa là gì với một blockchain?
-
-  Đây là chỗ hầu hết các cuộc tranh luận về ETH sụp đổ. Mọi người tranh luận về giá mà không đồng ý về việc họ đang định giá cái gì.
-
-  Với một công ty truyền thống, định giá khá đơn giản: so sánh giá với thu nhập, doanh thu, giá trị sổ sách, hoặc dòng tiền tương lai. Với Ethereum, không có cái nào ánh xạ gọn gàng. Nó không phải là công ty. Nó không phải tiền tệ, dù có tính chất tiền tệ. Nó là hạ tầng, lớp thanh toán mà các hoạt động tài chính khác chạy trên đó.
-
-  Vì vậy các nhà phân tích đã xây dựng các mô hình thay thế. Đây là những mô hình chính đáng hiểu.
-
-  NVT so sánh vốn hóa thị trường với khối lượng giao dịch. Tỷ lệ cao có thể cho thấy tài sản bị định giá cao so với mức sử dụng thực tế, giống như chỉ số P/E nhưng cho thông lượng blockchain.
-
-  MVRV so sánh giá hiện tại với giá trung bình mà tất cả ETH được chuyển giao lần cuối. Khi MVRV âm sâu, lịch sử cho thấy thị trường đang định giá ETH dưới giá vốn. Hiện tại tỷ lệ MVRV đã giảm xuống -36%, mức thấp nhất kể từ tháng 4/2025 khi ETH đáy ở khoảng 1.400 USD.
-
-  Mô hình App Capital định giá ETH dựa trên tổng tài sản on-chain bao gồm stablecoin, token ERC-20, NFT, tài sản thực được token hóa. Mô hình này định giá hợp lý khoảng 4.918 USD.
-
-  Mô hình L2 tính đến TVL trên hệ sinh thái Layer 2 của Ethereum. Ngụ ý giá trị hợp lý khoảng 4.633 USD.
-
-  Revenue Yield là kẻ ngoại lệ. Định giá ETH bằng cách chia doanh thu mạng lưới cho lợi suất staking, và đây là mô hình duy nhất cho rằng ETH bị định giá cao, hơn 57%. Một số nhà phân tích coi đây là mô hình đáng tin cậy nhất.
-
-  CEO CryptoQuant Ki Young Ju chạy tất cả 12 mô hình định giá chính vào tháng 11 năm ngoái. Chín trên mười hai cho thấy ETH bị định giá thấp. Giá trị hợp lý tổng hợp khoảng 4.836 USD, hơn gấp đôi giá hiện tại.
-
-  ## Dữ liệu on-chain nói gì
-
-  TVL đạt đỉnh 59,69 tỷ USD vào giữa tháng 3, ổn định khoảng 52,5 tỷ USD cuối tháng, vẫn là TVL lớn nhất trong các blockchain.
-
-  Vốn hóa stablecoin trên Ethereum tăng đều từ 159 tỷ lên 163,7 tỷ USD, củng cố vai trò của Ethereum với 57% tổng nguồn cung stablecoin toàn cầu.
-
-  Địa chỉ hoạt động hàng ngày đạt 1,01 triệu vào ngày 19/3, giảm về 436.000 cuối tháng.
-
-  Giao dịch hàng ngày 2,6 triệu ở mức cao, ổn định khoảng 1,83 triệu cuối tháng.
-
-  Ethereum nắm giữ 65% tổng giá trị RWA on-chain bao gồm chứng khoán, bất động sản, hàng hóa được token hóa.
-
-  Mẫu hình nổi bật là sự phân kỳ giữa giá giảm và mức độ áp dụng tổ chức ngày càng tăng.
-
-  ## Vấn đề câu chuyện narrative
-
-  Bitcoin dominance đang tăng. Khi Bitcoin chạy, vốn thường xoay vào BTC trước. ETH/BTC đã trong xu hướng giảm suốt 2024 và 2025.
-
-  Tranh luận về khả năng thu phí của L2. Các L2 xử lý giao dịch rẻ và giữ phần lớn phí, chỉ trả lại một phần nhỏ cho Ethereum mainnet. Tốt cho người dùng, nhưng có nghĩa là mô hình doanh thu của Ethereum đang bị nén lại.
-
-  ETH vẫn được định giá như câu chuyện công nghệ, chưa phải câu chuyện dòng tiền. Thị trường chưa định giá lại ETH như hạ tầng năng suất, mang lại lợi suất, mặc dù đó chính xác là những gì nó đang trở thành.
-
-  ## Kết luận của tôi
-
-  Bị định giá thấp theo hầu hết các chỉ số kỹ thuật. Được định giá hợp lý đến hơi cao theo mô hình doanh thu.
-
-  ETH đang trong giai đoạn chuyển đổi nơi mô hình định giá cũ đang mất đi tính liên quan nhưng mô hình định giá mới chưa được thị trường áp dụng đầy đủ. Khoảng cách đó là nơi sự bất ổn tồn tại.
-
-  Đây không phải lời khuyên tài chính. Hãy tự nghiên cứu.
-
-  Nguồn dữ liệu: CryIP on-chain metrics tháng 3/2026, CryptoQuant ETHval composite model, DefiLlama TVL data, FXEmpire MVRV analysis.
 ---
 
 ETH is sitting at roughly $2,050 as I write this. Down nearly 60% from its 2021 all-time high of $4,953. Down against Bitcoin for most of the past two years. The narrative feels broken.

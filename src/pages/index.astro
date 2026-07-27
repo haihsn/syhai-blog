@@ -8,11 +8,6 @@ const sections = [
   { label: 'Meet me',   href: '/meet' },
   { label: 'About',     href: '/about' },
 ];
-
-const socials = [
-  { label: 'X',       href: 'https://x.com/syngochai', external: true },
-  { label: 'RSS',     href: '/rss.xml',                external: false },
-];
 ---
 
 <Base title="Sy Hai — syhai.xyz" bare>
@@ -21,25 +16,17 @@ const socials = [
 
     <header class="fade-up">
       <h1 class="hub-name">Sy Hai</h1>
-      <p class="hub-location">Learning in public</p>
+      <p class="hub-location">HCMC, Vietnam</p>
     </header>
 
     <p class="hub-bio fade-up-1">
-      AI &amp; crypto research. I use <a href="/blog">Claude</a> to build trading
-      systems, automate research, and analyze on-chain data — then write down
-      everything that worked and everything that didn't.
+      AI &amp; crypto research. I use Claude to build trading systems, automate
+      research, and analyze on-chain data — then write down everything that
+      worked and everything that didn't.
     </p>
 
     <nav class="hub-link-row home__sections fade-up-2">
       {sections.map(s => <a href={s.href}>{s.label}</a>)}
-    </nav>
-
-    <nav class="hub-link-row hub-link-row--muted home__socials fade-up-3">
-      {socials.map(s => (
-        <a href={s.href} target={s.external ? '_blank' : undefined} rel={s.external ? 'noopener' : undefined}>
-          {s.label}
-        </a>
-      ))}
     </nav>
 
   </div>
@@ -54,7 +41,6 @@ const socials = [
 }
 
 .home__sections { margin-top: 3.25rem; }
-.home__socials  { margin-top: 2.25rem; }
 
 @media (max-width: 600px) {
   .home__sections { gap: 0.5rem 1.5rem; }

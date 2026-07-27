@@ -1,13 +1,10 @@
 ---
 title: "How I Built My Crypto Trading Signal System with Claude"
-titleVN: "Tôi xây dựng hệ thống tín hiệu giao dịch với Claude như thế nào"
 description: "No ML background. No quant team. Just good prompts and a weekend. Here's exactly how I built a working signal engine using Claude's Extended Thinking."
-descriptionVN: "Không có nền tảng ML, không có đội quant. Chỉ cần prompt tốt và một cuối tuần. Đây là cách tôi xây dựng hệ thống tín hiệu giao dịch thực sự hoạt động với Claude."
 pubDate: 2025-03-15
 category: "AI Tutorial"
 readTime: 12
 tags: ["Claude", "Trading", "Python", "Crypto"]
-tagsVN: ["Claude", "Giao dịch", "Python", "Crypto"]
 ---
 
 I've been trading crypto for two years. For most of that time I was doing everything manually — scanning charts, reading news, gut-feel entries. I wanted systematic signals but assumed I'd need a quant background or expensive tools to get there.

@@ -4,11 +4,10 @@ import type { CollectionEntry } from 'astro:content';
 
 export interface Props {
   post: CollectionEntry<'blog'>;
-  bodyVNHtml?: string | null;
 }
 
-const { post, bodyVNHtml } = Astro.props;
-const { title, titleVN, description, descriptionVN, pubDate, category, readTime, tags, tagsVN, cover } = post.data;
+const { post } = Astro.props;
+const { title, description, pubDate, category, readTime, cover } = post.data;
 
 function fmt(date: Date) {
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -28,31 +27,25 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 
         <!-- Kicker: back link + category -->
         <div class="post__kicker fade-up">
-          <a href="/blog" class="post__back" data-lang="en">← All posts</a>
-          <a href="/blog" class="post__back" data-lang="vn">← Tất cả bài</a>
+          <a href="/blog" class="post__back">← All posts</a>
           <span class="post__kicker-sep">|</span>
           <span class="tag">{category}</span>
         </div>
 
         <!-- Headline -->
-        <h1 class="post__title fade-up-1" data-lang="en">{title}</h1>
-        <h1 class="post__title fade-up-1" data-lang="vn">{titleVN ?? title}</h1>
+        <h1 class="post__title fade-up-1">{title}</h1>
 
         <!-- Deck / description (italic) -->
-        <p class="post__desc fade-up-2" data-lang="en">{description}</p>
-        <p class="post__desc fade-up-2" data-lang="vn">{descriptionVN ?? description}</p>
+        <p class="post__desc fade-up-2">{description}</p>
 
         <!-- Byline -->
         <div class="post__byline fade-up-3">
-          <span class="post__byline-author" data-lang="en">By Sy Hai</span>
-          <span class="post__byline-author" data-lang="vn">Bởi Sy Hai</span>
+          <span class="post__byline-author">By Sy Hai</span>
           <span class="post__byline-sep">·</span>
           <span class="post__meta-text">{fmt(pubDate)}</span>
           <span class="post__byline-sep">·</span>
-          <span class="post__meta-text" data-lang="en">{readTime} min read</span>
-          <span class="post__meta-text" data-lang="vn">{readTime} phút đọc</span>
-          <a href={tweetURL} target="_blank" rel="noopener" class="post__share-btn" data-lang="en">Post on X →</a>
-          <a href={tweetURL} target="_blank" rel="noopener" class="post__share-btn" data-lang="vn">Chia sẻ lên X →</a>
+          <span class="post__meta-text">{readTime} min read</span>
+          <a href={tweetURL} target="_blank" rel="noopener" class="post__share-btn">Post on X →</a>
         </div>
 
       </div>
@@ -68,33 +61,26 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
               <path d="M3 17l8 7 7-6 10 7" stroke="#999" stroke-width="1"/>
               <circle cx="11" cy="14" r="3" fill="#E5E5E5"/>
             </svg>
-            <span data-lang="en">Cover image</span>
-            <span data-lang="vn">Ảnh bìa bài viết</span>
+            <span>Cover image</span>
           </div>
       }
     </div>
 
     <!-- BODY -->
     <div class="post__body container">
-      <div class="prose" data-lang="en">
+      <div class="prose">
         <slot />
       </div>
-      {bodyVNHtml && (
-        <div class="prose" data-lang="vn" set:html={bodyVNHtml} />
-      )}
     </div>
 
     <!-- POST FOOTER -->
     <footer class="post__footer">
       <div class="container">
         <div class="cta-strip">
-          <span class="section-label" data-lang="en">▸ Enjoyed this post?</span>
-          <span class="section-label" data-lang="vn">▸ Thích bài viết này?</span>
+          <span class="section-label">▸ Enjoyed this post?</span>
           <div class="cta-strip__actions">
-            <a href="/blog" class="btn" data-lang="en">← Back to all posts</a>
-            <a href="/blog" class="btn" data-lang="vn">← Quay lại tất cả bài</a>
-            <a href={tweetURL} target="_blank" rel="noopener" class="btn btn--solid" data-lang="en">Share on X →</a>
-            <a href={tweetURL} target="_blank" rel="noopener" class="btn btn--solid" data-lang="vn">Chia sẻ lên X →</a>
+            <a href="/blog" class="btn">← Back to all posts</a>
+            <a href={tweetURL} target="_blank" rel="noopener" class="btn btn--solid">Share on X →</a>
           </div>
         </div>
       </div>

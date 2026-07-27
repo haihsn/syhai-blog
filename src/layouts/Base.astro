@@ -51,13 +51,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 
 <body>
 
+  <!-- Bare pages (homepage) get the toggle on its own, floating -->
+  {bare && (
+    <button id="theme-toggle" class="theme-toggle theme-toggle--floating" aria-label="Toggle theme">
+      <span class="icon-light">☾</span>
+      <span class="icon-dark">☀</span>
+    </button>
+  )}
+
   <!-- ══ NAV ══ -->
   {!bare && (
     <nav class="nav">
       <div class="nav__masthead">
         <div class="nav__brand">
           <a href="/" class="nav__logo">syhai.xyz</a>
-          <p class="nav__tagline">Learning in public</p>
+          <p class="nav__tagline">HCMC, Vietnam</p>
         </div>
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
           <span class="icon-light">☾</span>
@@ -159,6 +167,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   flex-shrink: 0;
 }
 .theme-toggle:hover { color: var(--ink); }
+.theme-toggle--floating {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.75rem;
+  z-index: 100;
+  font-size: 1.1rem;
+}
 /* Light is the default: show the moon (switch to dark). In dark, show the sun. */
 .icon-light { display: inline; }
 .icon-dark  { display: none; }

@@ -4,22 +4,20 @@ const blog = defineCollection({
   type: 'content',
   schema: z.object({
     title:          z.string(),
-    titleVN:        z.string().optional(),
     description:    z.string(),
-    descriptionVN:  z.string().optional(),
     pubDate:        z.coerce.date(),
     category:       z.string(),
     readTime:       z.number(),
     cover:          z.string().optional(),
     tags:           z.array(z.string()).optional(),
-    tagsVN:         z.array(z.string()).optional(),
     draft:          z.boolean().optional().default(false),
-    bodyVN:         z.string().optional(),
   }),
 });
 
 const books = defineCollection({
   type: 'content',
+  // The markdown body of each book file is its "key takeaways", shown in a
+  // modal when the book is clicked on /bookshelf.
   schema: z.object({
     title:    z.string(),
     author:   z.string(),

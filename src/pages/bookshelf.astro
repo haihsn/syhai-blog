@@ -6,11 +6,24 @@ import { getCollection } from 'astro:content';
 const books = (await getCollection('books'))
   .sort((a, b) => a.data.title.localeCompare(b.data.title));
 
+// A book's markdown body is its key-takeaways note. Books with an empty body
+// render as non-clickable cards.
+const entries = await Promise.all(
+  books.map(async book => ({
+    book,
+    hasTakeaways: book.body.trim().length > 0,
+    Content: (await book.render()).Content,
+  }))
+);
+
 const categories = [...new Set(books.map(b => b.data.category))].sort();
 
-const reading  = books.filter(b => b.data.status === 'reading');
-const upNext   = books.filter(b => b.data.status === 'up-next');
-const finished = books.filter(b => b.data.status === 'read');
+const byStatus = (status: string) => entries.filter(e => e.book.data.status === status);
+const shelves = [
+  { label: 'Currently Reading', items: byStatus('reading') },
+  { label: 'Up Next',           items: byStatus('up-next') },
+  { label: 'Finished',          items: byStatus('read') },
+].filter(s => s.items.length > 0);
 ---
 
 <Base title="Bookshelf — syhai.xyz" description="Books I'm reading, about to read, and have read.">
@@ -31,33 +44,34 @@ const finished = books.filter(b => b.data.status === 'read');
       <span class="hub-count"><strong>{books.length}</strong> books</span>
     </div>
 
-    {reading.length > 0 && (
+    {shelves.map(shelf => (
       <section class="hub-shelf" data-shelf>
-        <h2 class="hub-section-label">Currently Reading</h2>
+        <h2 class="hub-section-label">{shelf.label}</h2>
         <div class="hub-book-grid">
-          {reading.map(book => <BookCard book={book} />)}
+          {shelf.items.map(({ book, hasTakeaways }) => (
+            <BookCard book={book} hasTakeaways={hasTakeaways} />
+          ))}
         </div>
       </section>
-    )}
+    ))}
 
-    {upNext.length > 0 && (
-      <section class="hub-shelf" data-shelf>
-        <h2 class="hub-section-label">Up Next</h2>
-        <div class="hub-book-grid">
-          {upNext.map(book => <BookCard book={book} />)}
-        </div>
-      </section>
-    )}
+  </div>
 
-    {finished.length > 0 && (
-      <section class="hub-shelf" data-shelf>
-        <h2 class="hub-section-label">Finished</h2>
-        <div class="hub-book-grid">
-          {finished.map(book => <BookCard book={book} />)}
-        </div>
-      </section>
-    )}
+  <!-- Rendered takeaway notes, cloned into the modal on click -->
+  <div class="book-takeaways" hidden>
+    {entries.filter(e => e.hasTakeaways).map(({ book, Content }) => (
+      <div data-takeaway={book.slug}><Content /></div>
+    ))}
+  </div>
 
+  <div id="book-modal" class="book-modal" hidden>
+    <div class="book-modal__backdrop" data-close></div>
+    <div class="book-modal__panel" role="dialog" aria-modal="true" aria-labelledby="book-modal-title">
+      <button class="book-modal__close" data-close aria-label="Close">&times;</button>
+      <h2 id="book-modal-title" class="book-modal__title"></h2>
+      <p id="book-modal-author" class="book-modal__author"></p>
+      <div id="book-modal-body" class="book-modal__body"></div>
+    </div>
   </div>
 
 </Base>
@@ -86,28 +100,72 @@ const finished = books.filter(b => b.data.status === 'read');
 </style>
 
 <script>
-const pills = document.querySelectorAll<HTMLButtonElement>('.hub-pill');
-const cards = document.querySelectorAll<HTMLElement>('.book-card');
-const shelves = document.querySelectorAll<HTMLElement>('[data-shelf]');
+  // ── Filters ──
+  const pills   = document.querySelectorAll<HTMLButtonElement>('.hub-pill');
+  const cards   = document.querySelectorAll<HTMLElement>('.book-card');
+  const shelves = document.querySelectorAll<HTMLElement>('[data-shelf]');
 
-pills.forEach(pill => {
-  pill.addEventListener('click', () => {
-    pills.forEach(p => p.classList.remove('active'));
-    pill.classList.add('active');
-    const filter = pill.dataset.filter ?? 'all';
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      const filter = pill.dataset.filter ?? 'all';
 
-    cards.forEach(card => {
-      const matches =
-        filter === 'all' ? true :
-        filter === 'favorites' ? card.dataset.favorite === 'true' :
-        card.dataset.cat === filter;
-      card.classList.toggle('hidden', !matches);
-    });
+      cards.forEach(card => {
+        const matches =
+          filter === 'all'       ? true :
+          filter === 'favorites' ? card.dataset.favorite === 'true' :
+                                   card.dataset.cat === filter;
+        card.classList.toggle('hidden', !matches);
+      });
 
-    shelves.forEach(shelf => {
-      const visible = shelf.querySelectorAll('.book-card:not(.hidden)').length > 0;
-      shelf.classList.toggle('hidden', !visible);
+      shelves.forEach(shelf => {
+        const visible = shelf.querySelectorAll('.book-card:not(.hidden)').length > 0;
+        shelf.classList.toggle('hidden', !visible);
+      });
     });
   });
-});
+
+  // ── Takeaways modal ──
+  const modal      = document.getElementById('book-modal');
+  const modalTitle = document.getElementById('book-modal-title');
+  const modalBy    = document.getElementById('book-modal-author');
+  const modalBody  = document.getElementById('book-modal-body');
+  let lastFocused: HTMLElement | null = null;
+
+  function openModal(card: HTMLElement) {
+    const slug = card.dataset.book;
+    const source = document.querySelector(`[data-takeaway="${slug}"]`);
+    if (!modal || !modalTitle || !modalBy || !modalBody || !source) return;
+
+    lastFocused = card;
+    modalTitle.textContent = card.dataset.title ?? '';
+    modalBy.textContent    = card.dataset.author ?? '';
+    modalBody.innerHTML    = source.innerHTML;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    modal.querySelector<HTMLButtonElement>('.book-modal__close')?.focus();
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    lastFocused?.focus();
+    lastFocused = null;
+  }
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      if (!(card as HTMLButtonElement).disabled) openModal(card);
+    });
+  });
+
+  modal?.querySelectorAll('[data-close]').forEach(el =>
+    el.addEventListener('click', closeModal)
+  );
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal && !modal.hidden) closeModal();
+  });
 </script>
