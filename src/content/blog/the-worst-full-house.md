@@ -15,10 +15,9 @@ bodyVN: ''
 
 _Why I'm writing this one down_
 
-_For three years, my routine after a notable hand has been the same: play it, sit with it, then bring it to my mentor and take the lesson. Almost every time, the answer resolved into EV. Someone explained the math, I agreed, I wrote down the adjustment, I moved on. That process has never failed me._
+_For three years, my routine after a notable hand has been the same: play it, sit with it, then bring it to my mentor (in this case Claude Opus lolll) and take the lesson. Almost every time, the answer resolved into EV. Someone explained the math, I agreed, I wrote down the adjustment, I moved on. That process has never failed me._
 
-_This hand broke the pattern. Not because the math was wrong — the math was clean and I agree with all of it. It broke the pattern because the math answered a question I wasn't actually asking_.
-
+_This hand broke the pattern. Not because the math was wrong, the math was clean and I agree with all of it. It broke the pattern because the math answered a question I wasn't actually asking_.
 
 ## 1. The Hand
 
@@ -34,21 +33,21 @@ _This hand broke the pattern. Not because the math was wrong — the math was cl
 
 I hold fours full of jacks.
 
-## 2. What I felt on the turn (written before any analysis)
+## 2. What I felt on the turn 
 
 I want this part on the record honestly, because it's the real subject of the entry.
 
-On the turn I was not thinking about protection. I was thinking about the size of the pot if I won it. Around 300,000 in the middle and over 200,000 behind for each of us. Whoever won this hand was going to have something like 750,000 chips — about 3.4 times the average, close to one sixth of every chip in the tournament, with 22 players left and 16 paying.
+On the turn I was not thinking about protection. I was thinking about the size of the pot if I won it. Around 300,000 in the middle and over 200,000 behind for each of us. Whoever won this hand was going to have something like 750,000 chips, about 3.4 times the average >>> close to one sixth of every chip in the tournament, with 22 players left and 16 paying.
 
 From that stack, the path to the win is _visible_. You can see it. That's not a poker thought, it's a want.
 
 So when he bet 70,000 on the turn, I didn't ask "what's the best play." I asked "how do I make sure I get all of it." Those feel like the same question. They are not.
 
-## 3. The question I actually asked my mentor
+## 3. The question I actually asked my Opus
 
 I've kept my wording because the shape of the mistake is inside it:
 
-> _"If I raised on the turn, I may fold him if he has something like Kx / JJ / QJ. And if he had KJ, he will call my raise and jam-raise anyway. So I want to keep him in no matter what he holds?"_
+> _"If I raised on the turn, I may fold him if he has something like Kx / QJ. And if he had KJ, he will call my raise and jam-raise anyway. So I want to keep him in no matter what he holds?"_
 
 I still think that's a good question. It's also, word for word, the reasoning that cost me the pot.
 
