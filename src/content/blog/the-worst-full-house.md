@@ -61,14 +61,8 @@ This is where I found the thing I couldn't see at the table. My instinct was _"a
 
 ### On the river (board K 9 4 J J, I hold 44 — fours full of jacks)
 
-| His hand | What he has | Combos | Notes |
-| **KJ** | Jacks full of kings | \~6 | The natural line: top pair → two pair → the nuts-ish |
-| **KK** | Kings full | 3 |  |
-| **99** | Nines full | 3 |  |
-| **JJ** | **Quads** | 1 | Two jacks on board, so only one combination |
-| **J9s** | Jacks full of nines | \~1 | Barely in a UTG range |
 
-**≈ 13-14 combos beat me.**
+| \n |
 
 Against that, the hands I _beat_ that still jam: every AJ (\~8), QJ and JT (\~4), AK / KQ / KT two pair (12+, and plenty of players jam those on a paired board), plus every missed double-barrel — AQ, AT, QT, T9s.
 
