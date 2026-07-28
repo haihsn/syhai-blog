@@ -1,14 +1,7 @@
 ---
 title: The Worst Full House
 titleVN: ''
-description: |-
-  Why I'm writing this one down
-
-  For three years, my routine after a notable hand has been the same: play it, sit with it, then bring it to my mentor and take the lesson. Almost every time, the answer resolved into EV. Someone explained the math, I agreed, I wrote down the adjustment, I moved on. That process has never failed me.
-
-  This hand broke the pattern. Not because the math was wrong — the math was clean and I agree with all of it. It broke the pattern because the math answered a question I wasn't actually asking.
-
-  I need to write it down properly to find out what I was asking.
+description: Would you call this on river?
 descriptionVN: ''
 pubDate: 2026-07-28
 category: Poker
@@ -20,7 +13,14 @@ draft: false
 bodyVN: ''
 ---
 
-## 1. The hand
+_Why I'm writing this one down_
+
+_For three years, my routine after a notable hand has been the same: play it, sit with it, then bring it to my mentor and take the lesson. Almost every time, the answer resolved into EV. Someone explained the math, I agreed, I wrote down the adjustment, I moved on. That process has never failed me._
+
+_This hand broke the pattern. Not because the math was wrong — the math was clean and I agree with all of it. It broke the pattern because the math answered a question I wasn't actually asking_.
+
+
+## 1. The Hand
 
 **Blinds 6,000 / 12,000, 12,000 BB ante.** 22 players left. 16 get paid. Average stack 220,000. Roughly 4.84M chips in play.
 
@@ -34,8 +34,6 @@ bodyVN: ''
 
 I hold fours full of jacks.
 
-***
-
 ## 2. What I felt on the turn (written before any analysis)
 
 I want this part on the record honestly, because it's the real subject of the entry.
@@ -46,8 +44,6 @@ From that stack, the path to the win is _visible_. You can see it. That's not a 
 
 So when he bet 70,000 on the turn, I didn't ask "what's the best play." I asked "how do I make sure I get all of it." Those feel like the same question. They are not.
 
-***
-
 ## 3. The question I actually asked my mentor
 
 I've kept my wording because the shape of the mistake is inside it:
@@ -56,13 +52,9 @@ I've kept my wording because the shape of the mistake is inside it:
 
 I still think that's a good question. It's also, word for word, the reasoning that cost me the pot.
 
-***
-
 ## 4. The answer
 
-> "Keep him in" and "raise the turn" are the same line, not opposites.On K 9 4 J with 44, every one-pair hand in his range has **exactly 0% equity.** AK, KQ, KT cannot win. Whatever the river brings, I finish with at least a set, usually a full house. If a King comes, he makes trips and I make fours full. He is drawing dead and doesn't know it.A raise to 200,000 asks him to call 130,000 into a 440,000 pot — 3.4 to 1. Top pair on a King-high board calls that price. **So the raise doesn't fold out my value; it charges a dead hand 200,000.** The hands that do fold — AJ, QJ, missed barrels — are precisely the ones the river Jack turns into trip jacks that jam me off my equity.And KJ, the hand I used as my _reason_ to slowplay, is the strongest argument against it. On the turn KJ has 4 outs and I'm 91%. On the river KJ is jacks full and I'm 0%. "He'll get it in anyway" is true. The question is _at what price._ **The turn is where KJ pays me. The river is where KJ owns me.**Calling didn't keep his range in. It resurrected it. Nine river cards out of forty-six — 20% — pair the board and hand a veto to hands that had none.
-
-***
+> "Keep him in" and "raise the turn" are the same line, not opposites.On K 9 4 J with 44, every one-pair hand in his range has **exactly 0% equity.** AK, KQ, KT cannot win. Whatever the river brings, I finish with at least a set, usually a full house. If a King comes, he makes trips and I make fours full. He is drawing dead and doesn't know it.A raise to 200,000 asks him to call 130,000 into a 440,000 pot — 3.4 to 1. Top pair on a King-high board calls that price. **So the raise doesn't fold out my value; it charges a dead hand 200,000.** The hands that do fold — AJ, QJ, missed barrels — are precisely the ones the river Jack turns into trip jacks that jam me off my equity.And KJ, the hand I used as my _reason_ to slowplay, is the strongest argument against it. On the turn KJ has 4 outs and I'm 91%. On the river KJ is jacks full and I'm 0%. "He'll get it in anyway" is true. The question is _at what price._ \*\*The turn is where KJ pays me. The river is where KJ owns me.\*\*Calling didn't keep his range in. It resurrected it. Nine river cards out of forty-six — 20% — pair the board and hand a veto to hands that had none.
 
 ## 5. Which combos actually beat me
 
@@ -103,65 +95,17 @@ So my instinct at the table was right about the thing that mattered most. _We ca
 
 **It let KJ walk from 9% to 100%.**
 
-***
-
 ## 6. Every branch of the turn decision
 
 **Turn: K 9 4 J rainbow. I hold 44. Pot 240,000 after his 70,000. I have 290,000 behind.**
 
-```plain
-┌─ BRANCH A: RAISE to 200,000 ──────────────────────────────┐
-│                                                            │
-│  A1  He folds  (AJ, QJ, AQ, AT, QT, T9s)                  │
-│      → Win 440,000 uncontested → stack 530,000            │
-│      → Risk of elimination: ZERO                          │
-│      → These are exactly the hands the river J would       │
-│        have turned into trip jacks jamming into me         │
-│                                                            │
-│  A2  He calls with Kx  (AK, KQ, KT — ~15 combos)          │
-│      → HIS EQUITY: 0%. He is drawing dead.                │
-│      → I win → 750,000 chips                              │
-│                                                            │
-│  A3  He calls with KJ / K9  (~8 combos)                   │
-│      → I'm 91%                                             │
-│                                                            │
-│  A4  He jams KK / 99 / JJ  (~9 combos)                    │
-│      → I'm behind — but I was behind these on the          │
-│        turn AND the river. Not part of the decision.       │
-│                                                            │
-└────────────────────────────────────────────────────────────┘
-
-┌─ BRANCH B: CALL  (what I did) ────────────────────────────┐
-│  Pot 310,000. I have 220,000 behind.                      │
-│                                                            │
-│  B1  Blank river — 37 of 46 cards, ~80%                   │
-│      → He bets ~100,000, I call, I win ≈ 630,000          │
-│      → Gain over A2: nothing.  Over A1: about +100,000    │
-│                                                            │
-│  B2  Board pairs — 9 of 46 cards, ~20%                    │
-│      → I now hold the WORST POSSIBLE FULL HOUSE            │
-│                                                            │
-│      B2a  River J  ← WHAT HAPPENED                        │
-│           Every AJ / QJ / JT = trip jacks, jams, I win     │
-│           KJ = jacks full, I lose everything               │
-│           → Forced call at 2.4 to 1 with ~40-65%          │
-│           → 750,000 or busted, six off the money          │
-│                                                            │
-│      B2b  River K                                          │
-│           Every AK / KQ / KT = trip kings, jams, I win     │
-│           KJ / KK = better full house, I lose             │
-│           → Identical forced call. NOT a fold.            │
-│                                                            │
-└────────────────────────────────────────────────────────────┘
-```
+<iframe src="/interactives/worst-full-house-decision-tree.html" style="width:100%; height:700px; border:1px solid var(--rule);" title="Poker decision tree"></iframe>
 
 I had told myself that if the board paired I could just fold. **Look at B2a and B2b. There is no fold there.** On either card I make a full house that beats every trips hand in his range, facing a jam at 2.4 to 1. Too strong to fold, too weak to be glad about. That was never an escape hatch. That was the trap, and it was the whole price of the turn call.
 
 And read the two branches side by side:
 
 Branch A's _worst realistic_ outcome is **530,000 with zero elimination risk.** Branch B's _best_ outcome is **630,000.** I paid a 20% chance of a coinflip for my tournament to win 100,000 extra in the good branch.
-
-***
 
 ## 7. The reframe
 
@@ -183,8 +127,6 @@ On the turn I was 100% and I knew it. On the river I was 55% and I couldn't know
 
 That's not an EV lesson — the EV resolves it cleanly, and it always did. It's a lesson about _when_ I commit relative to when the board stops speaking. Which is why the math answer felt like it didn't cover the hand. It covered the decision perfectly. It didn't cover the feeling of having handed my tournament to a Jack.
 
-***
-
 ## 8. The rule I'm taking
 
 > **When I am at maximum strength and the board can still pair against me, that is the street. Not the next one.**
@@ -203,7 +145,5 @@ I don't want to close this entry pretending it's fixed.
 The pull I felt on the turn — seeing 750,000 chips and a visible road to the trophy — was not a calculation error. It was a want, and it will be there again. Writing a paragraph about it doesn't remove it. What I can do is install a trigger: **when I catch myself thinking about the size of the pot instead of the strength of my hand relative to the board, that is the moment to raise, not to call.** The want itself is the tell.
 
 I'll know whether that works the next time I flop a set on a board that can pair.
-
-***
 
 _River decision, for the record: I call. 2.4 to 1 with fours full against a range stuffed with trip jacks and two pair is not close, and the ICM premium six off the money doesn't bridge a gap that large. The river was the easy part. The turn was the hand._
