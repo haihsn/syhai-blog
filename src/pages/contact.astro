@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+
+const activities = ['Pickleball', 'Muay Thai Sparring', 'PUBG | Valorant'];
+---
+
+<Base title="Contact — syhai.xyz" description="Find me on X @syngochai. Want to play something?">
+
+  <div class="hub-page container">
+
+    <a href="/" class="hub-back">← Back</a>
+    <h1 class="hub-title">Contact</h1>
+
+    <p class="hub-intro">
+      Find me on <a href="https://x.com/syngochai" target="_blank" rel="noopener">X @syngochai</a>.
+      Want to play something?
+    </p>
+
+    <div class="hub-list">
+      {activities.map(name => (
+        <div class="hub-list-row">
+          <div class="hub-list-row__title">{name}</div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+
+</Base>
+
+<style>
+.hub-page { padding: 3rem 0 5rem; max-width: 680px; margin: 0 auto; }
+.hub-intro {
+  font-family: var(--source);
+  font-size: 1.05rem;
+  color: var(--ink2);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+.hub-intro a { color: var(--accent); }
+.hub-list { margin-top: 1rem; }
+</style>

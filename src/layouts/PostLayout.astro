@@ -21,7 +21,7 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 
   <article class="post">
 
-    <!-- POST HEADER — Bloomberg: category + big headline + deck + byline, THEN image -->
+    <!-- POST HEADER — category kicker + headline + centered byline -->
     <div class="post__header">
       <div class="container">
 
@@ -35,35 +35,13 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
         <!-- Headline -->
         <h1 class="post__title fade-up-1">{title}</h1>
 
-        <!-- Deck / description (italic) -->
-        <p class="post__desc fade-up-2">{description}</p>
-
         <!-- Byline -->
-        <div class="post__byline fade-up-3">
-          <span class="post__byline-author">By Sy Hai</span>
-          <span class="post__byline-sep">·</span>
-          <span class="post__meta-text">{fmt(pubDate)}</span>
-          <span class="post__byline-sep">·</span>
-          <span class="post__meta-text">{readTime} min read</span>
-          <a href={tweetURL} target="_blank" rel="noopener" class="post__share-btn">Post on X →</a>
+        <div class="post__byline fade-up-2">
+          <span class="post__byline-by">By <a href="https://x.com/syngochai" target="_blank" rel="noopener">Sy Hai</a></span>
+          <span class="post__byline-date">Published {fmt(pubDate)} · {readTime} min read</span>
         </div>
 
       </div>
-    </div>
-
-    <!-- COVER IMAGE — below header, Bloomberg style -->
-    <div class="post__cover img-frame">
-      {cover
-        ? <img src={cover} alt={title} />
-        : <div class="img-frame__placeholder">
-            <svg width="40" height="40" viewBox="0 0 36 36" fill="none">
-              <rect x="3" y="8" width="30" height="20" rx="1" stroke="#999" stroke-width="1.5"/>
-              <path d="M3 17l8 7 7-6 10 7" stroke="#999" stroke-width="1"/>
-              <circle cx="11" cy="14" r="3" fill="#E5E5E5"/>
-            </svg>
-            <span>Cover image</span>
-          </div>
-      }
     </div>
 
     <!-- BODY -->
@@ -122,45 +100,46 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
   color: var(--ink);
 }
 
-/* Deck in italic serif */
-.post__desc {
-  font-size: 1.25rem;
-  color: var(--ink2);
-  font-family: var(--serif);
-  font-style: italic;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-  max-width: 680px;
-}
-
 .post__byline {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: 6px;
+  text-align: center;
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
   border-top: 0.5px solid var(--rule);
-  padding-top: 1rem;
 }
-.post__byline-author {
-  font-family: var(--source);
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--ink);
+.post__byline-by {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink2);
 }
-.post__byline-sep { color: var(--b300); font-family: var(--source); font-size: 0.9rem; }
-.post__meta-text  { font-family: var(--source); font-size: 0.9rem; color: var(--ink2); }
-
-/* ── COVER IMAGE ── */
-.post__cover {
-  width: 100%;
-  height: clamp(260px, 42vw, 460px);
-  border-bottom: 0.5px solid var(--rule);
+.post__byline-by a {
+  color: var(--ink2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s;
+}
+.post__byline-by a:hover { color: var(--accent); }
+.post__byline-date {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--b400);
 }
 
 /* ── BODY ── */
 .post__body { padding: 3rem 0 2.5rem; }
 
-.prose { max-width: 680px; }
+.prose {
+  max-width: 680px;
+  border-left: 1px solid var(--rule);
+  padding-left: 1.75rem;
+}
 
 .prose :global(h2) {
   font-size: 1.5rem;
@@ -196,20 +175,6 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 .prose :global(img)     { margin: 2rem 0; width: 100%; }
 .prose :global(iframe)  { margin: 2rem 0; }
 
-/* Share button in byline */
-.post__share-btn {
-  font-family: var(--source);
-  font-size: 0.85rem;
-  padding: 5px 14px;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  color: var(--ink);
-  transition: all 0.15s;
-  white-space: nowrap;
-  font-weight: 500;
-}
-.post__share-btn:hover { border-color: var(--accent); color: var(--accent); }
-
 /* ── POST FOOTER ── */
 .post__footer {
   border-top: 0.5px solid var(--rule);
@@ -220,6 +185,6 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 @media (max-width: 600px) {
   .post__header { padding: 1.75rem 0 1.5rem; }
   .post__title  { font-size: 1.85rem; }
-  .post__desc   { font-size: 1rem; }
+  .prose        { border-left: none; padding-left: 0; }
 }
 </style>
