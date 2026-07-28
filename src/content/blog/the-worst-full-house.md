@@ -61,8 +61,9 @@ This is where I found the thing I couldn't see at the table. My instinct was _"a
 
 ### On the river (board K 9 4 J J, I hold 44 — fours full of jacks)
 
+|  |
 
-| \n |
+![](/images/Screenshot%202026-07-28%20at%2015.57.30.png "~13-14 combo beat me ")
 
 Against that, the hands I _beat_ that still jam: every AJ (\~8), QJ and JT (\~4), AK / KQ / KT two pair (12+, and plenty of players jam those on a paired board), plus every missed double-barrel — AQ, AT, QT, T9s.
 
