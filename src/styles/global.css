@@ -274,7 +274,7 @@ mark, .highlight {
 
 /* Stat grid — label/value pairs */
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 1.5rem; }
-.stat-item__value { display: block; font-family: var(--mono); font-weight: 600; font-size: 0.85rem; color: var(--ink); }
+.stat-item__value { display: block; font-family: var(--mono); font-weight: 500; font-size: 0.85rem; color: var(--ink2); }
 .stat-item__label { display: block; font-family: var(--mono); font-size: 0.56rem; color: var(--b400); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
 @media (max-width: 480px) { .stat-grid { grid-template-columns: 1fr; } }
 
