@@ -66,6 +66,11 @@ Wakil then moved all in for close to 4,000,000. Shevliakov snap-called. Big slic
 
 Afterwards Wakil wrote that he was ["extremely confident that this was an angle"](https://x.com/JamWakil/status/1921662330183577677) done on purpose.
 
+<blockquote class="twitter-tweet">
+  <a href="https://x.com/JamWakil/status/1921662330183577677"></a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js"></script>
+
 The part I keep coming back to is the distinction he draws, which he credits to Griffin Benger on the stream. Once the "mistake" happens, it's simply a different hand, and the only question left is which strategic route you want to take. Adapting to an opponent's real mistake is one thing. Manufacturing confusion in order to gain an edge while hiding what you're actually doing is another.
 
 That's the whole definition of angle-shooting for me. Not "did he break a rule," but "was the confusion on purpose."
@@ -73,6 +78,16 @@ That's the whole definition of angle-shooting for me. Not "did he break a rule,"
 I have no way of knowing whether it was here. Nobody does except Shevliakov.
 
 ### 2. [A bluff without a bet:](https://www.pokernews.com/news/2026/05/most-insane-poker-bluff-ever-51196.htm) Khanna and Nguyen
+
+<iframe
+  width="100%"
+  height="400"
+  src="https://www.youtube.com/watch?v=rEgJ4dE-mMM"
+  title="YouTube video"
+  frameborder="0"
+  allow="accelerate; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
 
 Both players had already locked up a big score, $170,000 to the winner after a heads-up chop. Then they played one of the strangest hands you'll see.
 
