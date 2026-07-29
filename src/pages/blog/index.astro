@@ -81,7 +81,7 @@ function fmtShort(date: Date) {
 
 .post-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin-top: 2rem;
 }
@@ -100,6 +100,11 @@ function fmtShort(date: Date) {
 .post-card.hidden { display: none; }
 .post-card .chip-row { margin-bottom: 0.9rem; }
 .post-card__title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  min-height: calc(1.05rem * 1.35 * 2);
   font-family: var(--source);
   font-size: 1.05rem;
   font-weight: 600;
