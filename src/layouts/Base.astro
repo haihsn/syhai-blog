@@ -51,29 +51,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 
 <body>
 
-  <!-- Bare pages (homepage) get the toggle on its own, floating -->
-  {bare && (
-    <button id="theme-toggle" class="theme-toggle theme-toggle--floating" aria-label="Toggle theme">
-      <span class="icon-light">☾</span>
-      <span class="icon-dark">☀</span>
-    </button>
-  )}
-
-  <!-- ══ NAV ══ -->
-  {!bare && (
-    <nav class="nav">
-      <div class="nav__masthead">
-        <div class="nav__brand">
-          <a href="/" class="nav__logo">syhai.xyz</a>
-          <p class="nav__tagline">HCMC, Vietnam</p>
-        </div>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-          <span class="icon-light">☾</span>
-          <span class="icon-dark">☀</span>
-        </button>
-      </div>
-    </nav>
-  )}
+  <!-- Every page gets just the floating toggle — no logo/tagline nav bar -->
+  <button id="theme-toggle" class="theme-toggle theme-toggle--floating" aria-label="Toggle theme">
+    <span class="icon-light">☾</span>
+    <span class="icon-dark">☀</span>
+  </button>
 
   <main>
     <slot />
@@ -111,48 +93,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 </html>
 
 <style>
-/* ── NAV ── */
-.nav {
-  background: var(--bg);
-  border-bottom: 0.5px solid var(--rule);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.nav__masthead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 1.75rem 12px;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.nav__brand {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.nav__logo {
-  font-family: var(--source);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  display: block;
-}
-.nav__logo:hover { color: var(--accent); }
-
-.nav__tagline {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.9rem;
-  color: var(--ink2);
-}
-
 /* Theme toggle */
 .theme-toggle {
   background: none;
@@ -219,7 +159,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 }
 
 @media (max-width: 600px) {
-  .nav__tagline { display: none; }
   .footer__copy { display: none; }
 }
 </style>
