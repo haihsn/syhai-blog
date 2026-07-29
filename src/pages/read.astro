@@ -32,6 +32,13 @@ const shelves = [
     <a href="/" class="hub-back">← Back</a>
     <h1 class="hub-title">Read</h1>
 
+    <p class="hub-intro">
+      Not all my reads. This isn't a list of everything I've ever read — it's
+      the books I actually finished from beginning to end, never felt like
+      skipping, and still find myself thinking about. The ones that really
+      resonated with me.
+    </p>
+
     <div class="hub-toolbar">
       <div class="hub-pill-row">
         <button class="hub-pill active" data-filter="all">All</button>
@@ -77,6 +84,14 @@ const shelves = [
 
 <style>
 .hub-page { padding: 3rem 0 5rem; }
+.hub-intro {
+  font-family: var(--source);
+  font-size: 1.05rem;
+  color: var(--ink2);
+  line-height: 1.7;
+  max-width: 640px;
+  margin-bottom: 2.5rem;
+}
 .hub-toolbar {
   display: flex;
   align-items: center;
