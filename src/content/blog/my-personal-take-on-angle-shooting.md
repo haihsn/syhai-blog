@@ -82,7 +82,7 @@ I have no way of knowing whether it was here. Nobody does except Shevliakov.
 <iframe
   width="100%"
   height="400"
-  src="src="https://www.youtube.com/embed/rEgJ4dE-mMM""
+  src="https://www.youtube.com/embed/rEgJ4dE-mMM"
   title="YouTube video"
   frameborder="0"
   allow="accelerate; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
