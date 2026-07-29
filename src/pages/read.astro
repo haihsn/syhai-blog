@@ -20,8 +20,8 @@ const categories = [...new Set(books.map(b => b.data.category))].sort();
 
 const byStatus = (status: string) => entries.filter(e => e.book.data.status === status);
 const shelves = [
-  { label: 'Currently Reading', items: byStatus('reading') },
-  { label: 'Finished',          items: byStatus('read') },
+  { label: 'Reading & In Queue', items: [...byStatus('reading'), ...byStatus('up-next')] },
+  { label: 'Finished',           items: byStatus('read') },
 ].filter(s => s.items.length > 0);
 ---
 
