@@ -41,7 +41,7 @@ function fmtShort(date: Date) {
           <div class="chip-row">
             <span class="chip chip--outline">{post.data.category}</span>
           </div>
-          <h3 class="post-card__title">{post.data.title}</h3>
+          <h3 class="post-card__title-wrap"><span class="post-card__title">{post.data.title}</span></h3>
           <div class="stat-grid">
             <div class="stat-item"><span class="stat-item__value">{post.data.readTime} min</span><span class="stat-item__label">Read</span></div>
             <div class="stat-item"><span class="stat-item__value">{fmtShort(post.data.pubDate)}</span><span class="stat-item__label">Published</span></div>
@@ -81,7 +81,7 @@ function fmtShort(date: Date) {
 
 .post-card-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1rem;
   margin-top: 2rem;
 }
@@ -99,14 +99,20 @@ function fmtShort(date: Date) {
 .post-card:hover .card-arrow { background: var(--accent); color: #fff; border-color: var(--accent); }
 .post-card.hidden { display: none; }
 .post-card .chip-row { margin-bottom: 0.9rem; }
-.post-card__title {
+.post-card__title-wrap {
   font-family: var(--source);
   font-size: 1.05rem;
   font-weight: 600;
-  color: var(--ink);
   letter-spacing: -0.02em;
   line-height: 1.35;
   margin: 0 0 1.1rem;
+}
+.post-card__title {
+  color: #1a1a1a;
+  background: var(--highlight);
+  padding: 2px 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 @media (max-width: 800px) {
