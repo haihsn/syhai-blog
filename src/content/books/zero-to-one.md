@@ -2,6 +2,7 @@
 title:    "Zero to One"
 author:   "Peter Thiel"
 category: "Business"
+cover:    "/images/books/zero-to-one.jpg"
 status:   "read"
 favorite: true
 ---
