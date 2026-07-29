@@ -1,3 +1,11 @@
+# Project: syhai.xyz blog (syhai-blog)
+
+This is the **syhai.xyz editorial blog** — Astro 4 + Vercel, EN/VN language switcher. See README.md for stack/deploy details.
+
+**This is NOT Glean.** Glean is a separate React Native/Expo mobile app in a sibling folder (`~/Projects/Glean`). If a prompt mentions Glean, Expo, React Native, or Supabase mobile screens, it's very likely meant for that other project — stop and flag it instead of proceeding here.
+
+---
+
 # CLAUDE.md
 
 Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
