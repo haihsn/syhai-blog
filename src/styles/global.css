@@ -5,7 +5,7 @@
   --bg:       #fbfaf7;
   --paper:    #fbfaf7;
   --navy:     #191919;
-  --accent:   #06b6d4;
+  --accent:   #00FFEF;
 
   /* Text */
   --ink:      #191919;
@@ -39,7 +39,7 @@ html.dark {
   --bg:       #0f0f0e;
   --paper:    #0f0f0e;
   --navy:     #ffffff;
-  --accent:   #22d3ee;
+  --accent:   #00FFEF;
 
   --ink:      #ededea;
   --ink2:     #8f8d87;
@@ -297,8 +297,8 @@ mark, .highlight {
 .search-input::placeholder { color: var(--b400); }
 
 /* Solid button — filled counterpart to .btn */
-.btn--solid { background: var(--accent); color: #fff; border-color: var(--accent); }
-.btn--solid:hover { opacity: 0.88; color: #fff; border-color: var(--accent); }
+.btn--solid { background: var(--accent); color: #0a0a0a; border-color: var(--accent); }
+.btn--solid:hover { opacity: 0.88; color: #0a0a0a; border-color: var(--accent); }
 
 /* Arrow-in-box card affordance */
 .card-arrow {
@@ -396,7 +396,7 @@ mark, .highlight {
   transition: all 0.15s;
 }
 .hub-pill:hover { border-color: var(--ink2); }
-.hub-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.hub-pill.active { background: var(--accent); border-color: var(--accent); color: #0a0a0a; }
 
 .hub-card {
   border: 1px solid var(--rule);
