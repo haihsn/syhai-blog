@@ -36,10 +36,9 @@ function fmtShort(date: Date) {
     </div>
 
     <div id="post-list" class="post-card-grid">
-      {posts.map((post, i) => (
+      {posts.map((post) => (
         <a href={`/blog/${post.slug}`} class="post-card" data-cat={post.data.category} data-title={post.data.title.toLowerCase()}>
           <div class="chip-row">
-            {i === 0 && <span class="chip chip--status">Latest</span>}
             <span class="chip chip--outline">{post.data.category}</span>
           </div>
           <h3 class="post-card__title">{post.data.title}</h3>

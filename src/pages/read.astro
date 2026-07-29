@@ -33,16 +33,14 @@ const shelves = [
     <h1 class="hub-title">Read</h1>
 
     <p class="hub-intro">
-      Not all my reads. This isn't a list of everything I've ever read — it's
-      the books I actually finished from beginning to end, never felt like
-      skipping, and still find myself thinking about. The ones that really
-      resonated with me.
+      Not much of a reader. I give up on most books if the first chapter
+      doesn't hook me. But here's my curated list of the ones that resonate
+      with me.
     </p>
 
     <div class="hub-toolbar">
       <div class="hub-pill-row">
         <button class="hub-pill active" data-filter="all">All</button>
-        <button class="hub-pill" data-filter="favorites">★ Favorites</button>
         {categories.map(cat => (
           <button class="hub-pill" data-filter={cat}>{cat}</button>
         ))}
@@ -126,10 +124,7 @@ const shelves = [
       const filter = pill.dataset.filter ?? 'all';
 
       cards.forEach(card => {
-        const matches =
-          filter === 'all'       ? true :
-          filter === 'favorites' ? card.dataset.favorite === 'true' :
-                                   card.dataset.cat === filter;
+        const matches = filter === 'all' ? true : card.dataset.cat === filter;
         card.classList.toggle('hidden', !matches);
       });
 
