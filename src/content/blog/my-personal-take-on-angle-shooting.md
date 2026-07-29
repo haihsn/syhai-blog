@@ -12,8 +12,6 @@ draft: false
 bodyVN: ''
 ---
 
-# My Personal Take on Angle-Shooting
-
 In live poker, especially MTT, the skill is not only math. It's the "human being" part: how you behave at the table, what you talk about, whether you answer the "exploit" questions people put to you.
 
 That's what I love about MTT. You're not playing like a robot running GTO. You're playing a person, and sometimes that person is playing you rather than playing your range.
