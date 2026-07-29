@@ -26,13 +26,7 @@ const activities = [
 
     <div class="activity-grid">
       {activities.map(a => (
-        <button
-          class="activity-card"
-          type="button"
-          data-video={a.video}
-          disabled={!a.video}
-        >
-          <span class="activity-card__icon">▶</span>
+        <button class="activity-card" type="button" data-video={a.video}>
           <span class="activity-card__name">{a.name}</span>
         </button>
       ))}
@@ -64,34 +58,25 @@ const activities = [
 
 .activity-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.75rem;
   margin-top: 1rem;
 }
 .activity-card {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  aspect-ratio: 1;
-  padding: 1rem;
+  padding: 1.1rem 0.75rem;
   border: 1px solid var(--rule);
   border-radius: var(--radius);
   background: var(--b100);
   cursor: pointer;
   transition: border-color 0.15s, transform 0.15s;
 }
-.activity-card:not([disabled]):hover { border-color: var(--accent); transform: translateY(-2px); }
-.activity-card[disabled] { cursor: default; opacity: 0.55; }
-.activity-card__icon {
-  font-size: 1.1rem;
-  color: var(--ink2);
-}
-.activity-card:not([disabled]) .activity-card__icon { color: var(--accent); }
+.activity-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .activity-card__name {
   font-family: var(--source);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--ink);
   text-align: center;
@@ -130,9 +115,7 @@ const activities = [
   }
 
   document.querySelectorAll<HTMLButtonElement>('.activity-card').forEach(card => {
-    card.addEventListener('click', () => {
-      if (!card.disabled) openModal(card);
-    });
+    card.addEventListener('click', () => openModal(card));
   });
 
   modal?.querySelectorAll('[data-close]').forEach(el =>
