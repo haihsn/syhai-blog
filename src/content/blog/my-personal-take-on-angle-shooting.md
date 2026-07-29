@@ -12,11 +12,11 @@ draft: false
 bodyVN: ''
 ---
 
-In live poker, especially MTT, the skill is not only math. It's the "human being" part: how you behave at the table, what you talk about, whether you answer the "exploit" questions people put to you.
+_In live poker, especially MTT, the skill is not only math. It's the "human being" part: how you behave at the table, what you talk about, whether you answer the "exploit" questions people put to you._
 
-That's what I love about MTT. You're not playing like a robot running GTO. You're playing a person, and sometimes that person is playing you rather than playing your range.
+_That's what I love about MTT. You're not playing like a robot running GTO. You're playing a person, and sometimes that person is playing you rather than playing your range._
 
-Before I get to angle-shooting, I want to write down two things I think every MTT player has run into.
+_Before I get to angle-shooting, I want to write down two things I think every MTT player has run into._
 
 ## The table "friend"
 
