@@ -7,11 +7,11 @@ const books = (await getCollection('books'))
   .sort((a, b) => a.data.title.localeCompare(b.data.title));
 
 // A book's markdown body is its key-takeaways note. Books with an empty body
-// render as non-clickable cards.
+// and no highlight images render as non-clickable cards.
 const entries = await Promise.all(
   books.map(async book => ({
     book,
-    hasTakeaways: book.body.trim().length > 0,
+    hasTakeaways: book.body.trim().length > 0 || (book.data.highlights?.length ?? 0) > 0,
     Content: (await book.render()).Content,
   }))
 );
@@ -64,7 +64,22 @@ const shelves = [
   <!-- Rendered takeaway notes, cloned into the modal on click -->
   <div class="book-takeaways" hidden>
     {entries.filter(e => e.hasTakeaways).map(({ book, Content }) => (
-      <div data-takeaway={book.slug}><Content /></div>
+      <div data-takeaway={book.slug}>
+        <Content />
+        {book.data.highlights && book.data.highlights.length > 0 && (
+          <div class="book-highlights">
+            <h3 class="book-highlights__label">Favorite pages</h3>
+            <div class="book-highlights__grid">
+              {book.data.highlights.map(h => (
+                <figure class="book-highlight">
+                  <img src={h.image} alt={h.caption ?? book.data.title} loading="lazy" />
+                  {h.caption && <figcaption>{h.caption}</figcaption>}
+                </figure>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     ))}
   </div>
 

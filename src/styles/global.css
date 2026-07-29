@@ -519,6 +519,37 @@ a.hub-card:hover { border-color: var(--ink2); }
 .book-modal__body a { color: var(--accent); }
 .book-modal__body strong { font-weight: 600; }
 
+.book-highlights { margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+.book-highlights__label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--ink2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.9rem;
+}
+.book-highlights__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+}
+.book-highlight { margin: 0; }
+.book-highlight img {
+  display: block;
+  width: 100%;
+  border-radius: calc(var(--radius) - 4px);
+  border: 1px solid var(--rule);
+}
+.book-highlight figcaption {
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--ink2);
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
 .hub-list-row {
   display: flex;
   align-items: center;

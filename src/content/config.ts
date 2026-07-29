@@ -26,6 +26,12 @@ const books = defineCollection({
     status:   z.enum(['reading', 'up-next', 'read']),
     progress: z.number().min(0).max(100).optional(),
     favorite: z.boolean().optional().default(false),
+    // Favorite pages: a photo of the page plus the takeaway/graph it holds,
+    // shown alongside the key-takeaways text in the modal.
+    highlights: z.array(z.object({
+      image:   z.string(),
+      caption: z.string().optional(),
+    })).optional(),
   }),
 });
 
