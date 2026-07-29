@@ -68,6 +68,14 @@ const tweetURL  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(ti
 
 </Base>
 
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('.prose a').forEach(a => {
+    if (a.getAttribute('href')?.startsWith('#')) return;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+  });
+</script>
+
 <style>
 /* ── POST HEADER ── */
 .post__header {
