@@ -93,6 +93,15 @@ const shelves = [
     </div>
   </div>
 
+  <!-- Full-size view of a highlight photo, layered above the modal -->
+  <div id="lightbox" class="lightbox" hidden>
+    <button class="lightbox__close" data-lightbox-close aria-label="Close image">&times;</button>
+    <figure class="lightbox__figure" role="dialog" aria-modal="true" aria-label="Enlarged page photo">
+      <img id="lightbox-img" src="" alt="" />
+      <figcaption id="lightbox-caption"></figcaption>
+    </figure>
+  </div>
+
 </Base>
 
 <style>
@@ -189,7 +198,45 @@ const shelves = [
     el.addEventListener('click', closeModal)
   );
 
+  // ── Lightbox: click a highlight photo to view it full size ──
+  const lightbox    = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
+  const lightboxCap = document.getElementById('lightbox-caption');
+
+  function openLightbox(img: HTMLImageElement) {
+    if (!lightbox || !lightboxImg || !lightboxCap) return;
+    lightboxImg.src = img.currentSrc || img.src;
+    lightboxImg.alt = img.alt;
+    const caption = img.closest('figure')?.querySelector('figcaption')?.textContent ?? '';
+    lightboxCap.textContent = caption;
+    lightbox.hidden = false;
+    lightbox.querySelector<HTMLButtonElement>('.lightbox__close')?.focus();
+  }
+
+  function closeLightbox() {
+    if (!lightbox || !lightboxImg) return;
+    lightbox.hidden = true;
+    lightboxImg.src = '';
+  }
+
+  // Modal content is cloned in at open time, so delegate from the body.
+  modalBody?.addEventListener('click', e => {
+    const img = (e.target as HTMLElement).closest('.book-highlight img');
+    if (img) openLightbox(img as HTMLImageElement);
+  });
+
+  // Click anywhere outside the figure closes it; clicks on the image itself don't.
+  lightbox?.addEventListener('click', e => {
+    const target = e.target as HTMLElement;
+    if (target.closest('[data-lightbox-close]') || !target.closest('.lightbox__figure')) {
+      closeLightbox();
+    }
+  });
+
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && modal && !modal.hidden) closeModal();
+    if (e.key !== 'Escape') return;
+    // Lightbox is on top, so it closes first and leaves the modal open.
+    if (lightbox && !lightbox.hidden) closeLightbox();
+    else if (modal && !modal.hidden) closeModal();
   });
 </script>
