@@ -5,13 +5,12 @@ category: "Business"
 cover:    "/images/books/zero-to-one.jpg"
 status:   "read"
 favorite: true
+highlights:
+  - image:   "/images/books/highlights/zero-to-one-nerds-vs-salesmen.jpg"
+    caption: "Nerds vs. Salesmen — p. 127"
 ---
 
-Replace this with your own notes.
-
-- Going from 0 to 1 (building something new) is harder and more valuable than
-  going from 1 to n (copying what works).
-- Competition erodes profit. Monopolies — earned by being genuinely better —
-  are what fund long-term thinking.
-- Every great company is built on a secret: something true that few people
-  agree with you on.
+Most of us like to think we're too smart or self-aware to be influenced by an
+ad, but that confidence is exactly what makes advertising effective: it doesn't
+need to convince you outright, it just needs to quietly plant an impression that
+shapes a decision later, without you tracing it back to the source.
