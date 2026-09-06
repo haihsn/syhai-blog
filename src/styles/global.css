@@ -6,6 +6,8 @@
   --paper:    #fbfaf7;
   --navy:     #191919;
   --accent:   #34D399;
+  /* Same colour as --accent, as RGB channels, for translucent glows */
+  --accent-rgb: 52, 211, 153;
 
   /* Text */
   --ink:      #191919;
@@ -40,6 +42,7 @@ html.dark {
   --paper:    #0f0f0e;
   --navy:     #ffffff;
   --accent:   #00FFEF;
+  --accent-rgb: 0, 255, 239;
 
   --ink:      #ededea;
   --ink2:     #8f8d87;

@@ -47,10 +47,24 @@ const { title, author, cover, category, status, progress } = book.data;
 }
 .book-card[disabled] { cursor: default; }
 .book-card.hidden { display: none; }
-.book-card :global(.hub-book-cover) { transition: transform 0.15s, box-shadow 0.15s; }
+.book-card :global(.hub-book-cover),
+.book-card :global(.hub-book-title) {
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+}
+/* Accent glow — same colour as the nav link hover on the homepage. */
 .book-card:not([disabled]):hover :global(.hub-book-cover) {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+  transform: translateY(-6px) scale(1.02);
+  border-color: rgba(var(--accent-rgb), 0.9);
+  box-shadow:
+    0 0 0 2px rgba(var(--accent-rgb), 0.55),
+    0 0 26px 4px rgba(var(--accent-rgb), 0.45),
+    0 12px 28px rgba(0, 0, 0, 0.16);
+}
+.book-card:not([disabled]):hover :global(.hub-book-title) { color: var(--accent); }
+
+/* Respect users who ask for reduced motion — keep the glow, drop the movement. */
+@media (prefers-reduced-motion: reduce) {
+  .book-card:not([disabled]):hover :global(.hub-book-cover) { transform: none; }
 }
 .book-card:not([disabled]):focus-visible :global(.hub-book-cover) {
   outline: 2px solid var(--accent);
