@@ -36,14 +36,14 @@ const groups = [
                   target={external ? '_blank' : undefined}
                   rel={external ? 'noopener' : undefined}
                 >
-                  <span class="brew-card__head">
-                    <span class="hub-logo">
-                      {p.data.logo
-                        ? <img src={p.data.logo} alt="" />
-                        : <span>{p.data.title.charAt(0)}</span>}
+                  {(p.data.logo || p.data.status) && (
+                    <span class="brew-card__head">
+                      {p.data.logo && (
+                        <span class="hub-logo"><img src={p.data.logo} alt="" /></span>
+                      )}
+                      {p.data.status && <span class="hub-list-row__status">{p.data.status}</span>}
                     </span>
-                    {p.data.status && <span class="hub-list-row__status">{p.data.status}</span>}
-                  </span>
+                  )}
                   <span class="brew-card__title">{p.data.title}</span>
                   {p.data.description && (
                     <span class="brew-card__desc">{p.data.description}</span>
@@ -61,7 +61,7 @@ const groups = [
 </Base>
 
 <style>
-.hub-page { padding: 3rem 0 5rem; }
+.hub-page { padding-top: 3rem; padding-bottom: 5rem; }
 .hub-shelf { margin-bottom: 2.75rem; }
 .hub-shelf .hub-section-label { display: block; margin-bottom: 1rem; }
 
@@ -73,7 +73,7 @@ const groups = [
 
 .brew-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
   gap: 1rem;
 }
 .brew-card { display: block; }
@@ -84,6 +84,8 @@ const groups = [
   gap: 0.75rem;
   margin-bottom: 0.9rem;
 }
+/* Keeps the status on the right even when a card has no logo. */
+.brew-card__head :global(.hub-list-row__status) { margin-left: auto; }
 .brew-card__title {
   display: block;
   font-family: var(--source);
