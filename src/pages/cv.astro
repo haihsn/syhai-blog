@@ -1,0 +1,206 @@
+---
+import Base from '../layouts/Base.astro';
+import { CV_PASSWORD, cvData } from '../config/cv';
+---
+
+<Base title="CV — syhai.xyz" description="Professional experience and background.">
+
+  <div class="hub-page container">
+
+    <a href="/" class="hub-back">← Back</a>
+
+    <!-- ══ PASSWORD GATE ══ -->
+    <div id="cv-gate">
+      <h1 class="hub-title">CV</h1>
+      <p class="gate-copy">This page is password protected.</p>
+      <form id="gate-form" class="gate-form">
+        <input
+          id="gate-input"
+          type="password"
+          placeholder="Password"
+          autocomplete="off"
+          class="gate-input"
+        />
+        <button type="submit" class="btn btn--solid">Unlock</button>
+      </form>
+      <p id="gate-error" class="gate-error" hidden>Wrong password.</p>
+    </div>
+
+    <!-- ══ CV CONTENT ══ -->
+    <div id="cv-content" hidden>
+
+      <header class="cv-header">
+        <h1 class="cv-name">{cvData.name}</h1>
+        <p class="cv-title">{cvData.title}</p>
+      </header>
+
+      <section class="cv-section">
+        <h2 class="cv-section__label">Experience</h2>
+        <div class="cv-timeline">
+          {cvData.experience.map(job => (
+            <div class="cv-entry">
+              <div class="cv-entry__head">
+                <div>
+                  <h3 class="cv-entry__role">{job.role}</h3>
+                  <p class="cv-entry__company">{job.company}</p>
+                </div>
+                <span class="cv-entry__dates">{job.dates}</span>
+              </div>
+              <ul class="cv-entry__bullets">
+                {job.bullets.map(b => <li>{b}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="cv-section">
+        <h2 class="cv-section__label">Skills</h2>
+        <div class="cv-skills">
+          {cvData.skills.map(s => <span class="tag tag--outline">{s}</span>)}
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+</Base>
+
+<script define:vars={{ password: CV_PASSWORD }}>
+  const gate    = document.getElementById('cv-gate');
+  const content = document.getElementById('cv-content');
+  const form    = document.getElementById('gate-form');
+  const input   = document.getElementById('gate-input');
+  const error   = document.getElementById('gate-error');
+
+  function unlock() {
+    sessionStorage.setItem('cv-unlocked', 'true');
+    gate.hidden = true;
+    content.hidden = false;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('access') === 'direct' || sessionStorage.getItem('cv-unlocked') === 'true') {
+    unlock();
+  }
+
+  form?.addEventListener('submit', e => {
+    e.preventDefault();
+    if (input.value === password) {
+      unlock();
+    } else {
+      error.hidden = false;
+      input.value = '';
+      input.focus();
+    }
+  });
+</script>
+
+<style>
+.hub-page { padding-top: 3rem; padding-bottom: 5rem; max-width: 680px; margin: 0 auto; }
+
+/* ── Gate ── */
+.gate-copy {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--ink2);
+  margin: 0.75rem 0 1.75rem;
+}
+.gate-form { display: flex; gap: 0.75rem; }
+.gate-input {
+  flex: 1;
+  font-family: var(--source);
+  font-size: 0.95rem;
+  padding: 10px 14px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+}
+.gate-input:focus { outline: none; border-color: var(--accent); }
+.gate-error {
+  font-family: var(--source);
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-top: 0.75rem;
+}
+
+/* ── CV header ── */
+.cv-header { margin-top: 0.75rem; margin-bottom: 2.5rem; }
+.cv-name {
+  font-family: var(--playfair);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(2.25rem, 5vw, 3rem);
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.cv-title {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--ink2);
+  margin-top: 0.4rem;
+}
+
+/* ── Sections ── */
+.cv-section { margin-top: 2.5rem; }
+.cv-section__label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* ── Timeline ── */
+.cv-timeline { display: flex; flex-direction: column; gap: 2rem; }
+.cv-entry__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.cv-entry__role {
+  font-family: var(--source);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.cv-entry__company {
+  font-family: var(--serif);
+  font-size: 0.98rem;
+  color: var(--ink2);
+  margin-top: 2px;
+}
+.cv-entry__dates {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--b400);
+  white-space: nowrap;
+}
+.cv-entry__bullets {
+  margin-top: 0.9rem;
+  padding-left: 1.25rem;
+}
+.cv-entry__bullets li {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+
+/* ── Skills ── */
+.cv-skills { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; }
+.cv-skills .tag {
+  padding: 5px 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+</style>
